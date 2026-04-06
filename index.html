@@ -1324,14 +1324,14 @@ footer {
 
 /* ── Logo in nav ── */
 .nav-logo-img {
-  height: 52px;
+  height: 68px;
   width: auto;
   vertical-align: middle;
-  mix-blend-mode: screen;
-  opacity: 0.88;
+  opacity: 0.92;
   transition: opacity 0.2s;
+  filter: drop-shadow(0 0 8px rgba(46,143,168,0.35));
 }
-.nav-logo-img:hover { opacity: 1; }
+.nav-logo-img:hover { opacity: 1; filter: drop-shadow(0 0 14px rgba(46,143,168,0.55)); }
 
 /* ── Project images ── */
 .project-imgs { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
@@ -1417,7 +1417,16 @@ footer {
 .cred-logo-dark { background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:2px; }
 
 /* ── Footer logo ── */
-.footer-logo-img { height:22px; width:auto; opacity:.55; vertical-align:middle; }
+.footer-logo-img { height:44px; width:auto; opacity:.65; vertical-align:middle; transition:opacity 0.2s; }
+.footer-logo-img:hover { opacity:.88; }
+
+/* ── Flying M watermark ── */
+.fm-watermark {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.055;
+  filter: brightness(2.2) saturate(0.4);
+}
 
 </style>
 </head>
@@ -1425,7 +1434,7 @@ footer {
 
 <!-- ═══ NAV ═══ -->
 <nav>
-  <a href="#hero"><img src="images/footer-logo.png" class="nav-logo-img" alt="Flying M"/></a>
+  <a href="#hero"><img src="images/flying-m-logo.png" class="nav-logo-img" alt="Flying M"/></a>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#independent">Projects</a></li>
@@ -1481,10 +1490,12 @@ footer {
           <line x1="10" y1="30" x2="80" y2="30" stroke="#2e8fa8" stroke-width="1"/>
         </svg>
 
-        <!-- Piper Cherokee silhouette — left-side profile -->
+        <!-- Flying M logo — hero centerpiece -->
         <div class="cherokee-wrap">
-          <img src="images/logo.png" alt="Googie-style Piper Cherokee"
-               style="width:100%;max-width:500px;height:auto;opacity:0.93;filter:drop-shadow(0 0 36px rgba(46,143,168,0.28));"/>
+          <img src="images/flying-m-logo.png" alt="Flying M"
+               style="width:88%;max-width:460px;height:auto;
+                      filter:drop-shadow(0 0 48px rgba(46,143,168,0.55)) drop-shadow(0 0 18px rgba(46,143,168,0.3));
+                      opacity:0.97;"/>
         </div>
 
         <!-- Googie starburst accent -->
@@ -1708,6 +1719,9 @@ footer {
   </div>
 </section>
 <section id="independent">
+  <!-- Flying M watermark -->
+  <img src="images/flying-m-logo.png" class="fm-watermark" alt="" aria-hidden="true"
+       style="width:420px;bottom:-40px;right:-60px;transform:rotate(-8deg);"/>
   <div class="section-inner">
 
     <div class="section-label reveal">
@@ -2250,6 +2264,9 @@ footer {
 
 <!-- ═══ CONTACT ═══ -->
 <section id="contact" style="position:relative;overflow:hidden;">
+  <!-- Flying M watermark -->
+  <img src="images/flying-m-logo.png" class="fm-watermark" alt="" aria-hidden="true"
+       style="width:500px;top:50%;right:-80px;transform:translateY(-50%) rotate(5deg);"/>
   <div style="position:absolute;inset:0;background-image:url('images/img-23.png');background-size:cover;background-position:center 30%;opacity:0.08;pointer-events:none;background-attachment:scroll;"></div>
   <div class="contact-inner">
 
@@ -2321,7 +2338,7 @@ footer {
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
-  <img src="images/footer-logo.png" class="footer-logo-img" alt="Flying M"/> <span style="font-family:var(--font-display);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sky);opacity:0.5;vertical-align:middle;margin-left:10px;">Live to Fly</span>
+  <img src="images/flying-m-logo.png" class="footer-logo-img" alt="Flying M"/> <span style="font-family:var(--font-display);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sky);opacity:0.5;vertical-align:middle;margin-left:10px;">Live to Fly</span>
   <span class="footer-copy">© <span id="copy-year"></span> Harvey Madison — All rights reserved</span>
 </footer>
 
