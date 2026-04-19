@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Second Opinion — Flying M</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+      background:#f5f8fb;color:#0d1b2a;
+    }
+    .wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px;}
+    header{margin-bottom:40px;}
+    .brand{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#0ab8b4;margin-bottom:8px;}
+    h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;color:#1a2f45;line-height:1.1;margin-bottom:8px;}
+    .subtitle{font-size:1.05rem;color:#5a7184;font-style:italic;margin-bottom:4px;}
+    .meta{font-size:.85rem;color:#5a7184;}
+    section{margin-bottom:36px;}
+    h2{font-size:1rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#1a2f45;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid #dce4ed;}
+    p{margin-bottom:12px;color:#1a3a50;font-size:.95rem;}
+    ul{margin:0 0 12px 20px;color:#1a3a50;font-size:.95rem;}
+    ul li{margin-bottom:6px;}
+    a{color:#0ab8b4;text-decoration:underline;}
+    .callout{
+      background:#e8f8f4;border:1.5px solid #0ab8b4;border-radius:12px;
+      padding:16px 20px;margin-bottom:24px;
+    }
+    .callout p{margin:0;font-size:.9rem;}
+    .callout-amber{
+      background:#fffbea;border:1.5px solid #f0b429;border-radius:12px;
+      padding:16px 20px;margin-bottom:24px;
+    }
+    .callout-amber p{margin:0;font-size:.9rem;color:#7a5c00;}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;}
+    .feature-card{background:#fff;border:1.5px solid #dce4ed;border-radius:12px;padding:16px 18px;}
+    .feature-card .icon{font-size:1.4rem;margin-bottom:6px;}
+    .feature-card h3{font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#1a2f45;margin-bottom:4px;}
+    .feature-card p{font-size:.85rem;margin:0;color:#4a6680;}
+    @media(max-width:520px){.two-col{grid-template-columns:1fr;}}
+    footer{margin-top:48px;padding-top:20px;border-top:1.5px solid #dce4ed;font-size:.8rem;color:#9ab0c4;}
+    footer a{color:#9ab0c4;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="brand">Flying M · flyingm.aero</p>
+    <h1>Second Opinion</h1>
+    <p class="subtitle">Preflight Cognitive &amp; Risk Assessment for General Aviation Pilots</p>
+    <p class="meta">iOS App &nbsp;·&nbsp; Bundle ID: me.flyingm.secondopinion &nbsp;·&nbsp; Developer: Harvey Madison</p>
+  </header>
+
+  <div class="callout-amber">
+    <p><strong>Not a medical device.</strong> Second Opinion is a wellness and decision-support tool only. It is not FDA-cleared or approved and is not intended to diagnose, treat, cure, or prevent any medical condition. It does not replace pilot judgment, official weather briefings, or consultation with an Aviation Medical Examiner.</p>
+  </div>
+
+  <section>
+    <h2>What This App Does</h2>
+    <p>Second Opinion helps general aviation pilots make more informed preflight go/no-go decisions by combining two complementary assessments into a single, fast workflow:</p>
+    <ul>
+      <li><strong>Cognitive &amp; Acuity Testing</strong> — Three brief, science-backed tests (Simple Reaction Time, Stroop Color-Word, and a 2&amp;4 Working Memory task) that measure a pilot's current mental sharpness and compare it against their own personal baseline.</li>
+      <li><strong>Flight Risk Assessment Tool (FRAT)</strong> — A 34-question survey aligned with FAA guidance that scores risk across six categories: Weather, Pilot Fitness, Flight Complexity, Aircraft, Environment, and External Pressures. Risk bands are calibrated by pilot certification level (VFR/IFR) and experience (under/over 100 hours).</li>
+    </ul>
+    <p>Results from both assessments are combined into a single preflight report that places the pilot in one of four risk quadrants — helping them see not just whether they feel ready, but whether their performance data supports that feeling.</p>
+  </section>
+
+  <section>
+    <h2>The Problem It Solves</h2>
+    <p>The FAA's traditional IM SAFE checklist (Illness, Medication, Stress, Alcohol, Fatigue, Emotion) is entirely self-reported. A pilot who is fatigued, distracted, or subtly impaired is often the least equipped to accurately assess their own fitness. Research in aviation human factors consistently shows that self-assessment of cognitive fitness degrades along with the fitness itself.</p>
+    <p>Second Opinion augments IM SAFE with measurable data — reaction time, executive function, and working memory scores — so pilots have an objective reference point rather than relying solely on how they feel in the moment. The goal is not to ground pilots, but to give them a second data point before they make one of the most consequential decisions of their day.</p>
+  </section>
+
+  <section>
+    <h2>Target Users</h2>
+    <p>Second Opinion is designed for certificated and student general aviation pilots flying under 14 CFR Part 91 (private, recreational, and sport aviation). It is not designed for Part 121/135 commercial operations, which have separate regulatory fitness frameworks.</p>
+    <p>The app is most valuable for pilots who fly regularly and build a personal baseline over time — the longer a pilot uses it, the more meaningful the trend data becomes.</p>
+  </section>
+
+  <section>
+    <h2>Core Features</h2>
+    <div class="two-col">
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3>Simple Reaction Time</h3>
+        <p>Measures tap latency against a visual stimulus. Sensitive to fatigue, alcohol, and medication effects.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎨</div>
+        <h3>Stroop Color-Word Test</h3>
+        <p>Measures executive function and cognitive interference — a well-validated marker of mental workload capacity.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔢</div>
+        <h3>2&amp;4 Working Memory</h3>
+        <p>Tests short-term working memory under mild distraction — predictive of attention management in the cockpit.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📋</div>
+        <h3>FRAT Survey</h3>
+        <p>34-question FAA-aligned risk assessment with six categories and experience-adjusted scoring bands.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📈</div>
+        <h3>Personal Baseline</h3>
+        <p>Scores are always compared to the pilot's own historical average — not generic population norms.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3>History &amp; Trends</h3>
+        <p>All Results screen shows score history, trend charts, and a risk quadrant dashboard over time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How a Session Works</h2>
+    <p>A typical preflight assessment takes 3–5 minutes and follows this flow:</p>
+    <ul>
+      <li>Pilot opens the app and taps <em>Start Assessment</em></li>
+      <li>Completes the three cognitive tests in sequence (approximately 90 seconds total)</li>
+      <li>Completes the FRAT survey (approximately 2–3 minutes)</li>
+      <li>Views a combined results screen showing cognitive scores vs. baseline, FRAT category breakdown, overall risk level, and risk quadrant placement</li>
+      <li>All data is saved locally to the device for trend tracking</li>
+    </ul>
+    <p>There is no account creation, no login, and no data upload. Everything stays on the pilot's device.</p>
+  </section>
+
+  <section>
+    <h2>What the App Does Not Do</h2>
+    <p>To be explicit about scope — Second Opinion does not:</p>
+    <ul>
+      <li>Issue medical opinions or diagnoses of any kind</li>
+      <li>Communicate with any server, API, or external service (except optional device GPS for airport lookup)</li>
+      <li>Access electronic flight bag data, aircraft systems, or ATC systems</li>
+      <li>Make go/no-go decisions — it surfaces data to support the pilot's own decision</li>
+      <li>Replace a standard weather briefing, NOTAMs review, or pre-flight inspection</li>
+      <li>Substitute for consultation with an Aviation Medical Examiner (AME) regarding medical certificates</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>TestFlight Beta Notes</h2>
+    <div class="callout">
+      <p><strong>For beta testers:</strong> Thank you for helping make Second Opinion better before it reaches the App Store. A few things to know as you test:</p>
+    </div>
+    <ul>
+      <li><strong>Complete the onboarding</strong> — Enter your pilot profile accurately (cert level, hours, IFR/VFR) since it directly affects FRAT scoring bands. You can edit it later in Settings.</li>
+      <li><strong>Build a baseline first</strong> — The cognitive scores become most meaningful after 5–7 sessions. Run it a few days in a row to establish your personal baseline.</li>
+      <li><strong>Test it preflight</strong> — The app is designed to be used in a real preflight context. Try it before an actual flight when possible.</li>
+      <li><strong>Report anything unexpected</strong> — Wrong scores, crashes, confusing UI, questions about the FRAT wording — all feedback is welcome via <a href="mailto:hmadison@flyingm.aero">hmadison@flyingm.aero</a>.</li>
+      <li><strong>Debug elements may be visible</strong> — Some development tools are still visible in this beta build and will be removed before the public release.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Developer &amp; Contact</h2>
+    <p>Second Opinion is developed by <strong>Harvey Madison</strong> under the <strong>Flying M</strong> brand. Harvey is a certificated pilot, instructional designer, and co-host of the aviation safety podcast <em>On Second Thought</em>. The app was built to address a gap he observed in preflight decision-making tools available to general aviation pilots.</p>
+    <p>
+      Developer: Harvey Madison<br>
+      Brand: Flying M<br>
+      Website: <a href="https://flyingm.aero" target="_blank" rel="noopener noreferrer">flyingm.aero</a><br>
+      Support: <a href="mailto:hmadison@flyingm.aero">hmadison@flyingm.aero</a><br>
+      Privacy Policy: <a href="https://flyingm.aero/privacy" target="_blank" rel="noopener noreferrer">flyingm.aero/privacy</a><br>
+      Bundle ID: me.flyingm.secondopinion<br>
+      Platform: iOS 15+<br>
+      App Store Category: Health &amp; Fitness
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Flying M (Harvey Madison). All rights reserved. &nbsp;·&nbsp; <a href="https://flyingm.aero">flyingm.aero</a> &nbsp;·&nbsp; <a href="https://flyingm.aero/privacy">Privacy Policy</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
