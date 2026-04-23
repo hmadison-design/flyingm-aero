@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On Second Thought — Redesign Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-900: #123445;
+    --teal-800: #1a4760;
+    --teal-700: #245b7a;
+    --teal-600: #2d6b8a;
+    --teal-500: #4287a6;
+    --cream: #f6f1e4;
+    --cream-50: #fbf8ef;
+    --cream-100: #efe8d4;
+    --ribbon: #c6452f;
+    --ribbon-dark: #9e3624;
+    --gold: #e6a94d;
+    --sky: #cfe6ef;
+    --sky-2: #a7d3e0;
+    --ink: #16303f;
+    --ink-soft: #4a6475;
+    --line: #d9d1ba;
+    --shadow: 0 10px 30px -12px rgba(18, 52, 69, 0.25);
+    --shadow-sm: 0 4px 14px -6px rgba(18, 52, 69, 0.22);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; font-weight: 700; color: var(--teal-900); line-height: 1.15; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(2.4rem, 4.6vw, 3.75rem); }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+  h3 { font-size: 1.25rem; }
+  p { color: var(--ink-soft); }
+  a { color: var(--teal-700); text-decoration: none; }
+  a:hover { color: var(--teal-900); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* === MOCKUP BANNER (for Harvey to show John) === */
+  .mockup-banner {
+    background: #1a4760;
+    color: #fbf8ef;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+  .mockup-banner strong { color: #ffd489; }
+
+  /* === NAV === */
+  .nav {
+    background: var(--cream-50);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: saturate(150%) blur(6px);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-logo {
+    height: 60px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .brand-logo img {
+    height: 100%; width: auto; display: block;
+  }
+  .brand-logo.fallback {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--sky-2), var(--teal-700));
+    color: white; font-weight: 800; font-size: 1rem;
+    font-family: 'Fraunces', serif;
+    border: 2px solid var(--teal-900);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1; }
+  .brand-text .title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.15rem; color: var(--teal-900); letter-spacing: -0.01em; }
+  .brand-text .sub { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 3px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a {
+    color: var(--teal-900);
+    font-weight: 500;
+    font-size: 0.94rem;
+    position: relative;
+  }
+  .nav-links a:hover::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -6px;
+    height: 2px; background: var(--ribbon); border-radius: 2px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.94rem;
+    cursor: pointer;
+    border: none;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--ribbon); color: white; box-shadow: var(--shadow-sm); }
+  .btn-primary:hover { background: var(--ribbon-dark); transform: translateY(-1px); }
+  .btn-teal { background: var(--teal-700); color: white; box-shadow: var(--shadow-sm); }
+  .btn-teal:hover { background: var(--teal-800); transform: translateY(-1px); color: white; }
+  .btn-outline { background: transparent; color: var(--teal-900); border: 2px solid var(--teal-800); }
+  .btn-outline:hover { background: var(--teal-900); color: white; }
+  .btn-ghost { background: var(--cream-100); color: var(--teal-900); }
+  .btn-ghost:hover { background: var(--line); }
+  .btn-sm { padding: 8px 16px; font-size: 0.84rem; }
+
+  /* === HERO === */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba(207, 230, 239, 0.6), transparent 55%),
+      linear-gradient(180deg, var(--cream-50) 0%, var(--cream) 100%);
+    padding: 72px 0 96px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 90%, rgba(36, 91, 122, 0.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(198, 69, 47, 0.04), transparent 40%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--teal-900); color: white;
+    padding: 8px 16px; border-radius: 999px;
+    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+  }
+  .kicker .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--ribbon);
+    box-shadow: 0 0 0 4px rgba(198, 69, 47, 0.25);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero h1 { margin: 18px 0 14px; }
+  .hero .episode-title { font-style: italic; color: var(--teal-800); font-weight: 600; }
+  .hero p.lead { font-size: 1.05rem; max-width: 540px; margin-bottom: 28px; color: var(--ink-soft); }
+  .hero-meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    margin-bottom: 28px;
+    padding: 18px 22px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    backdrop-filter: blur(4px);
+  }
+  .meta-item { display: flex; flex-direction: column; }
+  .meta-item .label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+  .meta-item .value { font-family: 'Fraunces', serif; font-weight: 700; color: var(--teal-900); font-size: 1.15rem; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-note { display: block; margin-top: 14px; font-size: 0.85rem; color: var(--ink-soft); }
+
+  /* Hero right column — sponsor strip + art stacked, same width */
+  .hero-right { display: flex; flex-direction: column; gap: 16px; }
+  .hero-sponsor {
+    display: block;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .hero-sponsor:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+  .hero-sponsor-img {
+    width: 100%; height: auto; display: block;
+  }
+
+  /* Hero art card — displays Ep5 artwork at its natural aspect ratio, never cropped */
+  .hero-art {
+    position: relative;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: linear-gradient(170deg, #dfeaef 0%, #b7d2de 55%, #78a5b6 100%);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 320px;
+  }
+  .hero-art img {
+    width: 100%; height: auto; display: block;
+    position: relative; z-index: 1;
+  }
+
+  /* === TAGLINE BAND === */
+  .band {
+    background: var(--teal-900);
+    color: var(--cream-50);
+    padding: 28px 0;
+  }
+  .band-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    flex-wrap: wrap;
+  }
+  .band-tag {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 600;
+    font-size: 1.35rem; color: var(--cream-50);
+  }
+  .band-chips { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chip {
+    background: rgba(255,255,255,0.08);
+    color: var(--cream-50);
+    padding: 8px 16px; border-radius: 999px;
+    font-size: 0.84rem; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chip .icn { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+  /* === SECTIONS === */
+  section.block { padding: 88px 0; }
+  .section-head { text-align: center; margin-bottom: 48px; }
+  .section-head .eyebrow {
+    color: var(--ribbon); font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .section-head h2 { margin: 8px 0 12px; }
+  .section-head p { max-width: 620px; margin: 0 auto; }
+
+  /* Archive grid */
+  .archives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s ease, box-shadow .2s ease;
+    display: flex; flex-direction: column;
+    border: 1px solid var(--line);
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .card-thumb {
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(160deg, #dfeaef, #8cb3c4);
+    position: relative;
+    display: grid; place-items: center;
+    color: var(--teal-900);
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 16px;
+    overflow: hidden;
+  }
+  .card-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.2) 100%);
+    pointer-events: none;
+  }
+  .card-thumb > * { position: relative; z-index: 1; }
+  .card-thumb .ep-num {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--teal-900); color: white;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .card-thumb .play-btn {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: white;
+    display: grid; place-items: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s ease;
+  }
+  .card-thumb .play-btn:hover { transform: scale(1.08); }
+  .card-thumb .play-btn::before {
+    content: '';
+    width: 0; height: 0;
+    border-left: 16px solid var(--ribbon);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 4px;
+  }
+  .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .card-meta { font-size: 0.78rem; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .card h3 { font-size: 1.05rem; color: var(--teal-900); line-height: 1.3; }
+  .card-excerpt { font-size: 0.9rem; color: var(--ink-soft); flex: 1; }
+  .card-actions { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+  .card-actions .btn { flex: 1; justify-content: center; }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--cream-100); display: grid; place-items: center;
+    color: var(--teal-800); flex: 0 0 auto; cursor: pointer;
+    transition: background .15s ease;
+    font-size: 0.95rem;
+  }
+  .icon-btn:hover { background: var(--line); }
+
+  /* Upcoming strip */
+  .upcoming {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-100) 100%);
+  }
+  .upcoming-scroller {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .upcoming-card {
+    background: white;
+    border-left: 4px solid var(--teal-700);
+    border-radius: 10px;
+    padding: 18px 18px 18px 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column; gap: 8px;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .upcoming-card:hover { transform: translateY(-2px); border-left-color: var(--ribbon); }
+  .upcoming-card .date { font-family: 'Fraunces', serif; font-weight: 700; color: var(--ribbon); font-size: 1.1rem; }
+  .upcoming-card .ep { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+  .upcoming-card .title { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--teal-900); font-weight: 600; line-height: 1.3; }
+  .upcoming-card .reminder {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--teal-700);
+    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  /* About OST */
+  .about {
+    background:
+      linear-gradient(120deg, var(--teal-900) 0%, var(--teal-800) 100%);
+    color: var(--cream-50);
+    position: relative;
+    overflow: hidden;
+  }
+  .about::before, .about::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.08;
+  }
+  .about::before { background: var(--sky-2); top: -200px; left: -200px; }
+  .about::after { background: var(--gold); bottom: -200px; right: -200px; }
+  .about-inner { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .about h2 { color: var(--cream-50); }
+  .about .eyebrow { color: var(--gold); }
+  .about p { color: rgba(251,248,239,0.85); font-size: 1.02rem; margin-bottom: 18px; }
+  .about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; }
+  .stat {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px; padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .stat .big { font-family: 'Fraunces', serif; font-weight: 700; font-size: 2rem; color: var(--gold); line-height: 1; }
+  .stat .lbl { font-size: 0.82rem; margin-top: 6px; color: rgba(251,248,239,0.75); }
+
+  /* Hosts */
+  .hosts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .host-card {
+    background: white; border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    display: grid; grid-template-rows: 320px auto;
+  }
+  .host-photo {
+    background: linear-gradient(160deg, #9fc0cd, #3d6f88);
+    position: relative;
+    display: grid; place-items: center;
+    color: white;
+    overflow: hidden;
+  }
+  /* Blurred image fills the container behind; full image sits on top with contain */
+  .host-photo .backdrop {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    filter: blur(22px) saturate(1.1);
+    transform: scale(1.18);
+    opacity: 0.55;
+  }
+  .host-photo img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: contain; object-position: center;
+    z-index: 1;
+  }
+  .host-photo .photo-placeholder {
+    width: 160px; height: 160px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 4px solid white;
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 700;
+    color: white;
+    box-shadow: var(--shadow);
+    position: relative; z-index: 1;
+  }
+  .host-photo .caption {
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+    background: rgba(18, 52, 69, 0.75);
+    color: white;
+    padding: 6px 14px; border-radius: 999px;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+    white-space: nowrap;
+    z-index: 2;
+  }
+  .host-name-tag {
+    position: absolute; bottom: 16px; left: 16px; z-index: 2;
+    background: rgba(18, 52, 69, 0.82);
+    color: white;
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
+    backdrop-filter: blur(4px);
+  }
+  .host-body { padding: 28px; }
+  .host-body h3 { font-size: 1.6rem; margin-bottom: 4px; }
+  .host-role { color: var(--ribbon); font-weight: 600; margin-bottom: 14px; font-size: 0.9rem; letter-spacing: 0.04em; }
+  .host-body p { font-size: 0.95rem; margin-bottom: 16px; }
+  .host-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .host-link {
+    font-size: 0.82rem; font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--cream);
+    color: var(--teal-900);
+    border: 1px solid var(--line);
+    transition: all .15s ease;
+  }
+  .host-link:hover { background: var(--teal-900); color: white; border-color: var(--teal-900); }
+
+  /* Jolie feature */
+  .jolie-feature {
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(66, 135, 166, 0.08), transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(198, 69, 47, 0.06), transparent 50%),
+      var(--cream);
+  }
+  .jolie-card {
+    background: white;
+    border-radius: 28px;
+    padding: 0;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    overflow: hidden;
+  }
+  .jolie-art {
+    background: linear-gradient(160deg, #f7f4eb 0%, #e9f0f5 100%);
+    display: grid; place-items: center;
+    padding: 56px;
+    position: relative;
+    min-height: 360px;
+    transition: background .2s ease;
+    text-decoration: none;
+  }
+  a.jolie-art { cursor: pointer; }
+  a.jolie-art:hover { background: linear-gradient(160deg, #f1ebd9 0%, #dceaf0 100%); }
+  .jolie-art img { max-width: 100%; max-height: 340px; height: auto; filter: drop-shadow(0 10px 24px rgba(36,91,122,0.18)); transition: transform .2s ease; }
+  a.jolie-art:hover img { transform: scale(1.03); }
+  .jolie-art.fallback::after {
+    content: 'JolieLucas.com';
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 2rem; color: var(--teal-700);
+    position: absolute; inset: 0; display: grid; place-items: center;
+  }
+  .jolie-content { padding: 48px 48px 48px 40px; display: flex; flex-direction: column; justify-content: center; }
+  .jolie-content h2 { margin: 8px 0 14px; }
+  .jolie-content p { font-size: 1rem; margin-bottom: 24px; }
+  .jolie-offerings {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .offering {
+    background: var(--cream-50);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal-700);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: all .15s ease;
+    color: var(--ink);
+  }
+  .offering:hover {
+    border-left-color: var(--ribbon);
+    background: white;
+    transform: translateX(3px);
+    box-shadow: var(--shadow-sm);
+  }
+  .offering .offering-name {
+    font-family: 'Fraunces', serif; font-weight: 700; color: var(--teal-900);
+    font-size: 1.02rem; margin-bottom: 2px;
+  }
+  .offering .offering-desc {
+    font-size: 0.82rem; color: var(--ink-soft);
+  }
+  @media (max-width: 900px) {
+    .jolie-card { grid-template-columns: 1fr; }
+    .jolie-art { padding: 36px; min-height: 260px; }
+    .jolie-content { padding: 32px; }
+    .jolie-offerings { grid-template-columns: 1fr; }
+  }
+
+  /* Flying M feature — mirrors Jolie's section */
+  .flyingm-feature {
+    background:
+      radial-gradient(ellipse at 90% 20%, rgba(66, 135, 166, 0.08), transparent 50%),
+      radial-gradient(ellipse at 10% 80%, rgba(230, 169, 77, 0.06), transparent 50%),
+      var(--cream);
+  }
+  .flyingm-card {
+    background: white;
+    border-radius: 28px;
+    padding: 0;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    overflow: hidden;
+  }
+  .flyingm-art {
+    background: linear-gradient(160deg, #eef7fb 0%, #cfe6ef 100%);
+    display: grid; place-items: center;
+    padding: 56px 40px;
+    position: relative;
+    min-height: 360px;
+    transition: background .2s ease;
+  }
+  .flyingm-art:hover { background: linear-gradient(160deg, #e2f1f7 0%, #b7d9e5 100%); }
+  .flyingm-art img {
+    width: 100%; height: auto; display: block;
+    filter: drop-shadow(0 14px 28px rgba(36,91,122,0.22));
+    transition: transform .2s ease;
+  }
+  .flyingm-art:hover img { transform: scale(1.03); }
+  .flyingm-content { padding: 48px 48px 48px 40px; display: flex; flex-direction: column; justify-content: center; }
+  .flyingm-content h2 { margin: 8px 0 14px; }
+  .flyingm-content p { font-size: 1rem; margin-bottom: 24px; }
+
+  .flyingm-offerings {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .flyingm-offering {
+    background: var(--cream-50);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal-700);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: all .15s ease;
+    color: var(--ink);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .flyingm-offering:hover {
+    border-left-color: var(--ribbon);
+    background: white;
+    transform: translateX(3px);
+    box-shadow: var(--shadow-sm);
+  }
+  .flyingm-offering-head {
+    display: flex; align-items: center; gap: 10px;
+    justify-content: space-between;
+  }
+  .flyingm-offering-logo {
+    width: 56px; height: 56px; border-radius: 10px;
+    background: white; border: 1px solid var(--line);
+    display: grid; place-items: center;
+    padding: 6px; flex-shrink: 0;
+    overflow: hidden;
+  }
+  .flyingm-offering-logo.dark { background: #1a2e44; border-color: #1a2e44; padding: 8px; }
+  .flyingm-offering-logo img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+
+  .status-pill {
+    display: inline-flex; align-self: center;
+    background: rgba(45, 107, 138, 0.12);
+    color: var(--teal-800);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .status-pill.beta {
+    background: rgba(198, 69, 47, 0.14);
+    color: var(--ribbon-dark);
+  }
+
+  @media (max-width: 900px) {
+    .flyingm-card { grid-template-columns: 1fr; }
+    .flyingm-art { padding: 36px; min-height: 240px; }
+    .flyingm-content { padding: 32px; }
+    .flyingm-offerings { grid-template-columns: 1fr; }
+  }
+
+  /* Producer bar */
+  .producer-bar {
+    background: var(--cream-100);
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .producer-inner { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; text-align: center; }
+  .producer-inner .label { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+  .producer-inner .name { font-family: 'Fraunces', serif; font-weight: 700; color: var(--teal-900); font-size: 1.1rem; }
+
+  /* Sponsors */
+  .sponsor-hero {
+    background: white;
+    border-radius: 22px;
+    padding: 36px 40px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px; align-items: center;
+    margin-bottom: 24px;
+  }
+  .sponsor-logo {
+    aspect-ratio: 3 / 1;
+    background: linear-gradient(120deg, #f7faff, #e6f0f8);
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif; font-weight: 800;
+    color: #1e4f7a;
+    font-size: 2.4rem;
+    letter-spacing: 0.08em;
+    border: 1px dashed rgba(30, 79, 122, 0.3);
+  }
+  .sponsor-hero h3 { font-size: 1.3rem; margin-bottom: 8px; }
+  .sponsor-hero p { font-size: 0.95rem; margin-bottom: 14px; }
+  .sponsor-hero .benefit {
+    display: inline-block;
+    background: var(--ribbon); color: white;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 0.85rem; font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .sponsor-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .sponsor-mini {
+    background: white; border-radius: 16px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    text-align: center;
+    transition: transform .15s ease;
+  }
+  .sponsor-mini:hover { transform: translateY(-3px); }
+  .sponsor-mini .mini-logo {
+    aspect-ratio: 3 / 1;
+    background: var(--cream-100); border-radius: 8px;
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif; font-weight: 700;
+    color: var(--teal-800); font-size: 1.1rem;
+    margin-bottom: 12px;
+    border: 1px dashed var(--line);
+  }
+  .sponsor-mini .mini-name { font-weight: 700; color: var(--teal-900); font-size: 0.95rem; }
+  .sponsor-mini .mini-tag { font-size: 0.8rem; color: var(--ink-soft); margin-top: 4px; }
+
+  /* Podcast strip */
+  .podcast-strip {
+    background: var(--cream-50);
+    border-radius: 22px;
+    padding: 36px;
+    text-align: center;
+    border: 1px solid var(--line);
+  }
+  .podcast-strip h3 { margin-bottom: 6px; }
+  .podcast-strip p { margin-bottom: 20px; }
+  .platforms { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .platform {
+    background: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--teal-900);
+    border: 1px solid var(--line);
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all .15s ease;
+  }
+  .platform:hover { background: var(--teal-900); color: white; border-color: var(--teal-900); }
+  .platform .dotcolor { width: 10px; height: 10px; border-radius: 50%; background: var(--ribbon); }
+
+  /* Merch strip */
+  .merch-strip {
+    background:
+      linear-gradient(135deg, var(--teal-800) 0%, var(--teal-900) 60%, #0c2531 100%);
+    color: var(--cream-50);
+    border-radius: 22px;
+    padding: 28px 36px;
+    display: flex; align-items: center; gap: 24px;
+    box-shadow: var(--shadow);
+    position: relative; overflow: hidden;
+  }
+  .merch-strip::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(230,169,77,0.22), transparent 70%);
+    pointer-events: none;
+  }
+  .merch-icon {
+    font-size: 2.4rem;
+    background: rgba(255,255,255,0.08);
+    width: 68px; height: 68px; border-radius: 50%;
+    display: grid; place-items: center;
+    border: 1px solid rgba(255,255,255,0.15);
+    flex: 0 0 auto;
+  }
+  .merch-copy { flex: 1; }
+  .merch-headline {
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.3rem; color: var(--cream-50);
+    line-height: 1.3;
+  }
+  @media (max-width: 700px) {
+    .merch-strip { flex-direction: column; text-align: center; padding: 24px; }
+  }
+
+  /* Newsletter */
+  .newsletter {
+    background: var(--ribbon);
+    color: white;
+    border-radius: 22px;
+    padding: 48px;
+    text-align: center;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.15), transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(0,0,0,0.12), transparent 50%),
+      linear-gradient(135deg, var(--ribbon) 0%, var(--ribbon-dark) 100%);
+    box-shadow: var(--shadow);
+  }
+  .newsletter h2 { color: white; margin-bottom: 8px; }
+  .newsletter p { color: rgba(255,255,255,0.9); margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .newsletter-form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto; }
+  .newsletter-form input {
+    flex: 1; padding: 14px 18px;
+    border: none; border-radius: 999px;
+    font-size: 0.95rem; font-family: inherit;
+    background: rgba(255,255,255,0.95);
+    color: var(--ink);
+  }
+  .newsletter-form button {
+    padding: 14px 26px;
+    background: var(--teal-900);
+    color: white;
+    border: none; border-radius: 999px;
+    font-weight: 700; font-size: 0.95rem; cursor: pointer;
+    transition: background .15s ease;
+  }
+  .newsletter-form button:hover { background: var(--teal-800); }
+
+  /* Footer */
+  footer {
+    background: var(--teal-900);
+    color: var(--cream-50);
+    padding: 60px 0 28px;
+    margin-top: 0;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 40px;
+  }
+  footer h4 {
+    color: var(--gold); font-family: 'Inter', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 14px; font-weight: 700;
+  }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  footer li a { color: rgba(251,248,239,0.75); font-size: 0.9rem; }
+  footer li a:hover { color: white; }
+  footer p.footer-desc { color: rgba(251,248,239,0.7); font-size: 0.9rem; max-width: 340px; margin-top: 8px; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    font-size: 0.82rem; color: rgba(251,248,239,0.55);
+    flex-wrap: wrap;
+  }
+  .social { display: flex; gap: 10px; }
+  .social a {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: grid; place-items: center;
+    color: var(--cream-50); font-size: 0.85rem; font-weight: 600;
+    transition: background .15s ease;
+  }
+  .social a:hover { background: var(--ribbon); }
+
+  /* Designer notes callout */
+  .designer-notes {
+    background: #fff8e1;
+    border-left: 6px solid var(--gold);
+    padding: 28px 32px;
+    border-radius: 12px;
+    margin: 48px 0;
+    font-size: 0.94rem;
+    color: var(--ink);
+  }
+  .designer-notes h4 {
+    font-family: 'Inter', sans-serif;
+    color: var(--teal-900); text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.82rem; margin-bottom: 12px;
+  }
+  .designer-notes ul { list-style-position: inside; padding-left: 4px; line-height: 1.75; }
+  .designer-notes ul li { color: var(--ink-soft); margin-bottom: 4px; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero-grid, .about-inner, .hosts-grid, .sponsor-hero { grid-template-columns: 1fr; gap: 40px; }
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .sponsor-row { grid-template-columns: 1fr 1fr; }
+    .about-stats { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .footer-grid, .sponsor-row { grid-template-columns: 1fr; }
+    .hero { padding: 48px 0 60px; }
+    section.block { padding: 64px 0; }
+    .newsletter { padding: 32px 20px; }
+    .newsletter-form { flex-direction: column; }
+    .band-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mockup-banner">
+  <strong>MOCKUP</strong> — proposed redesign of onsecondthought.me landing page · prepared by Harvey & Jolie for John Teipen's review
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <div class="brand-logo"><img src="images/OSTLogo.jpg" alt="OST" onerror="this.parentElement.classList.add('fallback'); this.outerHTML='OST';"></div>
+      <div class="brand-text">
+        <span class="title">On Second Thought</span>
+        <span class="sub">Human Factors · Real Flights · Safer Skies</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#next">Watch Live</a>
+      <a href="#archives">Archives</a>
+      <a href="#podcast">Podcast</a>
+      <a href="#hosts">The Hosts</a>
+      <a href="#sponsors">Sponsors</a>
+      <a href="https://ostmerch.printify.me" target="_blank" rel="noopener">Shop</a>
+      <a href="#newsletter" class="btn btn-primary btn-sm">Remind Me</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="next">
+  <div class="container hero-grid">
+    <div>
+      <span class="kicker"><span class="dot"></span>Next Episode · 3 Weeks Away</span>
+      <h1>The Habits You Didn't Choose</h1>
+      <p class="episode-title">How aviation culture teaches us to fly — and maintain.</p>
+      <p class="lead" style="margin-top: 18px;">Every flight, inspection, clearance, and refuel either reinforces a good habit or an unsafe one. Join Jolie &amp; Harvey live as they unpack how local aviation culture shapes the decisions you make without noticing.</p>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="label">Airs</span>
+          <span class="value">Wed, May 13, 2026</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Time</span>
+          <span class="value">7:00 PM CDT</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Credit</span>
+          <span class="value">WINGS · AMT · IA</span>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">▶  Watch Live</a>
+        <a href="#newsletter" class="btn btn-teal">🔔  Remind Me Before Air</a>
+        <a href="#" class="btn btn-outline">Watch Preview</a>
+      </div>
+      <span class="hero-note">Free to watch. WINGS / AMT / IA credit immediately after the quiz.</span>
+    </div>
+
+    <div class="hero-right">
+      <a href="https://www.avemco.com/ost" target="_blank" rel="noopener" class="hero-sponsor">
+        <img src="https://www.onsecondthought.me/4/media/Avemco.png" alt="Brought to you by Avemco" class="hero-sponsor-img">
+      </a>
+      <div class="hero-art">
+        <img src="images/Ep5Habits.jpg" onerror="this.onerror=null; this.src='https://onsecondthought.me/images/Live5.png';" alt="Episode 5 — The Habits You Didn't Choose">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAGLINE BAND -->
+<div class="band">
+  <div class="container band-inner">
+    <div class="band-tag">"Human Factors. Real Flights. Safer Skies."</div>
+    <div class="band-chips">
+      <span class="chip"><span class="icn"></span>Free WINGS &amp; AMT Credit</span>
+      <span class="chip"><span class="icn"></span>Monthly Live Show</span>
+      <span class="chip"><span class="icn"></span>Podcast on All Platforms</span>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHIVES -->
+<section class="block" id="archives">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Season 1 Archives</div>
+      <h2>Catch Up on What You Missed</h2>
+      <p>Four episodes in the books — each built on peer-reviewed research and packaged with free WINGS / AMT / IA credit. Watch the full program, or grab the audio-only podcast episode on your platform of choice.</p>
+    </div>
+
+    <div class="archives-grid">
+      <!-- EP 1 -->
+      <article class="card">
+        <div class="card-thumb" style="background-image: url('https://onsecondthought.me/images/Archive.png'); background-size: cover; background-position: center;">
+          <span class="ep-num">EP 01 · JAN 2026</span>
+          <div class="play-btn"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Archived · Earns WINGS + AMT / IA Credit</div>
+          <h3>"Experience is Valuable — But Attention Is Invaluable"</h3>
+          <p class="card-excerpt">Attentiveness correlates more strongly with good decisions than time on the job. This episode introduces "aviator" as the unifying label.</p>
+          <div class="card-actions">
+            <a href="#" class="btn btn-teal btn-sm">▶ Watch</a>
+            <a href="#" class="icon-btn" title="Listen on podcast">🎧</a>
+            <a href="#" class="icon-btn" title="Resources">📄</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- EP 2 -->
+      <article class="card">
+        <div class="card-thumb" style="background-image: url('https://onsecondthought.me/images/Archive2.png'); background-size: cover; background-position: center;">
+          <span class="ep-num">EP 02 · FEB 2026</span>
+          <div class="play-btn"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Archived · Earns WINGS + AMT Credit</div>
+          <h3>"When Intuition Isn't Enough"</h3>
+          <p class="card-excerpt">Decisions under pressure with incomplete information. FOR-DEC gives aviators structure when gut-feel alone falls short.</p>
+          <div class="card-actions">
+            <a href="#" class="btn btn-teal btn-sm">▶ Watch</a>
+            <a href="#" class="icon-btn" title="Listen on podcast">🎧</a>
+            <a href="#" class="icon-btn" title="Resources">📄</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- EP 3 -->
+      <article class="card">
+        <div class="card-thumb" style="background-image: url('https://onsecondthought.me/images/Archive3.png'); background-size: cover; background-position: center;">
+          <span class="ep-num">EP 03 · MAR 2026</span>
+          <div class="play-btn"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Archived · Earns WINGS + AMT Credit</div>
+          <h3>"When Automation Becomes the Risk"</h3>
+          <p class="card-excerpt">How automation affects attention, trust, and complacency — and why aviators in every role need to stay actively engaged.</p>
+          <div class="card-actions">
+            <a href="#" class="btn btn-teal btn-sm">▶ Watch</a>
+            <a href="#" class="icon-btn" title="Listen on podcast">🎧</a>
+            <a href="#" class="icon-btn" title="Resources">📄</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- EP 4 -->
+      <article class="card">
+        <div class="card-thumb" style="background-image: url('https://onsecondthought.me/images/Archive4.jpeg'); background-size: cover; background-position: center;">
+          <span class="ep-num">EP 04 · APR 2026</span>
+          <div class="play-btn"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Archived · Earns WINGS + AMT Credit</div>
+          <h3>"When Everyone Heard Something Different"</h3>
+          <p class="card-excerpt">Tenerife and beyond — ambiguous ATC instructions, rushed handoffs, and casual ramp communication that quietly erode shared awareness.</p>
+          <div class="card-actions">
+            <a href="#" class="btn btn-teal btn-sm">▶ Watch</a>
+            <a href="#" class="icon-btn" title="Listen on podcast">🎧</a>
+            <a href="#" class="icon-btn" title="Resources">📄</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- UPCOMING STRIP -->
+<section class="block upcoming">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">The Rest of Season 1</div>
+      <h2>Coming Up</h2>
+      <p>Eight more live episodes through December 2026. Click any month to see the full description and set a reminder.</p>
+    </div>
+    <div class="upcoming-scroller">
+      <a href="#" class="upcoming-card">
+        <span class="ep">Episode 6</span>
+        <span class="date">Jun 10</span>
+        <span class="title">When Routine Becomes the Risk</span>
+        <span class="reminder">🔔  Remind me</span>
+      </a>
+      <a href="#" class="upcoming-card">
+        <span class="ep">Episode 7</span>
+        <span class="date">Jul 8</span>
+        <span class="title">What Safer Decision-Makers Have in Common</span>
+        <span class="reminder">🔔  Remind me</span>
+      </a>
+      <a href="#" class="upcoming-card">
+        <span class="ep">Episode 8</span>
+        <span class="date">Aug 12</span>
+        <span class="title">Twelve Habits That Keep Us Out of the Statistics</span>
+        <span class="reminder">🔔  Remind me</span>
+      </a>
+      <a href="#" class="upcoming-card">
+        <span class="ep">Episode 9</span>
+        <span class="date">Sep 9</span>
+        <span class="title">Operating Without a Safety Net</span>
+        <span class="reminder">🔔  Remind me</span>
+      </a>
+      <a href="#" class="upcoming-card">
+        <span class="ep">Episode 10</span>
+        <span class="date">Oct 14</span>
+        <span class="title">When You Are the Safety Department</span>
+        <span class="reminder">🔔  Remind me</span>
+      </a>
+      <a href="#" class="upcoming-card">
+        <span class="ep">Episode 11</span>
+        <span class="date">Nov 11</span>
+        <span class="title">Ambiguity Is the Hazard</span>
+        <span class="reminder">🔔  Remind me</span>
+      </a>
+      <a href="#" class="upcoming-card">
+        <span class="ep">Episode 12</span>
+        <span class="date">Dec 9</span>
+        <span class="title">The Most Dangerous Thought in Aviation</span>
+        <span class="reminder">🔔  Remind me</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="block about" id="about">
+  <div class="container about-inner">
+    <div>
+      <div class="eyebrow">About The Show</div>
+      <h2>A 100% focus on Human Factors — the Final Frontier of aviation safety.</h2>
+      <p>On Second Thought is a monthly, live-streamed aviation safety video series. Each hour-long episode dissects the real-world human-factor behaviors behind the decisions that put pilots, maintainers, and controllers into trouble — and offers practical, research-backed ways to do better next time.</p>
+      <p>Every episode is built on peer-reviewed research from the FAA, NTSB, and international safety studies, paired with expert analysis and interactive learning that earns you free WINGS / AMT / IA credit.</p>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="big">12</div>
+          <div class="lbl">Episodes in Season 1</div>
+        </div>
+        <div class="stat">
+          <div class="big">Free</div>
+          <div class="lbl">WINGS &amp; AMT Credit</div>
+        </div>
+        <div class="stat">
+          <div class="big">Live</div>
+          <div class="lbl">2nd Wednesday · 7 PM CDT</div>
+        </div>
+      </div>
+    </div>
+    <div style="position: relative; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15);">
+      <img src="https://onsecondthought.me/images/OST%20Generic.png" alt="On Second Thought" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+    </div>
+  </div>
+</section>
+
+<!-- HOSTS -->
+<section class="block" id="hosts">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Meet Your Hosts</div>
+      <h2>Research, Real-World, and a Little Bit of Fun</h2>
+      <p>Two aviators with wildly different day jobs who both spend a lot of time thinking about why pilots do what they do.</p>
+    </div>
+
+    <div class="hosts-grid">
+      <article class="host-card">
+        <div class="host-photo">
+          <div class="backdrop" style="background-image: url('images/Jolie.jpg');"></div>
+          <img src="images/Jolie.jpg" alt="Jolie Lucas" onerror="this.style.display='none';">
+          <span class="host-name-tag">Jolie Lucas</span>
+        </div>
+        <div class="host-body">
+          <h3>Jolie Lucas</h3>
+          <div class="host-role">Co-Host · Pilot · Psychotherapist</div>
+          <p>Commercial pilot, Mooney M20E owner, and licensed psychotherapist with 33 years of practice. Nationally-known aviation presenter, aviation writer, and Region 4 VP of the California Pilots Association. 2010 AOPA Joseph Crotti Award recipient.</p>
+          <div class="host-links">
+            <a href="https://jolielucas.com" class="host-link">jolielucas.com</a>
+            <a href="#" class="host-link">Right Seat Ready!</a>
+            <a href="#" class="host-link">Pilot Plus One</a>
+            <a href="#" class="host-link">OST Lecture</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="host-card">
+        <div class="host-photo" style="background: linear-gradient(160deg, #c4a877, #8a6b3e);">
+          <div class="backdrop" style="background-image: url('images/Harvey.jpg');"></div>
+          <img src="images/Harvey.jpg" alt="Harvey Madison" onerror="this.style.display='none';">
+          <span class="host-name-tag">Harvey Madison</span>
+        </div>
+        <div class="host-body">
+          <h3>Harvey Madison</h3>
+          <div class="host-role">Co-Host · Instructional Designer · FAASTeam Rep</div>
+          <p>Instructional Designer for a major flight simulator manufacturer with 30+ years applying Adult Learning Theory. FAASTeam Training Provider. Ham radio operator with ARES and SkyWarn. Devoted Chicago Cubs fan.</p>
+          <div class="host-links">
+            <a href="https://flyingm.aero" class="host-link">flyingm.aero</a>
+            <a href="#" class="host-link">103ready.com</a>
+            <a href="#" class="host-link">Second Opinion app</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- JOLIELUCAS.COM FEATURE -->
+<section class="block jolie-feature" id="jolielucas">
+  <div class="container">
+    <div class="jolie-card">
+      <a href="https://jolielucas.com" target="_blank" rel="noopener" class="jolie-art" aria-label="Visit JolieLucas.com">
+        <img src="images/RSRPPO.jpg" alt="Pilot Plus One · Right Seat Ready" onerror="this.style.display='none'; this.parentElement.classList.add('fallback');">
+      </a>
+      <div class="jolie-content">
+        <div class="eyebrow" style="color: var(--ribbon);">More From Jolie</div>
+        <h2>Beyond the Show — JolieLucas.com</h2>
+        <p>Jolie delivers her signature aviation seminars at airports, flight schools, and events around the country, and works one-on-one with pilots and the people who fly with them. Explore her full practice:</p>
+        <div class="jolie-offerings">
+          <a href="https://jolielucas.com" class="offering">
+            <div class="offering-name">Right Seat Ready!</div>
+            <div class="offering-desc">The signature companion safety seminar</div>
+          </a>
+          <a href="https://jolielucas.com" class="offering">
+            <div class="offering-name">Pilot Plus One</div>
+            <div class="offering-desc">Educating &amp; inspiring pilots &amp; non-pilots</div>
+          </a>
+          <a href="https://jolielucas.com" class="offering">
+            <div class="offering-name">Speaking Engagements</div>
+            <div class="offering-desc">National aviation-safety talks &amp; keynotes</div>
+          </a>
+          <a href="https://jolielucas.com" class="offering">
+            <div class="offering-name">One-to-One Coaching</div>
+            <div class="offering-desc">Personal sessions for pilots &amp; companions</div>
+          </a>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px;">
+          <a href="https://jolielucas.com" class="btn btn-primary">Visit JolieLucas.com →</a>
+          <a href="#" class="btn btn-outline">Book Jolie to Speak</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLYINGM.AERO FEATURE — mirrors Jolie's section -->
+<section class="block flyingm-feature" id="flying-m">
+  <div class="container">
+    <div class="flyingm-card">
+      <a href="https://flyingm.aero" target="_blank" rel="noopener" class="flyingm-art" aria-label="Visit FlyingM.aero">
+        <img src="images/flying-m-logo-trimmed.png" alt="Flying M">
+      </a>
+      <div class="flyingm-content">
+        <h2>Coming soon from<br>Flying M</h2>
+        <div class="flyingm-offerings">
+          <a href="#" class="flyingm-offering">
+            <div class="flyingm-offering-head">
+              <div class="flyingm-offering-logo"><img src="images/2oLogo.png" alt="Second Opinion"></div>
+              <span class="status-pill beta">Now in Beta</span>
+            </div>
+            <div class="offering-name">Second Opinion</div>
+            <div class="offering-desc">IM SAFE is good — but imperfect. What if you <em>couldn't</em> lie to yourself? Second Opinion is the 3-minute preflight app for every pilot. <strong>Coming soon to the App Store.</strong></div>
+          </a>
+          <a href="https://103ready.com" target="_blank" rel="noopener" class="flyingm-offering">
+            <div class="flyingm-offering-head">
+              <div class="flyingm-offering-logo dark"><img src="images/103readyLogo.png" alt="103ready.com"></div>
+              <span class="status-pill">Coming Soon</span>
+            </div>
+            <div class="offering-name">103ready.com — Know It All</div>
+            <div class="offering-desc">§91.103 says the "…pilot in command shall, before beginning a flight, become familiar with all available information concerning that flight." Be 103 ready with proficiency-oriented info, lessons, and interactive "choose-your-own-adventure" scenarios that entertain and teach.</div>
+          </a>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px;">
+          <a href="https://flyingm.aero" target="_blank" rel="noopener" class="btn btn-primary">Visit FlyingM.aero →</a>
+          <a href="#" class="btn btn-outline">Join Second Opinion Beta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCER BAR -->
+<div class="producer-bar">
+  <div class="container producer-inner">
+    <span class="label">Produced by</span>
+    <img src="images/WIN.jpg" alt="WINGS Industry Network" style="height: 44px; width: auto;" onerror="this.style.display='none';">
+    <span class="name">John Teipen · WINGS Industry Network</span>
+    <span style="color: var(--ink-soft); font-size: 0.9rem;">— also the team behind NAFI Mentor Live and The Schiff Show.</span>
+  </div>
+</div>
+
+<!-- SPONSORS -->
+<section class="block" id="sponsors">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Our Sponsors</div>
+      <h2>Making Aviation Safety Education Free</h2>
+      <p>On Second Thought is free to watch and free to earn credit because of the sponsors below. When you support them, you support the show.</p>
+    </div>
+
+    <div class="sponsor-hero">
+      <div class="sponsor-logo" style="background: white; padding: 24px;">
+        <img src="https://www.onsecondthought.me/4/media/Avemco.png" alt="Avemco" style="max-width: 100%; height: auto;">
+      </div>
+      <div>
+        <h3>Avemco Insurance</h3>
+        <p>The only direct writer in the aviation insurance market. Avemco connects you with an aviation underwriter in Frederick, Maryland — no third-party agents — for lightning-fast quotes on policies tailored to what and how you fly.</p>
+        <span class="benefit">OST Listeners Save 5%</span>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="https://www.avemco.com/ost" class="btn btn-primary btn-sm">Get a Free Quote</a>
+          <a href="tel:8003539107" class="btn btn-ghost btn-sm">📞 800-353-9107</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sponsor-row">
+      <div class="sponsor-mini">
+        <div class="mini-logo" style="background: white; padding: 8px;">
+          <img src="images/Lightspeed.jpg" alt="Lightspeed" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.outerHTML='LIGHTSPEED';">
+        </div>
+        <div class="mini-name">Lightspeed Aviation</div>
+        <div class="mini-tag">Premium pilot headsets</div>
+      </div>
+      <div class="sponsor-mini">
+        <div class="mini-logo" style="background: white; padding: 8px;">
+          <img src="images/WIN.jpg" alt="WINGS Industry Network" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.outerHTML='WINGS';">
+        </div>
+        <div class="mini-name">WINGS Industry Network</div>
+        <div class="mini-tag">Managing production partner</div>
+      </div>
+      <div class="sponsor-mini" style="background: var(--cream-100); border-style: dashed;">
+        <div class="mini-logo" style="background: white;">YOUR LOGO</div>
+        <div class="mini-name">Become a Sponsor</div>
+        <div class="mini-tag">Reach aviators, AMTs &amp; ATCs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST STRIP -->
+<section class="block" id="podcast" style="padding-top: 0;">
+  <div class="container">
+    <div class="podcast-strip">
+      <div class="eyebrow" style="color: var(--ribbon); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px;">Audio-Only Podcast</div>
+      <h3 style="font-size: 1.6rem; font-family: 'Fraunces', serif; color: var(--teal-900); font-weight: 700;">Can't Catch Us Live? Listen on the Go.</h3>
+      <p>Every archived episode drops as an audio podcast a day after the live show. Subscribe on your platform of choice.</p>
+      <div class="platforms">
+        <a href="#" class="platform"><span class="dotcolor"></span>Apple Podcasts</a>
+        <a href="#" class="platform"><span class="dotcolor"></span>Spotify</a>
+        <a href="#" class="platform"><span class="dotcolor"></span>Amazon Music</a>
+        <a href="#" class="platform"><span class="dotcolor"></span>Google / YouTube</a>
+        <a href="#" class="platform"><span class="dotcolor"></span>RSS Feed</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCH STRIP -->
+<section class="block" id="merch" style="padding-top: 0;">
+  <div class="container">
+    <div class="merch-strip">
+      <div class="merch-icon">👕</div>
+      <div class="merch-copy">
+        <div class="eyebrow" style="color: var(--cream-50); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px; opacity: 0.85;">OST Merch</div>
+        <div class="merch-headline">Wear the Mission. Human Factors. Real Flights. Safer Skies.</div>
+      </div>
+      <a href="https://ostmerch.printify.me" target="_blank" rel="noopener" class="btn btn-primary">Shop OST Gear →</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="block" id="newsletter" style="padding-top: 0;">
+  <div class="container">
+    <div class="newsletter">
+      <h2>Never Miss an Episode</h2>
+      <p>One email per month, a few days before the live show airs. That's it — no spam, no cross-promo bombardment. Unsubscribe any time.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault();">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGNER NOTES -->
+<div class="container">
+  <div class="designer-notes">
+    <h4>Notes for John — what changed &amp; why</h4>
+    <ul>
+      <li><strong>Hero pushes Episode 5 front and center</strong> — the most time-sensitive action (watch live or set a reminder) is now the first thing a visitor sees.</li>
+      <li><strong>Sticky top nav with destinations</strong> — Watch Live, Archives, Podcast, Hosts, Sponsors, and Shop. All the things currently buried inside an episode page are now one click from anywhere.</li>
+      <li><strong>Archives got a dedicated section</strong> — a grid of Episodes 1–4 with proper thumbnails, Watch / Listen / Resources actions, and room to grow as the season fills in.</li>
+      <li><strong>Upcoming season strip</strong> — eight future episodes as a scannable calendar strip, each with a "Remind me" tap rather than the same three buttons repeated on every card.</li>
+      <li><strong>"The Hosts" is now a proper section</strong> — bigger photos, cleaner bios, and inline buttons to both hosts' other sites.</li>
+      <li><strong>Dedicated JolieLucas.com feature</strong> — full-width card with the Pilot Plus One / Right Seat Ready logo, a four-card grid of her offerings (RSR!, Pilot Plus One, Speaking, One-to-One Coaching), and a clear "Visit JolieLucas.com" CTA.</li>
+      <li><strong>"Coming Soon from Flying M" feature</strong> — a parallel full-width card below Jolie's, previewing Second Opinion (beta) and 103ready.com under the Flying M umbrella with a link to flyingm.aero. Same layout treatment as Jolie's feature for visual consistency.</li>
+      <li><strong>Sponsors get appropriate hierarchy</strong> — Avemco as the primary sponsor feature with the 5% listener discount called out, then Lightspeed, WINGS Industry Network, and a "become a sponsor" slot below.</li>
+      <li><strong>Podcast platforms are explicit</strong> — dedicated strip with Apple, Spotify, Amazon, YouTube, RSS so audio-only listeners can subscribe in one click.</li>
+      <li><strong>Merch strip</strong> — small, dark, fun band linking to ostmerch.printify.me so the shop is visible without hijacking the page.</li>
+      <li><strong>Single, clear newsletter signup</strong> — one prominent call-to-action at the bottom, replacing the "Sign up for Newsletter" link that repeats on every episode card today.</li>
+      <li><strong>Brand preserved</strong> — steel-blue/teal primary, cream background, red ribbon accent, and the existing "Human Factors. Real Flights. Safer Skies." tagline all carry forward so it still looks like OST, just more organized.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom: 14px;">
+          <div class="brand-logo"><img src="images/OSTLogo.jpg" alt="OST" onerror="this.parentElement.classList.add('fallback'); this.outerHTML='OST';"></div>
+          <div class="brand-text">
+            <span class="title" style="color: var(--cream-50);">On Second Thought</span>
+            <span class="sub" style="color: var(--gold);">Live Aviation Safety Show</span>
+          </div>
+        </div>
+        <p class="footer-desc">A monthly live-streamed aviation safety series focused 100% on human factors. Hosted by Jolie Lucas and Harvey Madison. Produced by John Teipen / WINGS Industry Network.</p>
+      </div>
+      <div>
+        <h4>Watch, Listen &amp; Shop</h4>
+        <ul>
+          <li><a href="#">Live Stream</a></li>
+          <li><a href="#">Archives</a></li>
+          <li><a href="#">Podcast</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="https://ostmerch.printify.me" target="_blank" rel="noopener">OST Merch Shop</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>The Show</h4>
+        <ul>
+          <li><a href="#">About OST</a></li>
+          <li><a href="#">Meet the Hosts</a></li>
+          <li><a href="#">Sponsors</a></li>
+          <li><a href="#">Earn WINGS / AMT Credit</a></li>
+          <li><a href="#">Course Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Become a Sponsor</a></li>
+          <li><a href="#">Disclaimer</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+        <div class="social" style="margin-top: 14px;">
+          <a href="#" title="YouTube">YT</a>
+          <a href="#" title="LinkedIn">in</a>
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="X">X</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 On Second Thought · WINGS Industry Network. All episodes property of WINGS Industry Network.</div>
+      <div>Opinions expressed are for entertainment &amp; educational purposes only — see full disclaimer.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
