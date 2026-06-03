@@ -35,36 +35,47 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 
 /* ── Board ── */
 #board { display: flex; gap: 18px; padding: 24px 28px; flex: 1; align-items: flex-start; overflow-x: auto; }
-.column { flex: 1; min-width: 260px; max-width: 360px; background: rgba(255,255,255,.04); border-radius: 10px; border: 1px solid rgba(255,255,255,.08); display: flex; flex-direction: column; }
+.column { flex: 1; min-width: 270px; max-width: 360px; background: rgba(255,255,255,.04); border-radius: 10px; border: 1px solid rgba(255,255,255,.08); display: flex; flex-direction: column; }
 .col-header { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; gap: 8px; }
 .col-header h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .col-count { font-size: .72rem; background: rgba(255,255,255,.12); border-radius: 20px; padding: 1px 8px; color: var(--mist); }
 .col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.col-dot.preflight  { background: var(--sky); }
-.col-dot.enroute    { background: var(--amber); }
-.col-dot.landed     { background: #2ecc71; }
-.col-dot.flyingm    { background: #9b59b6; }
+.col-dot.preflight { background: var(--sky); }
+.col-dot.enroute   { background: var(--amber); }
+.col-dot.landed    { background: #2ecc71; }
+.col-dot.flyingm   { background: #9b59b6; }
 
 /* ── Card list ── */
 .card-list { padding: 10px; min-height: 120px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .card-list.drag-over { background: rgba(40,128,190,.12); border-radius: 6px; }
 
 /* ── Cards ── */
-.card { background: var(--deep); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 10px 12px; cursor: pointer; user-select: none; position: relative; transition: box-shadow .15s, transform .1s; }
+.card { background: var(--deep); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 10px 12px; cursor: pointer; user-select: none; position: relative; transition: box-shadow .15s; }
 .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: rgba(40,128,190,.4); }
-.card.dragging { opacity: .45; transform: scale(.97); cursor: grabbing; }
+.card.dragging { opacity: .45; cursor: grabbing; }
 .card[draggable="true"] { cursor: grab; }
-.card-title { font-size: .88rem; font-weight: 500; color: var(--cream); margin-bottom: 4px; padding-right: 22px; line-height: 1.35; }
+.card-top { display: flex; align-items: flex-start; gap: 6px; padding-right: 20px; margin-bottom: 4px; }
+.priority-pip { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.priority-pip.high   { background: #e74c3c; }
+.priority-pip.medium { background: var(--amber); }
+.priority-pip.low    { background: #7f8c8d; }
+.priority-pip.none   { display: none; }
+.card-title { font-size: .88rem; font-weight: 500; color: var(--cream); line-height: 1.35; }
 .card-notes { font-size: .75rem; color: var(--mist); opacity: .7; margin-bottom: 4px; line-height: 1.3; white-space: pre-wrap; }
-.card-meta { font-size: .72rem; color: var(--mist); opacity: .65; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.card-meta { font-size: .72rem; color: var(--mist); opacity: .65; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+.due-chip { font-size: .68rem; padding: 1px 7px; border-radius: 10px; font-weight: 600; }
+.due-chip.upcoming  { background: rgba(40,128,190,.25); color: var(--mist); }
+.due-chip.soon      { background: rgba(232,160,48,.25); color: var(--amber); }
+.due-chip.today     { background: rgba(231,76,60,.3); color: #f1948a; }
+.due-chip.overdue   { background: rgba(192,57,43,.35); color: #f1948a; border: 1px solid rgba(192,57,43,.5); }
 .card-attachments { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
-.attach-chip { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 4px; padding: 2px 7px; font-size: .68rem; color: var(--mist); text-decoration: none; cursor: pointer; }
+.attach-chip { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 4px; padding: 2px 7px; font-size: .68rem; color: var(--mist); cursor: pointer; }
 .attach-chip:hover { background: rgba(40,128,190,.2); }
 .badge { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: .68rem; font-weight: 600; letter-spacing: .03em; }
-.badge-harvey  { background: #2563EB; color: #fff; }
-.badge-jolie   { background: #14B8A6; color: #fff; }
-.badge-both    { background: linear-gradient(90deg,#14B8A6 50%,#2563EB 50%); color: #fff; }
-.badge-claude  { background: #7c3aed; color: #fff; }
+.badge-harvey { background: #2563EB; color: #fff; }
+.badge-jolie  { background: #14B8A6; color: #fff; }
+.badge-both   { background: linear-gradient(90deg,#14B8A6 50%,#2563EB 50%); color: #fff; }
+.badge-claude { background: #7c3aed; color: #fff; }
 .card-delete { position: absolute; top: 7px; right: 8px; background: none; border: none; color: rgba(255,255,255,.25); font-size: 1rem; cursor: pointer; line-height: 1; padding: 0 2px; transition: color .15s; }
 .card-delete:hover { color: var(--danger); }
 
@@ -72,12 +83,11 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .add-card-btn { margin: 0 10px 10px; padding: 7px; background: none; border: 1px dashed rgba(255,255,255,.18); border-radius: 7px; color: var(--mist); opacity: .6; cursor: pointer; font-size: .82rem; text-align: center; transition: opacity .15s, border-color .15s; }
 .add-card-btn:hover { opacity: 1; border-color: var(--sky); }
 .add-card-form { margin: 0 10px 10px; display: flex; flex-direction: column; gap: 6px; }
-.add-card-form input, .add-card-form select, .add-card-form textarea { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18); border-radius: 6px; color: var(--cream); padding: 7px 10px; font-size: .82rem; font-family: var(--font-body); outline: none; resize: vertical; }
-.add-card-form input:focus, .add-card-form select:focus, .add-card-form textarea:focus { border-color: var(--sky); }
+.add-card-form input, .add-card-form select { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18); border-radius: 6px; color: var(--cream); padding: 7px 10px; font-size: .82rem; font-family: var(--font-body); outline: none; }
+.add-card-form input:focus, .add-card-form select:focus { border-color: var(--sky); }
 .add-card-form select option { background: var(--deep); }
 .add-card-form .form-row { display: flex; gap: 6px; }
 .add-card-form .btn-save { flex: 1; background: var(--sky); border: none; border-radius: 6px; color: var(--white); font-weight: 600; font-size: .82rem; padding: 7px; cursor: pointer; }
-.add-card-form .btn-save:hover { background: var(--teal); }
 .add-card-form .btn-cancel { background: rgba(255,255,255,.08); border: none; border-radius: 6px; color: var(--mist); font-size: .82rem; padding: 7px 12px; cursor: pointer; }
 
 /* ── Edit Modal ── */
@@ -87,13 +97,12 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .modal-box h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; letter-spacing: .04em; margin-bottom: 4px; }
 .modal-field { display: flex; flex-direction: column; gap: 4px; }
 .modal-field label { font-size: .75rem; color: var(--mist); opacity: .8; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
-.modal-field input, .modal-field select, .modal-field textarea {
-  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18);
-  border-radius: 7px; color: var(--cream); padding: 9px 12px;
-  font-size: .88rem; font-family: var(--font-body); outline: none; resize: vertical;
-}
+.modal-field input, .modal-field select, .modal-field textarea { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18); border-radius: 7px; color: var(--cream); padding: 9px 12px; font-size: .88rem; font-family: var(--font-body); outline: none; resize: vertical; }
 .modal-field input:focus, .modal-field select:focus, .modal-field textarea:focus { border-color: var(--sky); }
 .modal-field select option { background: #0f2a42; }
+.modal-field input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.8); cursor: pointer; }
+.modal-row { display: flex; gap: 12px; }
+.modal-row .modal-field { flex: 1; }
 .modal-actions { display: flex; gap: 10px; margin-top: 4px; }
 .btn-primary { flex: 1; background: var(--sky); border: none; border-radius: 7px; color: white; font-weight: 600; font-size: .9rem; padding: 10px; cursor: pointer; }
 .btn-primary:hover { background: var(--teal); }
@@ -101,25 +110,23 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .btn-danger { background: rgba(192,57,43,.15); border: 1px solid rgba(192,57,43,.4); border-radius: 7px; color: #f1948a; font-size: .9rem; padding: 10px 16px; cursor: pointer; }
 .btn-danger:hover { background: rgba(192,57,43,.3); }
 
-/* ── Attachments in modal ── */
+/* ── Attachments ── */
 .attach-list { display: flex; flex-direction: column; gap: 6px; }
 .attach-item { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.05); border-radius: 6px; padding: 6px 10px; }
 .attach-item a { flex: 1; font-size: .82rem; color: var(--sky); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
-.attach-item button { background: none; border: none; color: rgba(255,255,255,.3); cursor: pointer; font-size: .9rem; padding: 0 2px; }
+.attach-item button { background: none; border: none; color: rgba(255,255,255,.3); cursor: pointer; font-size: .9rem; }
 .attach-item button:hover { color: var(--danger); }
 .upload-zone { border: 2px dashed rgba(255,255,255,.2); border-radius: 8px; padding: 16px; text-align: center; cursor: pointer; font-size: .82rem; color: var(--mist); opacity: .7; transition: all .2s; }
 .upload-zone:hover, .upload-zone.drag-active { opacity: 1; border-color: var(--sky); background: rgba(40,128,190,.08); }
 .upload-zone input[type=file] { display: none; }
 .upload-progress { font-size: .78rem; color: var(--amber); margin-top: 4px; }
 
-/* ── Toast ── */
+/* ── Toast / error / loading / auth ── */
 #toast { position: fixed; bottom: 24px; right: 24px; background: var(--deep); border: 1px solid var(--sky); color: var(--cream); padding: 10px 18px; border-radius: 8px; font-size: .82rem; opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 999; }
 #toast.show { opacity: 1; }
 #error-banner { display: none; background: rgba(192,57,43,.18); border: 1px solid var(--danger); color: #f1948a; padding: 10px 20px; font-size: .82rem; text-align: center; }
 #loading { position: fixed; inset: 0; background: rgba(9,31,46,.8); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.4rem; letter-spacing: .1em; color: var(--mist); z-index: 100; }
 #loading.hidden { display: none; }
-
-/* ── Auth modal ── */
 #auth-modal { position: fixed; inset: 0; background: rgba(9,31,46,.92); display: flex; align-items: center; justify-content: center; z-index: 200; }
 #auth-modal.hidden { display: none; }
 .auth-box { background: var(--deep); border: 1px solid var(--sky); border-radius: 12px; padding: 32px 36px; max-width: 340px; width: 100%; text-align: center; }
@@ -133,7 +140,6 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 </head>
 <body>
 
-<!-- Auth modal -->
 <div id="auth-modal">
   <div class="auth-box">
     <h2>Ops Board</h2>
@@ -144,13 +150,9 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
   </div>
 </div>
 
-<!-- Loading -->
 <div id="loading">Loading…</div>
-
-<!-- Error banner -->
 <div id="error-banner"></div>
 
-<!-- Header -->
 <header>
   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
     <path d="M14 2L26 8V20L14 26L2 20V8L14 2Z" fill="#2880be" opacity=".3" stroke="#2880be" stroke-width="1.5"/>
@@ -162,41 +164,24 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
   <button id="refresh-btn">↻ Refresh</button>
 </header>
 
-<!-- Board -->
 <div id="board">
   <div class="column" id="col-preflight" data-col="Preflight">
-    <div class="col-header">
-      <span class="col-dot preflight"></span>
-      <h2>Preflight</h2>
-      <span class="col-count" id="count-preflight">0</span>
-    </div>
+    <div class="col-header"><span class="col-dot preflight"></span><h2>Preflight</h2><span class="col-count" id="count-preflight">0</span></div>
     <div class="card-list" id="list-preflight" data-col="Preflight"></div>
     <button class="add-card-btn" data-col="Preflight">+ Add card</button>
   </div>
   <div class="column" id="col-enroute" data-col="Enroute">
-    <div class="col-header">
-      <span class="col-dot enroute"></span>
-      <h2>Enroute</h2>
-      <span class="col-count" id="count-enroute">0</span>
-    </div>
+    <div class="col-header"><span class="col-dot enroute"></span><h2>Enroute</h2><span class="col-count" id="count-enroute">0</span></div>
     <div class="card-list" id="list-enroute" data-col="Enroute"></div>
     <button class="add-card-btn" data-col="Enroute">+ Add card</button>
   </div>
   <div class="column" id="col-landed" data-col="Landed">
-    <div class="col-header">
-      <span class="col-dot landed"></span>
-      <h2>Landed</h2>
-      <span class="col-count" id="count-landed">0</span>
-    </div>
+    <div class="col-header"><span class="col-dot landed"></span><h2>Landed</h2><span class="col-count" id="count-landed">0</span></div>
     <div class="card-list" id="list-landed" data-col="Landed"></div>
     <button class="add-card-btn" data-col="Landed">+ Add card</button>
   </div>
   <div class="column" id="col-flyingm" data-col="Flying M">
-    <div class="col-header">
-      <span class="col-dot flyingm"></span>
-      <h2>Flying M</h2>
-      <span class="col-count" id="count-flyingm">0</span>
-    </div>
+    <div class="col-header"><span class="col-dot flyingm"></span><h2>Flying M</h2><span class="col-count" id="count-flyingm">0</span></div>
     <div class="card-list" id="list-flyingm" data-col="Flying M"></div>
     <button class="add-card-btn" data-col="Flying M">+ Add card</button>
   </div>
@@ -210,23 +195,40 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
       <label>Title</label>
       <input type="text" id="edit-title" maxlength="200">
     </div>
-    <div class="modal-field">
-      <label>Column</label>
-      <select id="edit-column">
-        <option value="Preflight">Preflight</option>
-        <option value="Enroute">Enroute</option>
-        <option value="Landed">Landed</option>
-        <option value="Flying M">Flying M</option>
-      </select>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label>Column</label>
+        <select id="edit-column">
+          <option value="Preflight">Preflight</option>
+          <option value="Enroute">Enroute</option>
+          <option value="Landed">Landed</option>
+          <option value="Flying M">Flying M</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label>Priority</label>
+        <select id="edit-priority">
+          <option value="none">None</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
     </div>
-    <div class="modal-field">
-      <label>Assigned to</label>
-      <select id="edit-assignee">
-        <option value="Both">Both</option>
-        <option value="Harvey">Harvey</option>
-        <option value="Jolie">Jolie</option>
-        <option value="Claude">Claude</option>
-      </select>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label>Assigned to</label>
+        <select id="edit-assignee">
+          <option value="Both">Both</option>
+          <option value="Harvey">Harvey</option>
+          <option value="Jolie">Jolie</option>
+          <option value="Claude">Claude</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label>Due date (optional)</label>
+        <input type="date" id="edit-due">
+      </div>
     </div>
     <div class="modal-field">
       <label>Project</label>
@@ -253,7 +255,6 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
   </div>
 </div>
 
-<!-- Toast -->
 <div id="toast"></div>
 
 <script>
@@ -276,9 +277,6 @@ function toast(msg) {
 function escHtml(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function formatDate(iso) {
-  try { return new Date(iso).toLocaleDateString('en-US', {month:'short', day:'numeric'}); } catch { return ''; }
-}
 function badgeHTML(assignee) {
   if (!assignee || assignee === 'Both') return `<span class="badge badge-both">BOTH</span>`;
   if (assignee === 'Harvey') return `<span class="badge badge-harvey">HARVEY</span>`;
@@ -287,88 +285,82 @@ function badgeHTML(assignee) {
   return `<span class="badge badge-both">${escHtml(assignee)}</span>`;
 }
 
+// ── Due date helpers ──────────────────────────────────────────────────────────
+function dueDaysFromNow(dateStr) {
+  if (!dateStr) return null;
+  const due = new Date(dateStr + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  return Math.round((due - today) / 86400000);
+}
+function dueBadge(dateStr) {
+  const days = dueDaysFromNow(dateStr);
+  if (days === null) return '';
+  const fmt = new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  if (days < 0)  return `<span class="due-chip overdue">Overdue (${fmt})</span>`;
+  if (days === 0) return `<span class="due-chip today">Due today</span>`;
+  if (days <= 2)  return `<span class="due-chip soon">Due ${fmt}</span>`;
+  return `<span class="due-chip upcoming">Due ${fmt}</span>`;
+}
+
+// ── Priority sort ─────────────────────────────────────────────────────────────
+const PRIORITY_ORDER = { high: 0, medium: 1, low: 2, none: 3, undefined: 3 };
+function sortCards(arr) {
+  return [...arr].sort((a, b) => {
+    const pa = PRIORITY_ORDER[a.priority || 'none'];
+    const pb = PRIORITY_ORDER[b.priority || 'none'];
+    if (pa !== pb) return pa - pb;
+    // secondary: due date ascending (nulls last)
+    const da = a.dueDate ? new Date(a.dueDate) : null;
+    const db = b.dueDate ? new Date(b.dueDate) : null;
+    if (da && db) return da - db;
+    if (da) return -1;
+    if (db) return 1;
+    return new Date(a.created||0) - new Date(b.created||0);
+  });
+}
+
 // ── API ───────────────────────────────────────────────────────────────────────
 let cards = [];
-let dragId = null;
-let dragOverCol = null;
-let editingId = null;
+let dragId = null, dragOverCol = null, editingId = null;
 
 async function apiFetch(path, options = {}) {
   const res = await fetch(`${API}${path}`, options);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
-
 async function fetchCards() {
   showLoading(true); showError('');
-  try {
-    cards = await apiFetch('/cards');
-    renderBoard();
-  } catch(e) {
-    showError('Could not load cards. (' + e.message + ')');
-  } finally { showLoading(false); }
+  try { cards = await apiFetch('/cards'); renderBoard(); }
+  catch(e) { showError('Could not load cards. (' + e.message + ')'); }
+  finally { showLoading(false); }
 }
-
 async function addCard(title, column, assignee, project) {
   const card = { id: crypto.randomUUID(), title, column, assignee: assignee||'Both',
-    project: project||'', notes: '', attachments: [], created: new Date().toISOString() };
+    project: project||'', notes:'', priority:'none', dueDate:'', attachments:[], created: new Date().toISOString() };
   try {
     await apiFetch('/cards', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(card) });
     cards.push(card); renderBoard(); toast('Card added.');
   } catch(e) { showError('Failed to save card: ' + e.message); }
 }
-
 async function moveCard(id, newCol) {
   const card = cards.find(c => c.id === id);
   if (!card || card.column === newCol) return;
-  const oldCol = card.column;
-  card.column = newCol; renderBoard();
-  try {
-    await apiFetch(`/cards/${id}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({column: newCol}) });
-    toast(`Moved to ${newCol}.`);
-  } catch(e) { card.column = oldCol; renderBoard(); showError('Failed to move card: ' + e.message); }
+  const oldCol = card.column; card.column = newCol; renderBoard();
+  try { await apiFetch(`/cards/${id}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({column: newCol}) }); toast(`Moved to ${newCol}.`); }
+  catch(e) { card.column = oldCol; renderBoard(); showError('Failed to move card: ' + e.message); }
 }
-
 async function deleteCard(id) {
   const idx = cards.findIndex(c => c.id === id);
   if (idx === -1) return;
-  const removed = cards.splice(idx, 1)[0];
-  renderBoard();
-  try {
-    await apiFetch(`/cards/${id}`, { method:'DELETE' });
-    toast('Card deleted.');
-  } catch(e) { cards.splice(idx, 0, removed); renderBoard(); showError('Failed to delete: ' + e.message); }
+  const removed = cards.splice(idx, 1)[0]; renderBoard();
+  try { await apiFetch(`/cards/${id}`, { method:'DELETE' }); toast('Card deleted.'); }
+  catch(e) { cards.splice(idx, 0, removed); renderBoard(); showError('Failed to delete: ' + e.message); }
 }
-
 async function saveCard(id, updates) {
-  const card = cards.find(c => c.id === id);
-  if (!card) return;
-  const prev = {...card};
-  Object.assign(card, updates);
-  renderBoard();
-  try {
-    await apiFetch(`/cards/${id}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(updates) });
-    toast('Card saved.');
-  } catch(e) { Object.assign(card, prev); renderBoard(); showError('Failed to save: ' + e.message); }
-}
-
-// ── File upload ───────────────────────────────────────────────────────────────
-async function uploadFile(file) {
-  document.getElementById('upload-progress').textContent = `Uploading ${file.name}…`;
-  try {
-    const res = await fetch(`${API}/upload`, {
-      method: 'POST',
-      headers: { 'X-Filename': file.name, 'Content-Type': file.type || 'application/octet-stream' },
-      body: file
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    document.getElementById('upload-progress').textContent = '';
-    return data;
-  } catch(e) {
-    document.getElementById('upload-progress').textContent = 'Upload failed: ' + e.message;
-    return null;
-  }
+  const card = cards.find(c => c.id === id); if (!card) return;
+  const prev = {...card}; Object.assign(card, updates); renderBoard();
+  try { await apiFetch(`/cards/${id}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(updates) }); toast('Saved.'); }
+  catch(e) { Object.assign(card, prev); renderBoard(); showError('Failed to save: ' + e.message); }
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────
@@ -376,41 +368,38 @@ function renderBoard() {
   const cols = ['Preflight', 'Enroute', 'Landed', 'Flying M'];
   const listIds = { 'Preflight':'list-preflight', 'Enroute':'list-enroute', 'Landed':'list-landed', 'Flying M':'list-flyingm' };
   const countIds = { 'Preflight':'count-preflight', 'Enroute':'count-enroute', 'Landed':'count-landed', 'Flying M':'count-flyingm' };
-
   cols.forEach(col => {
-    const colCards = cards.filter(c => c.column === col);
+    const colCards = sortCards(cards.filter(c => c.column === col));
     document.getElementById(countIds[col]).textContent = colCards.length;
     const list = document.getElementById(listIds[col]);
     list.innerHTML = '';
     colCards.forEach(card => {
       const el = document.createElement('div');
-      el.className = 'card';
-      el.setAttribute('draggable', 'true');
-      el.dataset.id = card.id;
-
+      el.className = 'card'; el.setAttribute('draggable','true'); el.dataset.id = card.id;
       const attachHtml = (card.attachments||[]).length > 0
         ? `<div class="card-attachments">${(card.attachments||[]).map(a =>
-            `<span class="attach-chip" onclick="event.stopPropagation();window.open('${escHtml(a.url)}','_blank')">📎 ${escHtml(a.name)}</span>`
-          ).join('')}</div>` : '';
-
+            `<span class="attach-chip" onclick="event.stopPropagation();window.open('${escHtml(a.url)}','_blank')">📎 ${escHtml(a.name)}</span>`).join('')}</div>` : '';
       el.innerHTML = `
         <button class="card-delete" data-id="${card.id}" title="Delete">×</button>
-        <div class="card-title">${escHtml(card.title)}</div>
+        <div class="card-top">
+          <span class="priority-pip ${card.priority||'none'}"></span>
+          <div class="card-title">${escHtml(card.title)}</div>
+        </div>
         ${card.notes ? `<div class="card-notes">${escHtml(card.notes)}</div>` : ''}
         <div class="card-meta">
           ${badgeHTML(card.assignee)}
           ${card.project ? `<span>${escHtml(card.project)}</span>` : ''}
-          ${card.created ? `<span>${formatDate(card.created)}</span>` : ''}
+          ${dueBadge(card.dueDate)}
         </div>
         ${attachHtml}
       `;
-      el.addEventListener('click', (e) => {
+      el.addEventListener('click', e => {
         if (e.target.classList.contains('card-delete') || e.target.classList.contains('attach-chip')) return;
         openEditModal(card.id);
       });
       el.addEventListener('dragstart', onDragStart);
       el.addEventListener('dragend', onDragEnd);
-      el.querySelector('.card-delete').addEventListener('click', async (e) => {
+      el.querySelector('.card-delete').addEventListener('click', async e => {
         e.stopPropagation();
         if (confirm('Delete this card?')) await deleteCard(card.id);
       });
@@ -422,153 +411,111 @@ function renderBoard() {
 
 // ── Edit modal ────────────────────────────────────────────────────────────────
 function openEditModal(id) {
-  const card = cards.find(c => c.id === id);
-  if (!card) return;
+  const card = cards.find(c => c.id === id); if (!card) return;
   editingId = id;
-  document.getElementById('edit-title').value = card.title || '';
-  document.getElementById('edit-column').value = card.column || 'Preflight';
+  document.getElementById('edit-title').value    = card.title || '';
+  document.getElementById('edit-column').value   = card.column || 'Preflight';
+  document.getElementById('edit-priority').value = card.priority || 'none';
   document.getElementById('edit-assignee').value = card.assignee || 'Both';
-  document.getElementById('edit-project').value = card.project || '';
-  document.getElementById('edit-notes').value = card.notes || '';
+  document.getElementById('edit-due').value      = card.dueDate || '';
+  document.getElementById('edit-project').value  = card.project || '';
+  document.getElementById('edit-notes').value    = card.notes || '';
   renderAttachList(card.attachments || []);
   document.getElementById('upload-progress').textContent = '';
   document.getElementById('edit-modal').classList.remove('hidden');
   document.getElementById('edit-title').focus();
 }
-
 function renderAttachList(attachments) {
-  const list = document.getElementById('edit-attach-list');
-  list.innerHTML = '';
+  const list = document.getElementById('edit-attach-list'); list.innerHTML = '';
   (attachments||[]).forEach((a, i) => {
-    const item = document.createElement('div');
-    item.className = 'attach-item';
-    item.innerHTML = `
-      <a href="${escHtml(a.url)}" target="_blank" title="${escHtml(a.name)}">📎 ${escHtml(a.name)}</a>
-      <button title="Remove" data-idx="${i}">×</button>
-    `;
+    const item = document.createElement('div'); item.className = 'attach-item';
+    item.innerHTML = `<a href="${escHtml(a.url)}" target="_blank">📎 ${escHtml(a.name)}</a><button data-idx="${i}">×</button>`;
     item.querySelector('button').addEventListener('click', () => {
-      const card = cards.find(c => c.id === editingId);
-      if (!card) return;
+      const card = cards.find(c => c.id === editingId); if (!card) return;
       card.attachments = (card.attachments||[]).filter((_,j) => j !== i);
       renderAttachList(card.attachments);
     });
     list.appendChild(item);
   });
 }
-
-function closeEditModal() {
-  document.getElementById('edit-modal').classList.add('hidden');
-  editingId = null;
-}
+function closeEditModal() { document.getElementById('edit-modal').classList.add('hidden'); editingId = null; }
 
 document.getElementById('edit-save').addEventListener('click', async () => {
   if (!editingId) return;
   const card = cards.find(c => c.id === editingId);
   const updates = {
-    title:      document.getElementById('edit-title').value.trim(),
-    column:     document.getElementById('edit-column').value,
-    assignee:   document.getElementById('edit-assignee').value,
-    project:    document.getElementById('edit-project').value.trim(),
-    notes:      document.getElementById('edit-notes').value.trim(),
+    title:       document.getElementById('edit-title').value.trim(),
+    column:      document.getElementById('edit-column').value,
+    priority:    document.getElementById('edit-priority').value,
+    assignee:    document.getElementById('edit-assignee').value,
+    dueDate:     document.getElementById('edit-due').value,
+    project:     document.getElementById('edit-project').value.trim(),
+    notes:       document.getElementById('edit-notes').value.trim(),
     attachments: card ? (card.attachments || []) : [],
   };
   if (!updates.title) { document.getElementById('edit-title').focus(); return; }
-  await saveCard(editingId, updates);
-  closeEditModal();
+  await saveCard(editingId, updates); closeEditModal();
 });
-
 document.getElementById('edit-cancel').addEventListener('click', closeEditModal);
-
 document.getElementById('edit-delete').addEventListener('click', async () => {
   if (!editingId) return;
-  if (confirm('Delete this card?')) {
-    await deleteCard(editingId);
-    closeEditModal();
-  }
+  if (confirm('Delete this card?')) { await deleteCard(editingId); closeEditModal(); }
 });
+document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === document.getElementById('edit-modal')) closeEditModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEditModal(); });
 
-// Close modal on backdrop click
-document.getElementById('edit-modal').addEventListener('click', (e) => {
-  if (e.target === document.getElementById('edit-modal')) closeEditModal();
-});
-
-// Escape key closes modal
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeEditModal();
-});
-
-// ── File upload wiring ────────────────────────────────────────────────────────
+// ── File upload ───────────────────────────────────────────────────────────────
+async function uploadFile(file) {
+  document.getElementById('upload-progress').textContent = `Uploading ${file.name}…`;
+  try {
+    const res = await fetch(`${API}/upload`, { method:'POST', headers:{'X-Filename':file.name,'Content-Type':file.type||'application/octet-stream'}, body: file });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    document.getElementById('upload-progress').textContent = '';
+    return data;
+  } catch(e) { document.getElementById('upload-progress').textContent = 'Upload failed: ' + e.message; return null; }
+}
 const uploadZone = document.getElementById('upload-zone');
-const fileInput = document.getElementById('file-input');
-
+const fileInput  = document.getElementById('file-input');
 uploadZone.addEventListener('click', () => fileInput.click());
-uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-active'); });
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-active'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-active'));
-uploadZone.addEventListener('drop', async (e) => {
-  e.preventDefault(); uploadZone.classList.remove('drag-active');
-  await handleFiles(e.dataTransfer.files);
-});
+uploadZone.addEventListener('drop', async e => { e.preventDefault(); uploadZone.classList.remove('drag-active'); await handleFiles(e.dataTransfer.files); });
 fileInput.addEventListener('change', async () => { await handleFiles(fileInput.files); fileInput.value = ''; });
-
 async function handleFiles(fileList) {
   if (!editingId) return;
-  const card = cards.find(c => c.id === editingId);
-  if (!card) return;
+  const card = cards.find(c => c.id === editingId); if (!card) return;
   for (const file of fileList) {
     const result = await uploadFile(file);
-    if (result) {
-      card.attachments = card.attachments || [];
-      card.attachments.push({ name: result.name, url: result.url, key: result.key });
-      renderAttachList(card.attachments);
-    }
+    if (result) { card.attachments = card.attachments || []; card.attachments.push({name:result.name,url:result.url,key:result.key}); renderAttachList(card.attachments); }
   }
 }
 
-// ── Drag & Drop ───────────────────────────────────────────────────────────────
-function onDragStart(e) {
-  dragId = e.currentTarget.dataset.id;
-  e.currentTarget.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-}
-function onDragEnd(e) {
-  e.currentTarget.classList.remove('dragging');
-  document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
-}
+// ── Drag & drop ───────────────────────────────────────────────────────────────
+function onDragStart(e) { dragId = e.currentTarget.dataset.id; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
+function onDragEnd(e) { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over')); }
 document.querySelectorAll('.card-list').forEach(list => {
-  list.addEventListener('dragover', e => {
-    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
-    document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
-    list.classList.add('drag-over'); dragOverCol = list.dataset.col;
-  });
+  list.addEventListener('dragover', e => { e.preventDefault(); document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over')); list.classList.add('drag-over'); dragOverCol = list.dataset.col; });
   list.addEventListener('dragleave', () => list.classList.remove('drag-over'));
-  list.addEventListener('drop', e => {
-    e.preventDefault(); list.classList.remove('drag-over');
-    if (dragId && dragOverCol) moveCard(dragId, dragOverCol);
-    dragId = null; dragOverCol = null;
-  });
+  list.addEventListener('drop', e => { e.preventDefault(); list.classList.remove('drag-over'); if (dragId && dragOverCol) moveCard(dragId, dragOverCol); dragId = null; dragOverCol = null; });
 });
 
 // ── Add card form ─────────────────────────────────────────────────────────────
 document.querySelectorAll('.add-card-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const col = btn.dataset.col;
-    btn.style.display = 'none';
-    const form = document.createElement('div');
-    form.className = 'add-card-form';
+    const col = btn.dataset.col; btn.style.display = 'none';
+    const form = document.createElement('div'); form.className = 'add-card-form';
     form.innerHTML = `
       <input type="text" class="f-title" placeholder="Card title…" maxlength="200">
       <select class="f-assignee">
-        <option value="Both">Both</option>
-        <option value="Harvey">Harvey</option>
-        <option value="Jolie">Jolie</option>
-        <option value="Claude">Claude</option>
+        <option value="Both">Both</option><option value="Harvey">Harvey</option>
+        <option value="Jolie">Jolie</option><option value="Claude">Claude</option>
       </select>
       <input type="text" class="f-project" placeholder="Project (optional)" maxlength="80">
       <div class="form-row">
         <button class="btn-save">Add</button>
         <button class="btn-cancel">Cancel</button>
-      </div>
-    `;
+      </div>`;
     btn.parentElement.insertBefore(form, btn);
     form.querySelector('.f-title').focus();
     form.querySelector('.btn-save').addEventListener('click', async () => {
@@ -585,36 +532,22 @@ document.querySelectorAll('.add-card-btn').forEach(btn => {
   });
 });
 
-// ── Refresh ───────────────────────────────────────────────────────────────────
 document.getElementById('refresh-btn').addEventListener('click', fetchCards);
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 async function init() {
   const modal = document.getElementById('auth-modal');
-  const pinInput = document.getElementById('pin-input');
-  const pinSubmit = document.getElementById('pin-submit');
-  const authError = document.getElementById('auth-error');
-
-  if (sessionStorage.getItem(SESSION_KEY) === 'ok') {
-    modal.classList.add('hidden'); fetchCards(); return;
-  }
+  if (sessionStorage.getItem(SESSION_KEY) === 'ok') { modal.classList.add('hidden'); fetchCards(); return; }
   modal.classList.remove('hidden'); showLoading(false);
-
   async function attempt() {
-    authError.textContent = '';
-    const hash = await sha256(pinInput.value.trim());
-    if (hash === BOARD_PIN_HASH) {
-      sessionStorage.setItem(SESSION_KEY, 'ok');
-      modal.classList.add('hidden'); fetchCards();
-    } else {
-      authError.textContent = 'Incorrect access code.';
-      pinInput.value = ''; pinInput.focus();
-    }
+    document.getElementById('auth-error').textContent = '';
+    const hash = await sha256(document.getElementById('pin-input').value.trim());
+    if (hash === BOARD_PIN_HASH) { sessionStorage.setItem(SESSION_KEY,'ok'); modal.classList.add('hidden'); fetchCards(); }
+    else { document.getElementById('auth-error').textContent = 'Incorrect access code.'; document.getElementById('pin-input').value = ''; document.getElementById('pin-input').focus(); }
   }
-  pinSubmit.addEventListener('click', attempt);
-  pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+  document.getElementById('pin-submit').addEventListener('click', attempt);
+  document.getElementById('pin-input').addEventListener('keydown', e => { if (e.key==='Enter') attempt(); });
 }
-
 init();
 </script>
 </body>
