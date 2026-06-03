@@ -63,7 +63,7 @@ export default {
       try { card = await request.json(); } catch { return err('Invalid JSON'); }
       if (!card.id || !card.title || !card.column) return err('Missing required fields: id, title, column');
 
-      const validCols = ['Backlog', 'In Progress', 'Done'];
+      const validCols = ['Preflight', 'Enroute', 'Landed', 'Flying M'];
       if (!validCols.includes(card.column)) return err('Invalid column');
 
       const cards = await getCards(kv);
