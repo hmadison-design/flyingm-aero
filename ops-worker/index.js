@@ -7,8 +7,9 @@
  *   PATCH  /cards/:id     → update fields on a card (body: partial card)
  *   DELETE /cards/:id     → delete a card
  *
- * KV binding: OPS_BOARD  (key = card ID, value = JSON string)
- * All cards also stored under key "ALL_IDS" as a JSON array of IDs for listing.
+ * KV binding: OPS_BOARD
+ * All cards stored under a single key "CARDS" as a JSON array.
+ * This avoids eventual-consistency issues with multiple KV keys.
  */
 
 const CORS = {
@@ -28,13 +29,13 @@ function err(msg, status = 400) {
   return json({ error: msg }, status);
 }
 
-async function getAllIds(kv) {
-  const raw = await kv.get('ALL_IDS');
+async function getCards(kv) {
+  const raw = await kv.get('CARDS');
   return raw ? JSON.parse(raw) : [];
 }
 
-async function setAllIds(kv, ids) {
-  await kv.put('ALL_IDS', JSON.stringify(ids));
+async function putCards(kv, cards) {
+  await kv.put('CARDS', JSON.stringify(cards));
 }
 
 export default {
@@ -51,13 +52,7 @@ export default {
 
     // GET /cards
     if (method === 'GET' && path === '/cards') {
-      const ids = await getAllIds(kv);
-      const cards = [];
-      for (const id of ids) {
-        const raw = await kv.get(id);
-        if (raw) cards.push(JSON.parse(raw));
-      }
-      // Sort by created date ascending
+      const cards = await getCards(kv);
       cards.sort((a, b) => new Date(a.created || 0) - new Date(b.created || 0));
       return json(cards);
     }
@@ -68,16 +63,13 @@ export default {
       try { card = await request.json(); } catch { return err('Invalid JSON'); }
       if (!card.id || !card.title || !card.column) return err('Missing required fields: id, title, column');
 
-      // Validate column
       const validCols = ['Backlog', 'In Progress', 'Done'];
       if (!validCols.includes(card.column)) return err('Invalid column');
 
-      await kv.put(card.id, JSON.stringify(card));
-      const ids = await getAllIds(kv);
-      if (!ids.includes(card.id)) {
-        ids.push(card.id);
-        await setAllIds(kv, ids);
-      }
+      const cards = await getCards(kv);
+      if (cards.find(c => c.id === card.id)) return err('Duplicate card ID', 409);
+      cards.push(card);
+      await putCards(kv, cards);
       return json(card, 201);
     }
 
@@ -85,24 +77,25 @@ export default {
     const patchMatch = path.match(/^\/cards\/([a-zA-Z0-9_-]+)$/);
     if (method === 'PATCH' && patchMatch) {
       const id = patchMatch[1];
-      const existing = await kv.get(id);
-      if (!existing) return err('Card not found', 404);
+      const cards = await getCards(kv);
+      const idx = cards.findIndex(c => c.id === id);
+      if (idx === -1) return err('Card not found', 404);
 
       let updates;
       try { updates = await request.json(); } catch { return err('Invalid JSON'); }
 
-      const card = { ...JSON.parse(existing), ...updates, id }; // id is immutable
-      await kv.put(id, JSON.stringify(card));
-      return json(card);
+      cards[idx] = { ...cards[idx], ...updates, id }; // id is immutable
+      await putCards(kv, cards);
+      return json(cards[idx]);
     }
 
     // DELETE /cards/:id
     const deleteMatch = path.match(/^\/cards\/([a-zA-Z0-9_-]+)$/);
     if (method === 'DELETE' && deleteMatch) {
       const id = deleteMatch[1];
-      await kv.delete(id);
-      const ids = await getAllIds(kv);
-      await setAllIds(kv, ids.filter(i => i !== id));
+      const cards = await getCards(kv);
+      const filtered = cards.filter(c => c.id !== id);
+      await putCards(kv, filtered);
       return json({ deleted: id });
     }
 
