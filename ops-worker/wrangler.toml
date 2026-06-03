@@ -2,9 +2,7 @@ name = "ops-board-api"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
-# KV namespace binding — create this in the Cloudflare dashboard first,
-# then paste the namespace ID below.
-# Dashboard: Workers & Pages → KV → Create namespace → "ops-board"
+# KV namespace binding
 [[kv_namespaces]]
 binding = "OPS_BOARD"
-id = "__KV_NAMESPACE_ID__"    # replace with real ID after creating in dashboard
+id = "da40d4f97f6b4842a28022229188b306"
