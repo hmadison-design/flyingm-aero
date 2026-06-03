@@ -2,7 +2,11 @@ name = "ops-board-api"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
-# KV namespace binding
-[[kv_namespaces]]
-binding = "OPS_BOARD"
-id = "da40d4f97f6b4842a28022229188b306"
+# Durable Object binding — strongly consistent, single writer
+[[durable_objects.bindings]]
+name = "OPS_BOARD_DO"
+class_name = "OpsBoard"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["OpsBoard"]
