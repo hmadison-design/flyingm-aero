@@ -9,4 +9,4 @@ class_name = "OpsBoard"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["OpsBoard"]
+new_sqlite_classes = ["OpsBoard"]
