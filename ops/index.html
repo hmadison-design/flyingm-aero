@@ -16,370 +16,119 @@
   --mist:      #c2d8eb;
   --cream:     #f2e8d5;
   --amber:     #e8a030;
-  --gold:      #c8841a;
   --white:     #ffffff;
   --danger:    #c0392b;
-
-  --col-backlog:    #0d3254;
-  --col-inprogress: #1a527c;
-  --col-done:       #145a32;
-
   --font-display: 'Barlow Condensed', sans-serif;
   --font-body:    'Inter', sans-serif;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--font-body);
-  background: var(--ink);
-  color: var(--cream);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+body { font-family: var(--font-body); background: var(--ink); color: var(--cream); min-height: 100vh; display: flex; flex-direction: column; }
 
 /* ── Header ── */
-header {
-  background: var(--deep);
-  border-bottom: 2px solid var(--sky);
-  padding: 14px 28px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-header h1 {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  color: var(--cream);
-}
-header .subtitle {
-  font-size: .8rem;
-  color: var(--mist);
-  opacity: .7;
-  margin-left: auto;
-}
-#last-sync {
-  font-size: .75rem;
-  color: var(--mist);
-  opacity: .6;
-}
-#refresh-btn {
-  background: none;
-  border: 1px solid var(--sky);
-  color: var(--mist);
-  border-radius: 6px;
-  padding: 4px 12px;
-  cursor: pointer;
-  font-size: .78rem;
-  transition: background .15s;
-}
+header { background: var(--deep); border-bottom: 2px solid var(--sky); padding: 14px 28px; display: flex; align-items: center; gap: 16px; }
+header h1 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; letter-spacing: .04em; color: var(--cream); }
+header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-left: auto; }
+#last-sync { font-size: .75rem; color: var(--mist); opacity: .6; }
+#refresh-btn { background: none; border: 1px solid var(--sky); color: var(--mist); border-radius: 6px; padding: 4px 12px; cursor: pointer; font-size: .78rem; transition: background .15s; }
 #refresh-btn:hover { background: var(--teal); }
 
 /* ── Board ── */
-#board {
-  display: flex;
-  gap: 18px;
-  padding: 24px 28px;
-  flex: 1;
-  align-items: flex-start;
-  overflow-x: auto;
-}
-
-.column {
-  flex: 1;
-  min-width: 260px;
-  max-width: 360px;
-  background: rgba(255,255,255,.04);
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.08);
-  display: flex;
-  flex-direction: column;
-}
-
-.col-header {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.col-header h2 {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.col-count {
-  font-size: .72rem;
-  background: rgba(255,255,255,.12);
-  border-radius: 20px;
-  padding: 1px 8px;
-  color: var(--mist);
-}
-.col-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+#board { display: flex; gap: 18px; padding: 24px 28px; flex: 1; align-items: flex-start; overflow-x: auto; }
+.column { flex: 1; min-width: 260px; max-width: 360px; background: rgba(255,255,255,.04); border-radius: 10px; border: 1px solid rgba(255,255,255,.08); display: flex; flex-direction: column; }
+.col-header { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; gap: 8px; }
+.col-header h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.col-count { font-size: .72rem; background: rgba(255,255,255,.12); border-radius: 20px; padding: 1px 8px; color: var(--mist); }
+.col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .col-dot.preflight  { background: var(--sky); }
 .col-dot.enroute    { background: var(--amber); }
 .col-dot.landed     { background: #2ecc71; }
 .col-dot.flyingm    { background: #9b59b6; }
 
-/* ── Card list / drop zones ── */
-.card-list {
-  padding: 10px;
-  min-height: 120px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.card-list.drag-over {
-  background: rgba(40,128,190,.12);
-  border-radius: 6px;
-}
+/* ── Card list ── */
+.card-list { padding: 10px; min-height: 120px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.card-list.drag-over { background: rgba(40,128,190,.12); border-radius: 6px; }
 
 /* ── Cards ── */
-.card {
-  background: var(--deep);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 8px;
-  padding: 10px 12px;
-  cursor: grab;
-  user-select: none;
-  position: relative;
-  transition: box-shadow .15s, transform .1s;
-}
-.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+.card { background: var(--deep); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 10px 12px; cursor: pointer; user-select: none; position: relative; transition: box-shadow .15s, transform .1s; }
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: rgba(40,128,190,.4); }
 .card.dragging { opacity: .45; transform: scale(.97); cursor: grabbing; }
-
-.card-title {
-  font-size: .88rem;
-  font-weight: 500;
-  color: var(--cream);
-  margin-bottom: 4px;
-  padding-right: 22px;
-  line-height: 1.35;
-}
-
-.card-meta {
-  font-size: .72rem;
-  color: var(--mist);
-  opacity: .65;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.badge {
-  display: inline-block;
-  padding: 1px 7px;
-  border-radius: 10px;
-  font-size: .68rem;
-  font-weight: 600;
-  letter-spacing: .03em;
-}
+.card[draggable="true"] { cursor: grab; }
+.card-title { font-size: .88rem; font-weight: 500; color: var(--cream); margin-bottom: 4px; padding-right: 22px; line-height: 1.35; }
+.card-notes { font-size: .75rem; color: var(--mist); opacity: .7; margin-bottom: 4px; line-height: 1.3; white-space: pre-wrap; }
+.card-meta { font-size: .72rem; color: var(--mist); opacity: .65; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.card-attachments { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+.attach-chip { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 4px; padding: 2px 7px; font-size: .68rem; color: var(--mist); text-decoration: none; cursor: pointer; }
+.attach-chip:hover { background: rgba(40,128,190,.2); }
+.badge { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: .68rem; font-weight: 600; letter-spacing: .03em; }
 .badge-harvey  { background: #2563EB; color: #fff; }
 .badge-jolie   { background: #14B8A6; color: #fff; }
 .badge-both    { background: linear-gradient(90deg,#14B8A6 50%,#2563EB 50%); color: #fff; }
 .badge-claude  { background: #7c3aed; color: #fff; }
-
-.card-delete {
-  position: absolute;
-  top: 7px; right: 8px;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,.25);
-  font-size: 1rem;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0 2px;
-  transition: color .15s;
-}
+.card-delete { position: absolute; top: 7px; right: 8px; background: none; border: none; color: rgba(255,255,255,.25); font-size: 1rem; cursor: pointer; line-height: 1; padding: 0 2px; transition: color .15s; }
 .card-delete:hover { color: var(--danger); }
 
 /* ── Add card ── */
-.add-card-btn {
-  margin: 0 10px 10px;
-  padding: 7px;
-  background: none;
-  border: 1px dashed rgba(255,255,255,.18);
-  border-radius: 7px;
-  color: var(--mist);
-  opacity: .6;
-  cursor: pointer;
-  font-size: .82rem;
-  text-align: center;
-  transition: opacity .15s, border-color .15s;
-}
+.add-card-btn { margin: 0 10px 10px; padding: 7px; background: none; border: 1px dashed rgba(255,255,255,.18); border-radius: 7px; color: var(--mist); opacity: .6; cursor: pointer; font-size: .82rem; text-align: center; transition: opacity .15s, border-color .15s; }
 .add-card-btn:hover { opacity: 1; border-color: var(--sky); }
-
-/* ── Add-card form (inline) ── */
-.add-card-form {
-  margin: 0 10px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.add-card-form input,
-.add-card-form select,
-.add-card-form textarea {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 6px;
-  color: var(--cream);
-  padding: 7px 10px;
-  font-size: .82rem;
-  font-family: var(--font-body);
-  outline: none;
-  resize: vertical;
-}
-.add-card-form input:focus,
-.add-card-form select:focus,
-.add-card-form textarea:focus {
-  border-color: var(--sky);
-}
+.add-card-form { margin: 0 10px 10px; display: flex; flex-direction: column; gap: 6px; }
+.add-card-form input, .add-card-form select, .add-card-form textarea { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18); border-radius: 6px; color: var(--cream); padding: 7px 10px; font-size: .82rem; font-family: var(--font-body); outline: none; resize: vertical; }
+.add-card-form input:focus, .add-card-form select:focus, .add-card-form textarea:focus { border-color: var(--sky); }
 .add-card-form select option { background: var(--deep); }
-.add-card-form .form-row {
-  display: flex;
-  gap: 6px;
-}
-.add-card-form .btn-save {
-  flex: 1;
-  background: var(--sky);
-  border: none;
-  border-radius: 6px;
-  color: var(--white);
-  font-weight: 600;
-  font-size: .82rem;
-  padding: 7px;
-  cursor: pointer;
-  transition: background .15s;
-}
+.add-card-form .form-row { display: flex; gap: 6px; }
+.add-card-form .btn-save { flex: 1; background: var(--sky); border: none; border-radius: 6px; color: var(--white); font-weight: 600; font-size: .82rem; padding: 7px; cursor: pointer; }
 .add-card-form .btn-save:hover { background: var(--teal); }
-.add-card-form .btn-cancel {
-  background: rgba(255,255,255,.08);
-  border: none;
-  border-radius: 6px;
-  color: var(--mist);
-  font-size: .82rem;
-  padding: 7px 12px;
-  cursor: pointer;
+.add-card-form .btn-cancel { background: rgba(255,255,255,.08); border: none; border-radius: 6px; color: var(--mist); font-size: .82rem; padding: 7px 12px; cursor: pointer; }
+
+/* ── Edit Modal ── */
+#edit-modal { position: fixed; inset: 0; background: rgba(9,31,46,.85); display: flex; align-items: center; justify-content: center; z-index: 300; padding: 20px; }
+#edit-modal.hidden { display: none; }
+.modal-box { background: #0f2a42; border: 1px solid var(--sky); border-radius: 12px; padding: 28px 32px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.modal-box h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; letter-spacing: .04em; margin-bottom: 4px; }
+.modal-field { display: flex; flex-direction: column; gap: 4px; }
+.modal-field label { font-size: .75rem; color: var(--mist); opacity: .8; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+.modal-field input, .modal-field select, .modal-field textarea {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18);
+  border-radius: 7px; color: var(--cream); padding: 9px 12px;
+  font-size: .88rem; font-family: var(--font-body); outline: none; resize: vertical;
 }
+.modal-field input:focus, .modal-field select:focus, .modal-field textarea:focus { border-color: var(--sky); }
+.modal-field select option { background: #0f2a42; }
+.modal-actions { display: flex; gap: 10px; margin-top: 4px; }
+.btn-primary { flex: 1; background: var(--sky); border: none; border-radius: 7px; color: white; font-weight: 600; font-size: .9rem; padding: 10px; cursor: pointer; }
+.btn-primary:hover { background: var(--teal); }
+.btn-secondary { background: rgba(255,255,255,.08); border: none; border-radius: 7px; color: var(--mist); font-size: .9rem; padding: 10px 16px; cursor: pointer; }
+.btn-danger { background: rgba(192,57,43,.15); border: 1px solid rgba(192,57,43,.4); border-radius: 7px; color: #f1948a; font-size: .9rem; padding: 10px 16px; cursor: pointer; }
+.btn-danger:hover { background: rgba(192,57,43,.3); }
+
+/* ── Attachments in modal ── */
+.attach-list { display: flex; flex-direction: column; gap: 6px; }
+.attach-item { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.05); border-radius: 6px; padding: 6px 10px; }
+.attach-item a { flex: 1; font-size: .82rem; color: var(--sky); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+.attach-item button { background: none; border: none; color: rgba(255,255,255,.3); cursor: pointer; font-size: .9rem; padding: 0 2px; }
+.attach-item button:hover { color: var(--danger); }
+.upload-zone { border: 2px dashed rgba(255,255,255,.2); border-radius: 8px; padding: 16px; text-align: center; cursor: pointer; font-size: .82rem; color: var(--mist); opacity: .7; transition: all .2s; }
+.upload-zone:hover, .upload-zone.drag-active { opacity: 1; border-color: var(--sky); background: rgba(40,128,190,.08); }
+.upload-zone input[type=file] { display: none; }
+.upload-progress { font-size: .78rem; color: var(--amber); margin-top: 4px; }
 
 /* ── Toast ── */
-#toast {
-  position: fixed;
-  bottom: 24px; right: 24px;
-  background: var(--deep);
-  border: 1px solid var(--sky);
-  color: var(--cream);
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: .82rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s;
-  z-index: 999;
-}
+#toast { position: fixed; bottom: 24px; right: 24px; background: var(--deep); border: 1px solid var(--sky); color: var(--cream); padding: 10px 18px; border-radius: 8px; font-size: .82rem; opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 999; }
 #toast.show { opacity: 1; }
-
-/* ── Error banner ── */
-#error-banner {
-  display: none;
-  background: rgba(192,57,43,.18);
-  border: 1px solid var(--danger);
-  color: #f1948a;
-  padding: 10px 20px;
-  font-size: .82rem;
-  text-align: center;
-}
-
-/* ── Loading overlay ── */
-#loading {
-  position: fixed;
-  inset: 0;
-  background: rgba(9,31,46,.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  letter-spacing: .1em;
-  color: var(--mist);
-  z-index: 100;
-}
+#error-banner { display: none; background: rgba(192,57,43,.18); border: 1px solid var(--danger); color: #f1948a; padding: 10px 20px; font-size: .82rem; text-align: center; }
+#loading { position: fixed; inset: 0; background: rgba(9,31,46,.8); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.4rem; letter-spacing: .1em; color: var(--mist); z-index: 100; }
 #loading.hidden { display: none; }
 
 /* ── Auth modal ── */
-#auth-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(9,31,46,.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-}
+#auth-modal { position: fixed; inset: 0; background: rgba(9,31,46,.92); display: flex; align-items: center; justify-content: center; z-index: 200; }
 #auth-modal.hidden { display: none; }
-.auth-box {
-  background: var(--deep);
-  border: 1px solid var(--sky);
-  border-radius: 12px;
-  padding: 32px 36px;
-  max-width: 340px;
-  width: 100%;
-  text-align: center;
-}
-.auth-box h2 {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  margin-bottom: 6px;
-}
-.auth-box p {
-  font-size: .82rem;
-  color: var(--mist);
-  opacity: .7;
-  margin-bottom: 20px;
-}
-.auth-box input {
-  width: 100%;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 7px;
-  color: var(--cream);
-  padding: 10px 14px;
-  font-size: .9rem;
-  text-align: center;
-  letter-spacing: .12em;
-  outline: none;
-  margin-bottom: 12px;
-}
+.auth-box { background: var(--deep); border: 1px solid var(--sky); border-radius: 12px; padding: 32px 36px; max-width: 340px; width: 100%; text-align: center; }
+.auth-box h2 { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 6px; }
+.auth-box p { font-size: .82rem; color: var(--mist); opacity: .7; margin-bottom: 20px; }
+.auth-box input { width: 100%; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.2); border-radius: 7px; color: var(--cream); padding: 10px 14px; font-size: .9rem; text-align: center; letter-spacing: .12em; outline: none; margin-bottom: 12px; }
 .auth-box input:focus { border-color: var(--sky); }
-.auth-box button {
-  width: 100%;
-  background: var(--sky);
-  border: none;
-  border-radius: 7px;
-  color: white;
-  font-weight: 600;
-  font-size: .9rem;
-  padding: 10px;
-  cursor: pointer;
-}
-.auth-box .auth-error {
-  color: #f1948a;
-  font-size: .78rem;
-  margin-top: 8px;
-  min-height: 18px;
-}
+.auth-box button { width: 100%; background: var(--sky); border: none; border-radius: 7px; color: white; font-weight: 600; font-size: .9rem; padding: 10px; cursor: pointer; }
+.auth-error { color: #f1948a; font-size: .78rem; margin-top: 8px; min-height: 18px; }
 </style>
 </head>
 <body>
@@ -424,7 +173,6 @@ header .subtitle {
     <div class="card-list" id="list-preflight" data-col="Preflight"></div>
     <button class="add-card-btn" data-col="Preflight">+ Add card</button>
   </div>
-
   <div class="column" id="col-enroute" data-col="Enroute">
     <div class="col-header">
       <span class="col-dot enroute"></span>
@@ -434,7 +182,6 @@ header .subtitle {
     <div class="card-list" id="list-enroute" data-col="Enroute"></div>
     <button class="add-card-btn" data-col="Enroute">+ Add card</button>
   </div>
-
   <div class="column" id="col-landed" data-col="Landed">
     <div class="col-header">
       <span class="col-dot landed"></span>
@@ -444,7 +191,6 @@ header .subtitle {
     <div class="card-list" id="list-landed" data-col="Landed"></div>
     <button class="add-card-btn" data-col="Landed">+ Add card</button>
   </div>
-
   <div class="column" id="col-flyingm" data-col="Flying M">
     <div class="col-header">
       <span class="col-dot flyingm"></span>
@@ -456,77 +202,180 @@ header .subtitle {
   </div>
 </div>
 
+<!-- Edit Modal -->
+<div id="edit-modal" class="hidden">
+  <div class="modal-box">
+    <h2>Edit Card</h2>
+    <div class="modal-field">
+      <label>Title</label>
+      <input type="text" id="edit-title" maxlength="200">
+    </div>
+    <div class="modal-field">
+      <label>Column</label>
+      <select id="edit-column">
+        <option value="Preflight">Preflight</option>
+        <option value="Enroute">Enroute</option>
+        <option value="Landed">Landed</option>
+        <option value="Flying M">Flying M</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Assigned to</label>
+      <select id="edit-assignee">
+        <option value="Both">Both</option>
+        <option value="Harvey">Harvey</option>
+        <option value="Jolie">Jolie</option>
+        <option value="Claude">Claude</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Project</label>
+      <input type="text" id="edit-project" maxlength="80" placeholder="e.g. RSR/PPO, OST, Redbird…">
+    </div>
+    <div class="modal-field">
+      <label>Notes</label>
+      <textarea id="edit-notes" rows="3" placeholder="Optional notes…"></textarea>
+    </div>
+    <div class="modal-field">
+      <label>Attachments</label>
+      <div class="attach-list" id="edit-attach-list"></div>
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="file-input" multiple>
+        📎 Drop files here or click to upload
+        <div class="upload-progress" id="upload-progress"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="edit-save">Save</button>
+      <button class="btn-secondary" id="edit-cancel">Cancel</button>
+      <button class="btn-danger" id="edit-delete">Delete</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div id="toast"></div>
 
 <script>
-// ─── Config ───────────────────────────────────────────────────────────────────
 const API = 'https://ops-board-api.hmadison.workers.dev';
-const PIN_HASH_KEY = 'ops_pin_hash';
-const SESSION_KEY  = 'ops_session';
-
-// Simple access code check (hashed client-side — this is obscurity, not real security)
-// The real access code is set when you deploy. Change BOARD_PIN_HASH below to match.
-// To generate: in browser console: crypto.subtle.digest('SHA-256', new TextEncoder().encode('yourcode'))
-//   .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
 const BOARD_PIN_HASH = '2487f9c182cb560bfb4378c513da675808a037cef01d1e82f17093d345c5c58d';
+const SESSION_KEY = 'ops_session';
 
-// ─── Auth ────────────────────────────────────────────────────────────────────
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2,'0')).join('');
 }
 
-async function checkAuth() {
-  const session = sessionStorage.getItem(SESSION_KEY);
-  if (session === 'ok') return true;
-  return false;
-}
-
-async function tryPin(pin) {
-  const hash = await sha256(pin.trim());
-  if (hash === BOARD_PIN_HASH) {
-    sessionStorage.setItem(SESSION_KEY, 'ok');
-    return true;
-  }
-  return false;
-}
-
-// ─── UI helpers ──────────────────────────────────────────────────────────────
-function showLoading(yes) {
-  document.getElementById('loading').classList.toggle('hidden', !yes);
-}
-function showError(msg) {
-  const el = document.getElementById('error-banner');
-  el.textContent = msg;
-  el.style.display = msg ? 'block' : 'none';
-}
+function showLoading(yes) { document.getElementById('loading').classList.toggle('hidden', !yes); }
+function showError(msg) { const el = document.getElementById('error-banner'); el.textContent = msg; el.style.display = msg ? 'block' : 'none'; }
 function toast(msg) {
   const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(el._t);
-  el._t = setTimeout(() => el.classList.remove('show'), 2800);
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 2800);
 }
-
-// ─── Badge helper ─────────────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function formatDate(iso) {
+  try { return new Date(iso).toLocaleDateString('en-US', {month:'short', day:'numeric'}); } catch { return ''; }
+}
 function badgeHTML(assignee) {
   if (!assignee || assignee === 'Both') return `<span class="badge badge-both">BOTH</span>`;
   if (assignee === 'Harvey') return `<span class="badge badge-harvey">HARVEY</span>`;
   if (assignee === 'Jolie')  return `<span class="badge badge-jolie">JOLIE</span>`;
   if (assignee === 'Claude') return `<span class="badge badge-claude">CLAUDE</span>`;
-  return `<span class="badge badge-both">${assignee}</span>`;
+  return `<span class="badge badge-both">${escHtml(assignee)}</span>`;
 }
 
-// ─── Render ──────────────────────────────────────────────────────────────────
+// ── API ───────────────────────────────────────────────────────────────────────
 let cards = [];
 let dragId = null;
 let dragOverCol = null;
+let editingId = null;
 
+async function apiFetch(path, options = {}) {
+  const res = await fetch(`${API}${path}`, options);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+async function fetchCards() {
+  showLoading(true); showError('');
+  try {
+    cards = await apiFetch('/cards');
+    renderBoard();
+  } catch(e) {
+    showError('Could not load cards. (' + e.message + ')');
+  } finally { showLoading(false); }
+}
+
+async function addCard(title, column, assignee, project) {
+  const card = { id: crypto.randomUUID(), title, column, assignee: assignee||'Both',
+    project: project||'', notes: '', attachments: [], created: new Date().toISOString() };
+  try {
+    await apiFetch('/cards', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(card) });
+    cards.push(card); renderBoard(); toast('Card added.');
+  } catch(e) { showError('Failed to save card: ' + e.message); }
+}
+
+async function moveCard(id, newCol) {
+  const card = cards.find(c => c.id === id);
+  if (!card || card.column === newCol) return;
+  const oldCol = card.column;
+  card.column = newCol; renderBoard();
+  try {
+    await apiFetch(`/cards/${id}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({column: newCol}) });
+    toast(`Moved to ${newCol}.`);
+  } catch(e) { card.column = oldCol; renderBoard(); showError('Failed to move card: ' + e.message); }
+}
+
+async function deleteCard(id) {
+  const idx = cards.findIndex(c => c.id === id);
+  if (idx === -1) return;
+  const removed = cards.splice(idx, 1)[0];
+  renderBoard();
+  try {
+    await apiFetch(`/cards/${id}`, { method:'DELETE' });
+    toast('Card deleted.');
+  } catch(e) { cards.splice(idx, 0, removed); renderBoard(); showError('Failed to delete: ' + e.message); }
+}
+
+async function saveCard(id, updates) {
+  const card = cards.find(c => c.id === id);
+  if (!card) return;
+  const prev = {...card};
+  Object.assign(card, updates);
+  renderBoard();
+  try {
+    await apiFetch(`/cards/${id}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(updates) });
+    toast('Card saved.');
+  } catch(e) { Object.assign(card, prev); renderBoard(); showError('Failed to save: ' + e.message); }
+}
+
+// ── File upload ───────────────────────────────────────────────────────────────
+async function uploadFile(file) {
+  document.getElementById('upload-progress').textContent = `Uploading ${file.name}…`;
+  try {
+    const res = await fetch(`${API}/upload`, {
+      method: 'POST',
+      headers: { 'X-Filename': file.name, 'Content-Type': file.type || 'application/octet-stream' },
+      body: file
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    document.getElementById('upload-progress').textContent = '';
+    return data;
+  } catch(e) {
+    document.getElementById('upload-progress').textContent = 'Upload failed: ' + e.message;
+    return null;
+  }
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
 function renderBoard() {
   const cols = ['Preflight', 'Enroute', 'Landed', 'Flying M'];
-  const listIds = { 'Preflight': 'list-preflight', 'Enroute': 'list-enroute', 'Landed': 'list-landed', 'Flying M': 'list-flyingm' };
-  const countIds = { 'Preflight': 'count-preflight', 'Enroute': 'count-enroute', 'Landed': 'count-landed', 'Flying M': 'count-flyingm' };
+  const listIds = { 'Preflight':'list-preflight', 'Enroute':'list-enroute', 'Landed':'list-landed', 'Flying M':'list-flyingm' };
+  const countIds = { 'Preflight':'count-preflight', 'Enroute':'count-enroute', 'Landed':'count-landed', 'Flying M':'count-flyingm' };
 
   cols.forEach(col => {
     const colCards = cards.filter(c => c.column === col);
@@ -538,40 +387,144 @@ function renderBoard() {
       el.className = 'card';
       el.setAttribute('draggable', 'true');
       el.dataset.id = card.id;
+
+      const attachHtml = (card.attachments||[]).length > 0
+        ? `<div class="card-attachments">${(card.attachments||[]).map(a =>
+            `<span class="attach-chip" onclick="event.stopPropagation();window.open('${escHtml(a.url)}','_blank')">📎 ${escHtml(a.name)}</span>`
+          ).join('')}</div>` : '';
+
       el.innerHTML = `
-        <button class="card-delete" data-id="${card.id}" title="Delete card">×</button>
+        <button class="card-delete" data-id="${card.id}" title="Delete">×</button>
         <div class="card-title">${escHtml(card.title)}</div>
+        ${card.notes ? `<div class="card-notes">${escHtml(card.notes)}</div>` : ''}
         <div class="card-meta">
           ${badgeHTML(card.assignee)}
           ${card.project ? `<span>${escHtml(card.project)}</span>` : ''}
           ${card.created ? `<span>${formatDate(card.created)}</span>` : ''}
         </div>
+        ${attachHtml}
       `;
-      // Drag events
+      el.addEventListener('click', (e) => {
+        if (e.target.classList.contains('card-delete') || e.target.classList.contains('attach-chip')) return;
+        openEditModal(card.id);
+      });
       el.addEventListener('dragstart', onDragStart);
       el.addEventListener('dragend', onDragEnd);
-      // Delete
-      el.querySelector('.card-delete').addEventListener('click', e => {
+      el.querySelector('.card-delete').addEventListener('click', async (e) => {
         e.stopPropagation();
-        deleteCard(card.id);
+        if (confirm('Delete this card?')) await deleteCard(card.id);
       });
       list.appendChild(el);
     });
   });
-
-  // Set last sync time
   document.getElementById('last-sync').textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
 
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function formatDate(iso) {
-  try { return new Date(iso).toLocaleDateString('en-US', {month:'short', day:'numeric'}); }
-  catch { return ''; }
+// ── Edit modal ────────────────────────────────────────────────────────────────
+function openEditModal(id) {
+  const card = cards.find(c => c.id === id);
+  if (!card) return;
+  editingId = id;
+  document.getElementById('edit-title').value = card.title || '';
+  document.getElementById('edit-column').value = card.column || 'Preflight';
+  document.getElementById('edit-assignee').value = card.assignee || 'Both';
+  document.getElementById('edit-project').value = card.project || '';
+  document.getElementById('edit-notes').value = card.notes || '';
+  renderAttachList(card.attachments || []);
+  document.getElementById('upload-progress').textContent = '';
+  document.getElementById('edit-modal').classList.remove('hidden');
+  document.getElementById('edit-title').focus();
 }
 
-// ─── Drag & Drop ─────────────────────────────────────────────────────────────
+function renderAttachList(attachments) {
+  const list = document.getElementById('edit-attach-list');
+  list.innerHTML = '';
+  (attachments||[]).forEach((a, i) => {
+    const item = document.createElement('div');
+    item.className = 'attach-item';
+    item.innerHTML = `
+      <a href="${escHtml(a.url)}" target="_blank" title="${escHtml(a.name)}">📎 ${escHtml(a.name)}</a>
+      <button title="Remove" data-idx="${i}">×</button>
+    `;
+    item.querySelector('button').addEventListener('click', () => {
+      const card = cards.find(c => c.id === editingId);
+      if (!card) return;
+      card.attachments = (card.attachments||[]).filter((_,j) => j !== i);
+      renderAttachList(card.attachments);
+    });
+    list.appendChild(item);
+  });
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.add('hidden');
+  editingId = null;
+}
+
+document.getElementById('edit-save').addEventListener('click', async () => {
+  if (!editingId) return;
+  const card = cards.find(c => c.id === editingId);
+  const updates = {
+    title:      document.getElementById('edit-title').value.trim(),
+    column:     document.getElementById('edit-column').value,
+    assignee:   document.getElementById('edit-assignee').value,
+    project:    document.getElementById('edit-project').value.trim(),
+    notes:      document.getElementById('edit-notes').value.trim(),
+    attachments: card ? (card.attachments || []) : [],
+  };
+  if (!updates.title) { document.getElementById('edit-title').focus(); return; }
+  await saveCard(editingId, updates);
+  closeEditModal();
+});
+
+document.getElementById('edit-cancel').addEventListener('click', closeEditModal);
+
+document.getElementById('edit-delete').addEventListener('click', async () => {
+  if (!editingId) return;
+  if (confirm('Delete this card?')) {
+    await deleteCard(editingId);
+    closeEditModal();
+  }
+});
+
+// Close modal on backdrop click
+document.getElementById('edit-modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('edit-modal')) closeEditModal();
+});
+
+// Escape key closes modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeEditModal();
+});
+
+// ── File upload wiring ────────────────────────────────────────────────────────
+const uploadZone = document.getElementById('upload-zone');
+const fileInput = document.getElementById('file-input');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-active'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-active'));
+uploadZone.addEventListener('drop', async (e) => {
+  e.preventDefault(); uploadZone.classList.remove('drag-active');
+  await handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', async () => { await handleFiles(fileInput.files); fileInput.value = ''; });
+
+async function handleFiles(fileList) {
+  if (!editingId) return;
+  const card = cards.find(c => c.id === editingId);
+  if (!card) return;
+  for (const file of fileList) {
+    const result = await uploadFile(file);
+    if (result) {
+      card.attachments = card.attachments || [];
+      card.attachments.push({ name: result.name, url: result.url, key: result.key });
+      renderAttachList(card.attachments);
+    }
+  }
+}
+
+// ── Drag & Drop ───────────────────────────────────────────────────────────────
 function onDragStart(e) {
   dragId = e.currentTarget.dataset.id;
   e.currentTarget.classList.add('dragging');
@@ -581,103 +534,21 @@ function onDragEnd(e) {
   e.currentTarget.classList.remove('dragging');
   document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
 }
-
 document.querySelectorAll('.card-list').forEach(list => {
   list.addEventListener('dragover', e => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
+    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
     document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
-    list.classList.add('drag-over');
-    dragOverCol = list.dataset.col;
+    list.classList.add('drag-over'); dragOverCol = list.dataset.col;
   });
   list.addEventListener('dragleave', () => list.classList.remove('drag-over'));
   list.addEventListener('drop', e => {
-    e.preventDefault();
-    list.classList.remove('drag-over');
+    e.preventDefault(); list.classList.remove('drag-over');
     if (dragId && dragOverCol) moveCard(dragId, dragOverCol);
     dragId = null; dragOverCol = null;
   });
 });
 
-// ─── API calls ───────────────────────────────────────────────────────────────
-async function fetchCards() {
-  showLoading(true);
-  showError('');
-  try {
-    const res = await fetch(`${API}/cards`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    cards = await res.json();
-    renderBoard();
-  } catch(e) {
-    showError('Could not load cards. Check API connection. (' + e.message + ')');
-  } finally {
-    showLoading(false);
-  }
-}
-
-async function addCard(title, column, assignee, project) {
-  const card = {
-    id: crypto.randomUUID(),
-    title,
-    column,
-    assignee: assignee || 'Both',
-    project: project || '',
-    created: new Date().toISOString()
-  };
-  try {
-    const res = await fetch(`${API}/cards`, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(card)
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    cards.push(card);
-    renderBoard();
-    toast('Card added.');
-  } catch(e) {
-    showError('Failed to save card: ' + e.message);
-  }
-}
-
-async function moveCard(id, newCol) {
-  const card = cards.find(c => c.id === id);
-  if (!card || card.column === newCol) return;
-  const oldCol = card.column;
-  card.column = newCol; // optimistic
-  renderBoard();
-  try {
-    const res = await fetch(`${API}/cards/${id}`, {
-      method: 'PATCH',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({column: newCol})
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    toast(`Moved to ${newCol}.`);
-  } catch(e) {
-    card.column = oldCol; // rollback
-    renderBoard();
-    showError('Failed to move card: ' + e.message);
-  }
-}
-
-async function deleteCard(id) {
-  if (!confirm('Delete this card?')) return;
-  const idx = cards.findIndex(c => c.id === id);
-  if (idx === -1) return;
-  const removed = cards.splice(idx, 1)[0]; // optimistic
-  renderBoard();
-  try {
-    const res = await fetch(`${API}/cards/${id}`, { method: 'DELETE' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    toast('Card deleted.');
-  } catch(e) {
-    cards.splice(idx, 0, removed); // rollback
-    renderBoard();
-    showError('Failed to delete card: ' + e.message);
-  }
-}
-
-// ─── Add-card form ────────────────────────────────────────────────────────────
+// ── Add card form ─────────────────────────────────────────────────────────────
 document.querySelectorAll('.add-card-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const col = btn.dataset.col;
@@ -685,7 +556,7 @@ document.querySelectorAll('.add-card-btn').forEach(btn => {
     const form = document.createElement('div');
     form.className = 'add-card-form';
     form.innerHTML = `
-      <input type="text" class="f-title" placeholder="Card title…" maxlength="200" autofocus>
+      <input type="text" class="f-title" placeholder="Card title…" maxlength="200">
       <select class="f-assignee">
         <option value="Both">Both</option>
         <option value="Harvey">Harvey</option>
@@ -700,23 +571,13 @@ document.querySelectorAll('.add-card-btn').forEach(btn => {
     `;
     btn.parentElement.insertBefore(form, btn);
     form.querySelector('.f-title').focus();
-
     form.querySelector('.btn-save').addEventListener('click', async () => {
       const title = form.querySelector('.f-title').value.trim();
       if (!title) { form.querySelector('.f-title').focus(); return; }
-      await addCard(
-        title,
-        col,
-        form.querySelector('.f-assignee').value,
-        form.querySelector('.f-project').value.trim()
-      );
-      form.remove();
-      btn.style.display = '';
+      await addCard(title, col, form.querySelector('.f-assignee').value, form.querySelector('.f-project').value.trim());
+      form.remove(); btn.style.display = '';
     });
-    form.querySelector('.btn-cancel').addEventListener('click', () => {
-      form.remove();
-      btn.style.display = '';
-    });
+    form.querySelector('.btn-cancel').addEventListener('click', () => { form.remove(); btn.style.display = ''; });
     form.querySelector('.f-title').addEventListener('keydown', e => {
       if (e.key === 'Enter') form.querySelector('.btn-save').click();
       if (e.key === 'Escape') form.querySelector('.btn-cancel').click();
@@ -724,42 +585,30 @@ document.querySelectorAll('.add-card-btn').forEach(btn => {
   });
 });
 
-// ─── Refresh button ──────────────────────────────────────────────────────────
+// ── Refresh ───────────────────────────────────────────────────────────────────
 document.getElementById('refresh-btn').addEventListener('click', fetchCards);
 
-// ─── Auth flow ───────────────────────────────────────────────────────────────
+// ── Auth ──────────────────────────────────────────────────────────────────────
 async function init() {
   const modal = document.getElementById('auth-modal');
   const pinInput = document.getElementById('pin-input');
   const pinSubmit = document.getElementById('pin-submit');
   const authError = document.getElementById('auth-error');
 
-  // If PIN_HASH is placeholder, skip auth (dev mode)
-  if (BOARD_PIN_HASH === '__PIN_HASH__') {
-    modal.classList.add('hidden');
-    fetchCards();
-    return;
+  if (sessionStorage.getItem(SESSION_KEY) === 'ok') {
+    modal.classList.add('hidden'); fetchCards(); return;
   }
-
-  if (await checkAuth()) {
-    modal.classList.add('hidden');
-    fetchCards();
-    return;
-  }
-
-  modal.classList.remove('hidden');
-  showLoading(false);
+  modal.classList.remove('hidden'); showLoading(false);
 
   async function attempt() {
     authError.textContent = '';
-    const ok = await tryPin(pinInput.value);
-    if (ok) {
-      modal.classList.add('hidden');
-      fetchCards();
+    const hash = await sha256(pinInput.value.trim());
+    if (hash === BOARD_PIN_HASH) {
+      sessionStorage.setItem(SESSION_KEY, 'ok');
+      modal.classList.add('hidden'); fetchCards();
     } else {
       authError.textContent = 'Incorrect access code.';
-      pinInput.value = '';
-      pinInput.focus();
+      pinInput.value = ''; pinInput.focus();
     }
   }
   pinSubmit.addEventListener('click', attempt);
