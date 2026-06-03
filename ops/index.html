@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ops Board — Flying M</title>
+<title>J+H Ops Board</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -126,9 +126,10 @@ header .subtitle {
   border-radius: 50%;
   flex-shrink: 0;
 }
-.col-dot.backlog    { background: var(--sky); }
-.col-dot.inprogress { background: var(--amber); }
-.col-dot.done       { background: #2ecc71; }
+.col-dot.preflight  { background: var(--sky); }
+.col-dot.enroute    { background: var(--amber); }
+.col-dot.landed     { background: #2ecc71; }
+.col-dot.flyingm    { background: #9b59b6; }
 
 /* ── Card list / drop zones ── */
 .card-list {
@@ -406,7 +407,7 @@ header .subtitle {
     <path d="M14 2L26 8V20L14 26L2 20V8L14 2Z" fill="#2880be" opacity=".3" stroke="#2880be" stroke-width="1.5"/>
     <path d="M14 6L22 10V18L14 22L6 18V10L14 6Z" fill="#2880be" opacity=".5"/>
   </svg>
-  <h1>Flying M Ops Board</h1>
+  <h1>J+H Ops Board</h1>
   <span class="subtitle">Harvey · Jolie · Claude</span>
   <span id="last-sync"></span>
   <button id="refresh-btn">↻ Refresh</button>
@@ -414,34 +415,44 @@ header .subtitle {
 
 <!-- Board -->
 <div id="board">
-  <div class="column" id="col-backlog" data-col="Backlog">
+  <div class="column" id="col-preflight" data-col="Preflight">
     <div class="col-header">
-      <span class="col-dot backlog"></span>
-      <h2>Backlog</h2>
-      <span class="col-count" id="count-backlog">0</span>
+      <span class="col-dot preflight"></span>
+      <h2>Preflight</h2>
+      <span class="col-count" id="count-preflight">0</span>
     </div>
-    <div class="card-list" id="list-backlog" data-col="Backlog"></div>
-    <button class="add-card-btn" data-col="Backlog">+ Add card</button>
+    <div class="card-list" id="list-preflight" data-col="Preflight"></div>
+    <button class="add-card-btn" data-col="Preflight">+ Add card</button>
   </div>
 
-  <div class="column" id="col-inprogress" data-col="In Progress">
+  <div class="column" id="col-enroute" data-col="Enroute">
     <div class="col-header">
-      <span class="col-dot inprogress"></span>
-      <h2>In Progress</h2>
-      <span class="col-count" id="count-inprogress">0</span>
+      <span class="col-dot enroute"></span>
+      <h2>Enroute</h2>
+      <span class="col-count" id="count-enroute">0</span>
     </div>
-    <div class="card-list" id="list-inprogress" data-col="In Progress"></div>
-    <button class="add-card-btn" data-col="In Progress">+ Add card</button>
+    <div class="card-list" id="list-enroute" data-col="Enroute"></div>
+    <button class="add-card-btn" data-col="Enroute">+ Add card</button>
   </div>
 
-  <div class="column" id="col-done" data-col="Done">
+  <div class="column" id="col-landed" data-col="Landed">
     <div class="col-header">
-      <span class="col-dot done"></span>
-      <h2>Done</h2>
-      <span class="col-count" id="count-done">0</span>
+      <span class="col-dot landed"></span>
+      <h2>Landed</h2>
+      <span class="col-count" id="count-landed">0</span>
     </div>
-    <div class="card-list" id="list-done" data-col="Done"></div>
-    <button class="add-card-btn" data-col="Done">+ Add card</button>
+    <div class="card-list" id="list-landed" data-col="Landed"></div>
+    <button class="add-card-btn" data-col="Landed">+ Add card</button>
+  </div>
+
+  <div class="column" id="col-flyingm" data-col="Flying M">
+    <div class="col-header">
+      <span class="col-dot flyingm"></span>
+      <h2>Flying M</h2>
+      <span class="col-count" id="count-flyingm">0</span>
+    </div>
+    <div class="card-list" id="list-flyingm" data-col="Flying M"></div>
+    <button class="add-card-btn" data-col="Flying M">+ Add card</button>
   </div>
 </div>
 
@@ -513,9 +524,9 @@ let dragId = null;
 let dragOverCol = null;
 
 function renderBoard() {
-  const cols = ['Backlog', 'In Progress', 'Done'];
-  const listIds = { 'Backlog': 'list-backlog', 'In Progress': 'list-inprogress', 'Done': 'list-done' };
-  const countIds = { 'Backlog': 'count-backlog', 'In Progress': 'count-inprogress', 'Done': 'count-done' };
+  const cols = ['Preflight', 'Enroute', 'Landed', 'Flying M'];
+  const listIds = { 'Preflight': 'list-preflight', 'Enroute': 'list-enroute', 'Landed': 'list-landed', 'Flying M': 'list-flyingm' };
+  const countIds = { 'Preflight': 'count-preflight', 'Enroute': 'count-enroute', 'Landed': 'count-landed', 'Flying M': 'count-flyingm' };
 
   cols.forEach(col => {
     const colCards = cards.filter(c => c.column === col);
