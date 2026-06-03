@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ops Board — Flying M</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #091f2e;
+  --deep:      #0d3254;
+  --teal:      #1a527c;
+  --sky:       #2880be;
+  --mist:      #c2d8eb;
+  --cream:     #f2e8d5;
+  --amber:     #e8a030;
+  --gold:      #c8841a;
+  --white:     #ffffff;
+  --danger:    #c0392b;
+
+  --col-backlog:    #0d3254;
+  --col-inprogress: #1a527c;
+  --col-done:       #145a32;
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body:    'Inter', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--ink);
+  color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  background: var(--deep);
+  border-bottom: 2px solid var(--sky);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+header h1 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--cream);
+}
+header .subtitle {
+  font-size: .8rem;
+  color: var(--mist);
+  opacity: .7;
+  margin-left: auto;
+}
+#last-sync {
+  font-size: .75rem;
+  color: var(--mist);
+  opacity: .6;
+}
+#refresh-btn {
+  background: none;
+  border: 1px solid var(--sky);
+  color: var(--mist);
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: .78rem;
+  transition: background .15s;
+}
+#refresh-btn:hover { background: var(--teal); }
+
+/* ── Board ── */
+#board {
+  display: flex;
+  gap: 18px;
+  padding: 24px 28px;
+  flex: 1;
+  align-items: flex-start;
+  overflow-x: auto;
+}
+
+.column {
+  flex: 1;
+  min-width: 260px;
+  max-width: 360px;
+  background: rgba(255,255,255,.04);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.col-header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.col-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.col-count {
+  font-size: .72rem;
+  background: rgba(255,255,255,.12);
+  border-radius: 20px;
+  padding: 1px 8px;
+  color: var(--mist);
+}
+.col-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.col-dot.backlog    { background: var(--sky); }
+.col-dot.inprogress { background: var(--amber); }
+.col-dot.done       { background: #2ecc71; }
+
+/* ── Card list / drop zones ── */
+.card-list {
+  padding: 10px;
+  min-height: 120px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-list.drag-over {
+  background: rgba(40,128,190,.12);
+  border-radius: 6px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--deep);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: grab;
+  user-select: none;
+  position: relative;
+  transition: box-shadow .15s, transform .1s;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+.card.dragging { opacity: .45; transform: scale(.97); cursor: grabbing; }
+
+.card-title {
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 4px;
+  padding-right: 22px;
+  line-height: 1.35;
+}
+
+.card-meta {
+  font-size: .72rem;
+  color: var(--mist);
+  opacity: .65;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.badge-harvey  { background: #2563EB; color: #fff; }
+.badge-jolie   { background: #14B8A6; color: #fff; }
+.badge-both    { background: linear-gradient(90deg,#14B8A6 50%,#2563EB 50%); color: #fff; }
+.badge-claude  { background: #7c3aed; color: #fff; }
+
+.card-delete {
+  position: absolute;
+  top: 7px; right: 8px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.25);
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color .15s;
+}
+.card-delete:hover { color: var(--danger); }
+
+/* ── Add card ── */
+.add-card-btn {
+  margin: 0 10px 10px;
+  padding: 7px;
+  background: none;
+  border: 1px dashed rgba(255,255,255,.18);
+  border-radius: 7px;
+  color: var(--mist);
+  opacity: .6;
+  cursor: pointer;
+  font-size: .82rem;
+  text-align: center;
+  transition: opacity .15s, border-color .15s;
+}
+.add-card-btn:hover { opacity: 1; border-color: var(--sky); }
+
+/* ── Add-card form (inline) ── */
+.add-card-form {
+  margin: 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.add-card-form input,
+.add-card-form select,
+.add-card-form textarea {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 6px;
+  color: var(--cream);
+  padding: 7px 10px;
+  font-size: .82rem;
+  font-family: var(--font-body);
+  outline: none;
+  resize: vertical;
+}
+.add-card-form input:focus,
+.add-card-form select:focus,
+.add-card-form textarea:focus {
+  border-color: var(--sky);
+}
+.add-card-form select option { background: var(--deep); }
+.add-card-form .form-row {
+  display: flex;
+  gap: 6px;
+}
+.add-card-form .btn-save {
+  flex: 1;
+  background: var(--sky);
+  border: none;
+  border-radius: 6px;
+  color: var(--white);
+  font-weight: 600;
+  font-size: .82rem;
+  padding: 7px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.add-card-form .btn-save:hover { background: var(--teal); }
+.add-card-form .btn-cancel {
+  background: rgba(255,255,255,.08);
+  border: none;
+  border-radius: 6px;
+  color: var(--mist);
+  font-size: .82rem;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+/* ── Toast ── */
+#toast {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--deep);
+  border: 1px solid var(--sky);
+  color: var(--cream);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: .82rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  z-index: 999;
+}
+#toast.show { opacity: 1; }
+
+/* ── Error banner ── */
+#error-banner {
+  display: none;
+  background: rgba(192,57,43,.18);
+  border: 1px solid var(--danger);
+  color: #f1948a;
+  padding: 10px 20px;
+  font-size: .82rem;
+  text-align: center;
+}
+
+/* ── Loading overlay ── */
+#loading {
+  position: fixed;
+  inset: 0;
+  background: rgba(9,31,46,.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: .1em;
+  color: var(--mist);
+  z-index: 100;
+}
+#loading.hidden { display: none; }
+
+/* ── Auth modal ── */
+#auth-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(9,31,46,.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+#auth-modal.hidden { display: none; }
+.auth-box {
+  background: var(--deep);
+  border: 1px solid var(--sky);
+  border-radius: 12px;
+  padding: 32px 36px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+}
+.auth-box h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+}
+.auth-box p {
+  font-size: .82rem;
+  color: var(--mist);
+  opacity: .7;
+  margin-bottom: 20px;
+}
+.auth-box input {
+  width: 100%;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 7px;
+  color: var(--cream);
+  padding: 10px 14px;
+  font-size: .9rem;
+  text-align: center;
+  letter-spacing: .12em;
+  outline: none;
+  margin-bottom: 12px;
+}
+.auth-box input:focus { border-color: var(--sky); }
+.auth-box button {
+  width: 100%;
+  background: var(--sky);
+  border: none;
+  border-radius: 7px;
+  color: white;
+  font-weight: 600;
+  font-size: .9rem;
+  padding: 10px;
+  cursor: pointer;
+}
+.auth-box .auth-error {
+  color: #f1948a;
+  font-size: .78rem;
+  margin-top: 8px;
+  min-height: 18px;
+}
+</style>
+</head>
+<body>
+
+<!-- Auth modal -->
+<div id="auth-modal">
+  <div class="auth-box">
+    <h2>Ops Board</h2>
+    <p>Flying M internal — enter the access code to continue.</p>
+    <input type="password" id="pin-input" placeholder="Access code" autocomplete="off">
+    <button id="pin-submit">Enter</button>
+    <div class="auth-error" id="auth-error"></div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div id="loading">Loading…</div>
+
+<!-- Error banner -->
+<div id="error-banner"></div>
+
+<!-- Header -->
+<header>
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+    <path d="M14 2L26 8V20L14 26L2 20V8L14 2Z" fill="#2880be" opacity=".3" stroke="#2880be" stroke-width="1.5"/>
+    <path d="M14 6L22 10V18L14 22L6 18V10L14 6Z" fill="#2880be" opacity=".5"/>
+  </svg>
+  <h1>Flying M Ops Board</h1>
+  <span class="subtitle">Harvey · Jolie · Claude</span>
+  <span id="last-sync"></span>
+  <button id="refresh-btn">↻ Refresh</button>
+</header>
+
+<!-- Board -->
+<div id="board">
+  <div class="column" id="col-backlog" data-col="Backlog">
+    <div class="col-header">
+      <span class="col-dot backlog"></span>
+      <h2>Backlog</h2>
+      <span class="col-count" id="count-backlog">0</span>
+    </div>
+    <div class="card-list" id="list-backlog" data-col="Backlog"></div>
+    <button class="add-card-btn" data-col="Backlog">+ Add card</button>
+  </div>
+
+  <div class="column" id="col-inprogress" data-col="In Progress">
+    <div class="col-header">
+      <span class="col-dot inprogress"></span>
+      <h2>In Progress</h2>
+      <span class="col-count" id="count-inprogress">0</span>
+    </div>
+    <div class="card-list" id="list-inprogress" data-col="In Progress"></div>
+    <button class="add-card-btn" data-col="In Progress">+ Add card</button>
+  </div>
+
+  <div class="column" id="col-done" data-col="Done">
+    <div class="col-header">
+      <span class="col-dot done"></span>
+      <h2>Done</h2>
+      <span class="col-count" id="count-done">0</span>
+    </div>
+    <div class="card-list" id="list-done" data-col="Done"></div>
+    <button class="add-card-btn" data-col="Done">+ Add card</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ─── Config ───────────────────────────────────────────────────────────────────
+const API = 'https://ops-board-api.flyingm-workers.workers.dev'; // updated after worker deploy
+const PIN_HASH_KEY = 'ops_pin_hash';
+const SESSION_KEY  = 'ops_session';
+
+// Simple access code check (hashed client-side — this is obscurity, not real security)
+// The real access code is set when you deploy. Change BOARD_PIN_HASH below to match.
+// To generate: in browser console: crypto.subtle.digest('SHA-256', new TextEncoder().encode('yourcode'))
+//   .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
+const BOARD_PIN_HASH = '2487f9c182cb560bfb4378c513da675808a037cef01d1e82f17093d345c5c58d';
+
+// ─── Auth ────────────────────────────────────────────────────────────────────
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkAuth() {
+  const session = sessionStorage.getItem(SESSION_KEY);
+  if (session === 'ok') return true;
+  return false;
+}
+
+async function tryPin(pin) {
+  const hash = await sha256(pin.trim());
+  if (hash === BOARD_PIN_HASH) {
+    sessionStorage.setItem(SESSION_KEY, 'ok');
+    return true;
+  }
+  return false;
+}
+
+// ─── UI helpers ──────────────────────────────────────────────────────────────
+function showLoading(yes) {
+  document.getElementById('loading').classList.toggle('hidden', !yes);
+}
+function showError(msg) {
+  const el = document.getElementById('error-banner');
+  el.textContent = msg;
+  el.style.display = msg ? 'block' : 'none';
+}
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ─── Badge helper ─────────────────────────────────────────────────────────────
+function badgeHTML(assignee) {
+  if (!assignee || assignee === 'Both') return `<span class="badge badge-both">BOTH</span>`;
+  if (assignee === 'Harvey') return `<span class="badge badge-harvey">HARVEY</span>`;
+  if (assignee === 'Jolie')  return `<span class="badge badge-jolie">JOLIE</span>`;
+  if (assignee === 'Claude') return `<span class="badge badge-claude">CLAUDE</span>`;
+  return `<span class="badge badge-both">${assignee}</span>`;
+}
+
+// ─── Render ──────────────────────────────────────────────────────────────────
+let cards = [];
+let dragId = null;
+let dragOverCol = null;
+
+function renderBoard() {
+  const cols = ['Backlog', 'In Progress', 'Done'];
+  const listIds = { 'Backlog': 'list-backlog', 'In Progress': 'list-inprogress', 'Done': 'list-done' };
+  const countIds = { 'Backlog': 'count-backlog', 'In Progress': 'count-inprogress', 'Done': 'count-done' };
+
+  cols.forEach(col => {
+    const colCards = cards.filter(c => c.column === col);
+    document.getElementById(countIds[col]).textContent = colCards.length;
+    const list = document.getElementById(listIds[col]);
+    list.innerHTML = '';
+    colCards.forEach(card => {
+      const el = document.createElement('div');
+      el.className = 'card';
+      el.setAttribute('draggable', 'true');
+      el.dataset.id = card.id;
+      el.innerHTML = `
+        <button class="card-delete" data-id="${card.id}" title="Delete card">×</button>
+        <div class="card-title">${escHtml(card.title)}</div>
+        <div class="card-meta">
+          ${badgeHTML(card.assignee)}
+          ${card.project ? `<span>${escHtml(card.project)}</span>` : ''}
+          ${card.created ? `<span>${formatDate(card.created)}</span>` : ''}
+        </div>
+      `;
+      // Drag events
+      el.addEventListener('dragstart', onDragStart);
+      el.addEventListener('dragend', onDragEnd);
+      // Delete
+      el.querySelector('.card-delete').addEventListener('click', e => {
+        e.stopPropagation();
+        deleteCard(card.id);
+      });
+      list.appendChild(el);
+    });
+  });
+
+  // Set last sync time
+  document.getElementById('last-sync').textContent = 'Updated ' + new Date().toLocaleTimeString();
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function formatDate(iso) {
+  try { return new Date(iso).toLocaleDateString('en-US', {month:'short', day:'numeric'}); }
+  catch { return ''; }
+}
+
+// ─── Drag & Drop ─────────────────────────────────────────────────────────────
+function onDragStart(e) {
+  dragId = e.currentTarget.dataset.id;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
+}
+
+document.querySelectorAll('.card-list').forEach(list => {
+  list.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
+    list.classList.add('drag-over');
+    dragOverCol = list.dataset.col;
+  });
+  list.addEventListener('dragleave', () => list.classList.remove('drag-over'));
+  list.addEventListener('drop', e => {
+    e.preventDefault();
+    list.classList.remove('drag-over');
+    if (dragId && dragOverCol) moveCard(dragId, dragOverCol);
+    dragId = null; dragOverCol = null;
+  });
+});
+
+// ─── API calls ───────────────────────────────────────────────────────────────
+async function fetchCards() {
+  showLoading(true);
+  showError('');
+  try {
+    const res = await fetch(`${API}/cards`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    cards = await res.json();
+    renderBoard();
+  } catch(e) {
+    showError('Could not load cards. Check API connection. (' + e.message + ')');
+  } finally {
+    showLoading(false);
+  }
+}
+
+async function addCard(title, column, assignee, project) {
+  const card = {
+    id: crypto.randomUUID(),
+    title,
+    column,
+    assignee: assignee || 'Both',
+    project: project || '',
+    created: new Date().toISOString()
+  };
+  try {
+    const res = await fetch(`${API}/cards`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(card)
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    cards.push(card);
+    renderBoard();
+    toast('Card added.');
+  } catch(e) {
+    showError('Failed to save card: ' + e.message);
+  }
+}
+
+async function moveCard(id, newCol) {
+  const card = cards.find(c => c.id === id);
+  if (!card || card.column === newCol) return;
+  const oldCol = card.column;
+  card.column = newCol; // optimistic
+  renderBoard();
+  try {
+    const res = await fetch(`${API}/cards/${id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({column: newCol})
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    toast(`Moved to ${newCol}.`);
+  } catch(e) {
+    card.column = oldCol; // rollback
+    renderBoard();
+    showError('Failed to move card: ' + e.message);
+  }
+}
+
+async function deleteCard(id) {
+  if (!confirm('Delete this card?')) return;
+  const idx = cards.findIndex(c => c.id === id);
+  if (idx === -1) return;
+  const removed = cards.splice(idx, 1)[0]; // optimistic
+  renderBoard();
+  try {
+    const res = await fetch(`${API}/cards/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    toast('Card deleted.');
+  } catch(e) {
+    cards.splice(idx, 0, removed); // rollback
+    renderBoard();
+    showError('Failed to delete card: ' + e.message);
+  }
+}
+
+// ─── Add-card form ────────────────────────────────────────────────────────────
+document.querySelectorAll('.add-card-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const col = btn.dataset.col;
+    btn.style.display = 'none';
+    const form = document.createElement('div');
+    form.className = 'add-card-form';
+    form.innerHTML = `
+      <input type="text" class="f-title" placeholder="Card title…" maxlength="200" autofocus>
+      <select class="f-assignee">
+        <option value="Both">Both</option>
+        <option value="Harvey">Harvey</option>
+        <option value="Jolie">Jolie</option>
+        <option value="Claude">Claude</option>
+      </select>
+      <input type="text" class="f-project" placeholder="Project (optional)" maxlength="80">
+      <div class="form-row">
+        <button class="btn-save">Add</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    `;
+    btn.parentElement.insertBefore(form, btn);
+    form.querySelector('.f-title').focus();
+
+    form.querySelector('.btn-save').addEventListener('click', async () => {
+      const title = form.querySelector('.f-title').value.trim();
+      if (!title) { form.querySelector('.f-title').focus(); return; }
+      await addCard(
+        title,
+        col,
+        form.querySelector('.f-assignee').value,
+        form.querySelector('.f-project').value.trim()
+      );
+      form.remove();
+      btn.style.display = '';
+    });
+    form.querySelector('.btn-cancel').addEventListener('click', () => {
+      form.remove();
+      btn.style.display = '';
+    });
+    form.querySelector('.f-title').addEventListener('keydown', e => {
+      if (e.key === 'Enter') form.querySelector('.btn-save').click();
+      if (e.key === 'Escape') form.querySelector('.btn-cancel').click();
+    });
+  });
+});
+
+// ─── Refresh button ──────────────────────────────────────────────────────────
+document.getElementById('refresh-btn').addEventListener('click', fetchCards);
+
+// ─── Auth flow ───────────────────────────────────────────────────────────────
+async function init() {
+  const modal = document.getElementById('auth-modal');
+  const pinInput = document.getElementById('pin-input');
+  const pinSubmit = document.getElementById('pin-submit');
+  const authError = document.getElementById('auth-error');
+
+  // If PIN_HASH is placeholder, skip auth (dev mode)
+  if (BOARD_PIN_HASH === '__PIN_HASH__') {
+    modal.classList.add('hidden');
+    fetchCards();
+    return;
+  }
+
+  if (await checkAuth()) {
+    modal.classList.add('hidden');
+    fetchCards();
+    return;
+  }
+
+  modal.classList.remove('hidden');
+  showLoading(false);
+
+  async function attempt() {
+    authError.textContent = '';
+    const ok = await tryPin(pinInput.value);
+    if (ok) {
+      modal.classList.add('hidden');
+      fetchCards();
+    } else {
+      authError.textContent = 'Incorrect access code.';
+      pinInput.value = '';
+      pinInput.focus();
+    }
+  }
+  pinSubmit.addEventListener('click', attempt);
+  pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+}
+
+init();
+</script>
+</body>
+</html>
