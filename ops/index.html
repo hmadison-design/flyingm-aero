@@ -41,8 +41,8 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .col-count { font-size: .72rem; background: rgba(255,255,255,.12); border-radius: 20px; padding: 1px 8px; color: var(--mist); }
 .col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .col-dot.preflight { background: var(--sky); }
-.col-dot.enroute   { background: var(--amber); }
-.col-dot.landed    { background: #2ecc71; }
+.col-dot.enroute   { background: #ff7a1a; }
+.col-dot.landed    { background: #22a83a; }
 .col-dot.flyingm   { background: #9b59b6; }
 
 /* ── Card list ── */
@@ -64,21 +64,21 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .card[data-col="Preflight"] .card-delete { color: rgba(168,205,232,.4); }
 .card[data-col="Preflight"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #c8dff0; }
 
-.card[data-col="Enroute"] { background: #6b4100; border-color: #9a5e00; }
-.card[data-col="Enroute"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #e8a030; }
-.card[data-col="Enroute"] .card-title { color: #fff3d6; }
-.card[data-col="Enroute"] .card-notes { color: #e0b870; }
-.card[data-col="Enroute"] .card-meta { color: #e0b870; }
-.card[data-col="Enroute"] .card-delete { color: rgba(224,184,112,.4); }
-.card[data-col="Enroute"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #f0d090; }
+.card[data-col="Enroute"] { background: #7a3500; border-color: #c45500; }
+.card[data-col="Enroute"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #ff7a1a; }
+.card[data-col="Enroute"] .card-title { color: #fff0e0; }
+.card[data-col="Enroute"] .card-notes { color: #ffb870; }
+.card[data-col="Enroute"] .card-meta { color: #ffb870; }
+.card[data-col="Enroute"] .card-delete { color: rgba(255,184,112,.4); }
+.card[data-col="Enroute"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #ffd0a0; }
 
-.card[data-col="Landed"] { background: #0d4a22; border-color: #156632; }
-.card[data-col="Landed"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #2ecc71; }
-.card[data-col="Landed"] .card-title { color: #d6f5e3; }
-.card[data-col="Landed"] .card-notes { color: #7ecfa0; }
-.card[data-col="Landed"] .card-meta { color: #7ecfa0; }
-.card[data-col="Landed"] .card-delete { color: rgba(126,207,160,.4); }
-.card[data-col="Landed"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #a8e8c0; }
+.card[data-col="Landed"] { background: #0a4d1a; border-color: #117a28; }
+.card[data-col="Landed"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #22a83a; }
+.card[data-col="Landed"] .card-title { color: #d0f5d8; }
+.card[data-col="Landed"] .card-notes { color: #70d484; }
+.card[data-col="Landed"] .card-meta { color: #70d484; }
+.card[data-col="Landed"] .card-delete { color: rgba(112,212,132,.4); }
+.card[data-col="Landed"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #98e8a8; }
 
 .card[data-col="Flying M"] { background: #3d1a5c; border-color: #5a2888; }
 .card[data-col="Flying M"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #9b59b6; }
