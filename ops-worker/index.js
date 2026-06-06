@@ -35,7 +35,7 @@ export class OpsBoard {
     const url = new URL(request.url);
     const path = url.pathname;
     const method = request.method.toUpperCase();
-    const validCols = ['Preflight', 'Enroute', 'Landed', 'Flying M'];
+    const validCols = ['Preflight', 'Enroute', 'Landed', 'Holding Pattern', 'Flying M'];
 
     if (method === 'GET' && path === '/cards') {
       const cards = (await this.state.storage.get('cards')) || [];
