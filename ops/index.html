@@ -191,14 +191,16 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .cal-nav button { background: none; border: 1px solid rgba(255,255,255,.2); color: var(--mist); border-radius: 6px; padding: 4px 14px; cursor: pointer; font-size: .9rem; transition: background .15s; }
 .cal-nav button:hover { background: rgba(255,255,255,.08); }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; flex: 1; }
-.cal-dow { font-family: var(--font-display); font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mist); opacity: .6; text-align: center; padding: 4px 0 8px; }
-.cal-cell { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 6px; padding: 6px; min-height: 90px; display: flex; flex-direction: column; gap: 3px; overflow: hidden; }
+.cal-dow { font-family: var(--font-display); font-size: 2.25rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--mist); opacity: .6; text-align: center; padding: 4px 0 10px; }
+.cal-cell { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 6px; padding: 6px; min-height: 110px; display: flex; flex-direction: column; gap: 3px; overflow: hidden; }
 .cal-cell.other-month { opacity: .35; }
 .cal-cell.today { border-color: var(--sky); background: rgba(40,128,190,.08); }
-.cal-day-num { font-size: .72rem; font-weight: 600; color: var(--mist); opacity: .7; margin-bottom: 2px; }
+.cal-day-num { font-size: 2.1rem; font-weight: 700; color: var(--mist); opacity: .7; margin-bottom: 3px; line-height: 1; }
 .cal-cell.today .cal-day-num { color: var(--sky); opacity: 1; }
-.cal-item { border-radius: 3px; padding: 2px 5px; font-size: .62rem; font-weight: 500; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.4; transition: opacity .15s; }
+.cal-item { border-radius: 3px; padding: 3px 5px; font-size: .62rem; font-weight: 500; cursor: pointer; overflow: hidden; line-height: 1.35; transition: opacity .15s; display: flex; flex-direction: column; gap: 1px; }
 .cal-item:hover { opacity: .8; }
+.cal-item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cal-item-assignee { font-size: .58rem; opacity: .8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* Cal item colors match column */
 .cal-item[data-col="Preflight"]      { background: #174a7a; color: #c8e4f8; }
 .cal-item[data-col="Enroute"]        { background: #0a9aaa; color: #001a1e; }
@@ -655,11 +657,11 @@ function shortTitle(title) {
 }
 
 function assigneeShort(a) {
-  if (!a || a === 'Both') return '·H+J';
-  if (a === 'Harvey') return '·H';
-  if (a === 'Jolie') return '·J';
-  if (a === 'Claude') return '·C';
-  return '';
+  if (!a || a === 'Both') return 'Harvey + Jolie';
+  if (a === 'Harvey') return 'Harvey';
+  if (a === 'Jolie') return 'Jolie';
+  if (a === 'Claude') return 'Claude';
+  return a;
 }
 
 function renderCalendar() {
@@ -726,7 +728,10 @@ function renderCalendar() {
       item.className = 'cal-item';
       item.setAttribute('data-col', c.column);
       item.title = c.title;
-      item.textContent = shortTitle(c.title) + assigneeShort(c.assignee);
+      item.innerHTML = `
+        <div class="cal-item-title">${escHtml(shortTitle(c.title))}</div>
+        <div class="cal-item-assignee">${escHtml(assigneeShort(c.assignee))}</div>
+      `;
       item.addEventListener('click', () => openEditModal(c.id));
       cell.appendChild(item);
     });
