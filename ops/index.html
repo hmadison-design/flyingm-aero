@@ -33,10 +33,11 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 #refresh-btn { background: none; border: 1px solid var(--sky); color: var(--mist); border-radius: 6px; padding: 4px 12px; cursor: pointer; font-size: .78rem; transition: background .15s; }
 #refresh-btn:hover { background: var(--teal); }
 
-/* ── Board ── */
-#board { display: flex; gap: 18px; padding: 24px 28px; flex: 1; align-items: flex-start; overflow-x: auto; }
-.column { flex: 1; min-width: 270px; max-width: 360px; background: rgba(255,255,255,.04); border-radius: 10px; border: 1px solid rgba(255,255,255,.08); display: flex; flex-direction: column; }
-.col-header { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; gap: 8px; }
+/* ── Board — full viewport height, columns scroll independently ── */
+body { height: 100vh; overflow: hidden; }
+#board { display: flex; gap: 18px; padding: 16px 28px 16px; flex: 1; align-items: stretch; overflow-x: auto; height: 0; /* flex child fills remaining height */ }
+.column { flex: 1; min-width: 270px; max-width: 360px; background: rgba(255,255,255,.04); border-radius: 10px; border: 1px solid rgba(255,255,255,.08); display: flex; flex-direction: column; min-height: 0; }
+.col-header { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .col-header h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .col-count { font-size: .72rem; background: rgba(255,255,255,.12); border-radius: 20px; padding: 1px 8px; color: var(--mist); }
 .col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -46,9 +47,13 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .col-dot.holdingpattern { background: #A1A1A1; }
 .col-dot.flyingm        { background: #4a8ecf; }
 
-/* ── Card list ── */
-.card-list { padding: 10px; min-height: 120px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+/* ── Card list — scrollable, fills column height ── */
+.col-body { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.15) transparent; }
+.col-body::-webkit-scrollbar { width: 4px; }
+.col-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
+.card-list { padding: 10px; min-height: 80px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .card-list.drag-over { background: rgba(40,128,190,.12); border-radius: 6px; }
+.add-card-wrap { flex-shrink: 0; }
 
 /* ── Cards ── */
 /* Base card — column-specific backgrounds override via data-col */
@@ -258,28 +263,38 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 <div id="board">
   <div class="column" id="col-preflight" data-col="Preflight">
     <div class="col-header"><span class="col-dot preflight"></span><h2>Preflight</h2><span class="col-count" id="count-preflight">0</span></div>
-    <div class="card-list" id="list-preflight" data-col="Preflight"></div>
-    <button class="add-card-btn" data-col="Preflight">+ Add card</button>
+    <div class="col-body">
+      <div class="card-list" id="list-preflight" data-col="Preflight"></div>
+      <div class="add-card-wrap"><button class="add-card-btn" data-col="Preflight">+ Add card</button></div>
+    </div>
   </div>
   <div class="column" id="col-enroute" data-col="Enroute">
     <div class="col-header"><span class="col-dot enroute"></span><h2>Enroute</h2><span class="col-count" id="count-enroute">0</span></div>
-    <div class="card-list" id="list-enroute" data-col="Enroute"></div>
-    <button class="add-card-btn" data-col="Enroute">+ Add card</button>
+    <div class="col-body">
+      <div class="card-list" id="list-enroute" data-col="Enroute"></div>
+      <div class="add-card-wrap"><button class="add-card-btn" data-col="Enroute">+ Add card</button></div>
+    </div>
   </div>
   <div class="column" id="col-landed" data-col="Landed">
     <div class="col-header"><span class="col-dot landed"></span><h2>Landed</h2><span class="col-count" id="count-landed">0</span></div>
-    <div class="card-list" id="list-landed" data-col="Landed"></div>
-    <button class="add-card-btn" data-col="Landed">+ Add card</button>
+    <div class="col-body">
+      <div class="card-list" id="list-landed" data-col="Landed"></div>
+      <div class="add-card-wrap"><button class="add-card-btn" data-col="Landed">+ Add card</button></div>
+    </div>
   </div>
   <div class="column" id="col-holdingpattern" data-col="Holding Pattern">
     <div class="col-header"><span class="col-dot holdingpattern"></span><h2>Holding Pattern</h2><span class="col-count" id="count-holdingpattern">0</span></div>
-    <div class="card-list" id="list-holdingpattern" data-col="Holding Pattern"></div>
-    <button class="add-card-btn" data-col="Holding Pattern">+ Add card</button>
+    <div class="col-body">
+      <div class="card-list" id="list-holdingpattern" data-col="Holding Pattern"></div>
+      <div class="add-card-wrap"><button class="add-card-btn" data-col="Holding Pattern">+ Add card</button></div>
+    </div>
   </div>
   <div class="column" id="col-flyingm" data-col="Flying M">
     <div class="col-header"><span class="col-dot flyingm"></span><h2>Flying M</h2><span class="col-count" id="count-flyingm">0</span></div>
-    <div class="card-list" id="list-flyingm" data-col="Flying M"></div>
-    <button class="add-card-btn" data-col="Flying M">+ Add card</button>
+    <div class="col-body">
+      <div class="card-list" id="list-flyingm" data-col="Flying M"></div>
+      <div class="add-card-wrap"><button class="add-card-btn" data-col="Flying M">+ Add card</button></div>
+    </div>
   </div>
 </div>
 
@@ -603,13 +618,51 @@ async function handleFiles(fileList) {
   }
 }
 
-// ── Drag & drop ───────────────────────────────────────────────────────────────
-function onDragStart(e) { dragId = e.currentTarget.dataset.id; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
-function onDragEnd(e) { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over')); }
+// ── Drag & drop with auto-scroll ─────────────────────────────────────────────
+let autoScrollTimer = null;
+
+function onDragStart(e) {
+  dragId = e.currentTarget.dataset.id;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
+  clearInterval(autoScrollTimer); autoScrollTimer = null;
+}
+
+// Auto-scroll the col-body when dragging near its top or bottom edge
+document.addEventListener('dragover', e => {
+  clearInterval(autoScrollTimer); autoScrollTimer = null;
+  // Find the col-body under the cursor
+  const colBody = e.target.closest('.col-body');
+  if (!colBody) return;
+  const rect = colBody.getBoundingClientRect();
+  const ZONE = 60; // px from edge to trigger scroll
+  const SPEED = 8;
+  if (e.clientY < rect.top + ZONE) {
+    autoScrollTimer = setInterval(() => { colBody.scrollTop -= SPEED; }, 16);
+  } else if (e.clientY > rect.bottom - ZONE) {
+    autoScrollTimer = setInterval(() => { colBody.scrollTop += SPEED; }, 16);
+  }
+});
+
 document.querySelectorAll('.card-list').forEach(list => {
-  list.addEventListener('dragover', e => { e.preventDefault(); document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over')); list.classList.add('drag-over'); dragOverCol = list.dataset.col; });
+  list.addEventListener('dragover', e => {
+    e.preventDefault();
+    document.querySelectorAll('.card-list').forEach(l => l.classList.remove('drag-over'));
+    list.classList.add('drag-over');
+    dragOverCol = list.dataset.col;
+  });
   list.addEventListener('dragleave', () => list.classList.remove('drag-over'));
-  list.addEventListener('drop', e => { e.preventDefault(); list.classList.remove('drag-over'); if (dragId && dragOverCol) moveCard(dragId, dragOverCol); dragId = null; dragOverCol = null; });
+  list.addEventListener('drop', e => {
+    e.preventDefault();
+    list.classList.remove('drag-over');
+    if (dragId && dragOverCol) moveCard(dragId, dragOverCol);
+    dragId = null; dragOverCol = null;
+    clearInterval(autoScrollTimer); autoScrollTimer = null;
+  });
 });
 
 // ── Add card form ─────────────────────────────────────────────────────────────
