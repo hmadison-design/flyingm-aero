@@ -42,9 +42,9 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .col-dot.preflight      { background: var(--sky); }
 .col-dot.enroute        { background: #2EDEFF; }
-.col-dot.landed         { background: #06C63D; }
+.col-dot.landed         { background: #00C853; }
 .col-dot.holdingpattern { background: #A1A1A1; }
-.col-dot.flyingm        { background: #4a5de8; }
+.col-dot.flyingm        { background: #4a8ecf; }
 
 /* ── Card list ── */
 .card-list { padding: 10px; min-height: 120px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
@@ -77,17 +77,14 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .card[data-col="Enroute"] .badge-jolie  { background: #006655; color: #fff; }
 .card[data-col="Enroute"] .badge-both   { background: linear-gradient(90deg,#006655 50%,#0044cc 50%); color: #fff; }
 
-/* Landed — Kelly green, dark text for contrast */
-.card[data-col="Landed"] { background: #05923d; border-color: #06C63D; }
-.card[data-col="Landed"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #4dffa0; }
-.card[data-col="Landed"] .card-title { color: #001a0a; }
-.card[data-col="Landed"] .card-notes { color: #003818; }
-.card[data-col="Landed"] .card-meta { color: #003818; }
-.card[data-col="Landed"] .card-delete { color: rgba(0,56,24,.5); }
-.card[data-col="Landed"] .attach-chip { background: rgba(0,0,0,.15); border-color: rgba(0,0,0,.2); color: #001a0a; }
-.card[data-col="Landed"] .badge-harvey { background: #0044cc; color: #fff; }
-.card[data-col="Landed"] .badge-jolie  { background: #006655; color: #fff; }
-.card[data-col="Landed"] .badge-both   { background: linear-gradient(90deg,#006655 50%,#0044cc 50%); color: #fff; }
+/* Landed — deep forest green, light text */
+.card[data-col="Landed"] { background: #00612D; border-color: #008a40; }
+.card[data-col="Landed"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #00c85a; }
+.card[data-col="Landed"] .card-title { color: #d0ffe6; }
+.card[data-col="Landed"] .card-notes { color: #80dba8; }
+.card[data-col="Landed"] .card-meta { color: #80dba8; }
+.card[data-col="Landed"] .card-delete { color: rgba(128,219,168,.4); }
+.card[data-col="Landed"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #a0f0c0; }
 
 /* Holding Pattern — medium grey, dark text */
 .card[data-col="Holding Pattern"] { background: #787878; border-color: #A1A1A1; }
@@ -101,14 +98,14 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .card[data-col="Holding Pattern"] .badge-jolie  { background: #006655; color: #fff; }
 .card[data-col="Holding Pattern"] .badge-both   { background: linear-gradient(90deg,#006655 50%,#0044cc 50%); color: #fff; }
 
-/* Flying M — deep navy blue, light text */
-.card[data-col="Flying M"] { background: #141E69; border-color: #2a36a0; }
-.card[data-col="Flying M"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #5060d0; }
-.card[data-col="Flying M"] .card-title { color: #dde2ff; }
-.card[data-col="Flying M"] .card-notes { color: #9aa0e0; }
-.card[data-col="Flying M"] .card-meta { color: #9aa0e0; }
-.card[data-col="Flying M"] .card-delete { color: rgba(154,160,224,.4); }
-.card[data-col="Flying M"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #c0c8f8; }
+/* Flying M — very deep navy, light text */
+.card[data-col="Flying M"] { background: #00244A; border-color: #003d80; }
+.card[data-col="Flying M"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #0066cc; }
+.card[data-col="Flying M"] .card-title { color: #d0e8ff; }
+.card[data-col="Flying M"] .card-notes { color: #80b0e0; }
+.card[data-col="Flying M"] .card-meta { color: #80b0e0; }
+.card[data-col="Flying M"] .card-delete { color: rgba(128,176,224,.4); }
+.card[data-col="Flying M"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #a8ccf0; }
 
 /* Shared card internals */
 .card-top { display: flex; align-items: flex-start; gap: 6px; padding-right: 20px; margin-bottom: 4px; }
@@ -180,6 +177,35 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .upload-zone input[type=file] { display: none; }
 .upload-progress { font-size: .78rem; color: var(--amber); margin-top: 4px; }
 
+/* ── View toggle ── */
+.view-toggle { display: flex; gap: 4px; margin-left: 8px; }
+.view-btn { background: none; border: 1px solid rgba(255,255,255,.2); color: var(--mist); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 1rem; line-height: 1; transition: background .15s, border-color .15s; }
+.view-btn.active { background: var(--sky); border-color: var(--sky); color: #fff; }
+.view-btn:hover:not(.active) { background: rgba(255,255,255,.08); }
+
+/* ── Calendar view ── */
+#calendar-view { display: none; padding: 16px 28px 28px; flex: 1; flex-direction: column; }
+#calendar-view.visible { display: flex; }
+.cal-nav { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.cal-nav h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; letter-spacing: .06em; color: var(--cream); min-width: 180px; text-align: center; }
+.cal-nav button { background: none; border: 1px solid rgba(255,255,255,.2); color: var(--mist); border-radius: 6px; padding: 4px 14px; cursor: pointer; font-size: .9rem; transition: background .15s; }
+.cal-nav button:hover { background: rgba(255,255,255,.08); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; flex: 1; }
+.cal-dow { font-family: var(--font-display); font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mist); opacity: .6; text-align: center; padding: 4px 0 8px; }
+.cal-cell { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 6px; padding: 6px; min-height: 90px; display: flex; flex-direction: column; gap: 3px; overflow: hidden; }
+.cal-cell.other-month { opacity: .35; }
+.cal-cell.today { border-color: var(--sky); background: rgba(40,128,190,.08); }
+.cal-day-num { font-size: .72rem; font-weight: 600; color: var(--mist); opacity: .7; margin-bottom: 2px; }
+.cal-cell.today .cal-day-num { color: var(--sky); opacity: 1; }
+.cal-item { border-radius: 3px; padding: 2px 5px; font-size: .62rem; font-weight: 500; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.4; transition: opacity .15s; }
+.cal-item:hover { opacity: .8; }
+/* Cal item colors match column */
+.cal-item[data-col="Preflight"]      { background: #174a7a; color: #c8e4f8; }
+.cal-item[data-col="Enroute"]        { background: #0a9aaa; color: #001a1e; }
+.cal-item[data-col="Landed"]         { background: #00612D; color: #a0f0c0; }
+.cal-item[data-col="Holding Pattern"]{ background: #787878; color: #f0f0f0; }
+.cal-item[data-col="Flying M"]       { background: #00244A; color: #a8ccf0; }
+
 /* ── Toast / error / loading / auth ── */
 #toast { position: fixed; bottom: 24px; right: 24px; background: var(--deep); border: 1px solid var(--sky); color: var(--cream); padding: 10px 18px; border-radius: 8px; font-size: .82rem; opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 999; }
 #toast.show { opacity: 1; }
@@ -220,6 +246,10 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
   <h1>J+H Ops Board</h1>
   <span class="subtitle">Harvey · Jolie · Claude</span>
   <span id="last-sync"></span>
+  <div class="view-toggle">
+    <button class="view-btn active" id="btn-board" title="Board view">⬛</button>
+    <button class="view-btn" id="btn-calendar" title="Calendar view">📅</button>
+  </div>
   <button id="refresh-btn">↻ Refresh</button>
 </header>
 
@@ -249,6 +279,16 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
     <div class="card-list" id="list-flyingm" data-col="Flying M"></div>
     <button class="add-card-btn" data-col="Flying M">+ Add card</button>
   </div>
+</div>
+
+<!-- Calendar view -->
+<div id="calendar-view">
+  <div class="cal-nav">
+    <button id="cal-prev">‹</button>
+    <h2 id="cal-title"></h2>
+    <button id="cal-next">›</button>
+  </div>
+  <div class="cal-grid" id="cal-grid"></div>
 </div>
 
 <!-- Edit Modal -->
@@ -602,6 +642,123 @@ document.querySelectorAll('.add-card-btn').forEach(btn => {
 });
 
 document.getElementById('refresh-btn').addEventListener('click', fetchCards);
+
+// ── Calendar view ─────────────────────────────────────────────────────────────
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth(); // 0-based
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function shortTitle(title) {
+  const words = title.split(' ');
+  return words.slice(0, 5).join(' ') + (words.length > 5 ? '…' : '');
+}
+
+function assigneeShort(a) {
+  if (!a || a === 'Both') return '·H+J';
+  if (a === 'Harvey') return '·H';
+  if (a === 'Jolie') return '·J';
+  if (a === 'Claude') return '·C';
+  return '';
+}
+
+function renderCalendar() {
+  document.getElementById('cal-title').textContent = `${MONTHS[calMonth]} ${calYear}`;
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  // Day-of-week headers
+  DAYS.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-dow';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const daysInPrev = new Date(calYear, calMonth, 0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Build lookup: date string -> cards
+  const byDate = {};
+  cards.forEach(c => {
+    if (!c.dueDate || c.dueDate === '') return;
+    byDate[c.dueDate] = byDate[c.dueDate] || [];
+    byDate[c.dueDate].push(c);
+  });
+
+  // Fill grid: prev month overflow + current month + next month overflow
+  const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+  for (let i = 0; i < totalCells; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell';
+
+    let year = calYear, month = calMonth, day;
+    if (i < firstDay) {
+      // prev month
+      day = daysInPrev - firstDay + i + 1;
+      month = calMonth - 1;
+      if (month < 0) { month = 11; year--; }
+      cell.classList.add('other-month');
+    } else if (i >= firstDay + daysInMonth) {
+      // next month
+      day = i - firstDay - daysInMonth + 1;
+      month = calMonth + 1;
+      if (month > 11) { month = 0; year++; }
+      cell.classList.add('other-month');
+    } else {
+      day = i - firstDay + 1;
+      const cellDate = new Date(calYear, calMonth, day);
+      if (cellDate.getTime() === today.getTime()) cell.classList.add('today');
+    }
+
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+
+    const dayNum = document.createElement('div');
+    dayNum.className = 'cal-day-num';
+    dayNum.textContent = day;
+    cell.appendChild(dayNum);
+
+    // Add card items for this date
+    (byDate[dateStr] || []).forEach(c => {
+      const item = document.createElement('div');
+      item.className = 'cal-item';
+      item.setAttribute('data-col', c.column);
+      item.title = c.title;
+      item.textContent = shortTitle(c.title) + assigneeShort(c.assignee);
+      item.addEventListener('click', () => openEditModal(c.id));
+      cell.appendChild(item);
+    });
+
+    grid.appendChild(cell);
+  }
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => {
+  calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+});
+document.getElementById('cal-next').addEventListener('click', () => {
+  calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar();
+});
+
+// ── View toggle ───────────────────────────────────────────────────────────────
+const boardView = document.getElementById('board');
+const calView   = document.getElementById('calendar-view');
+const btnBoard  = document.getElementById('btn-board');
+const btnCal    = document.getElementById('btn-calendar');
+
+btnBoard.addEventListener('click', () => {
+  boardView.style.display = ''; calView.classList.remove('visible');
+  btnBoard.classList.add('active'); btnCal.classList.remove('active');
+});
+btnCal.addEventListener('click', () => {
+  boardView.style.display = 'none'; calView.classList.add('visible');
+  btnCal.classList.add('active'); btnBoard.classList.remove('active');
+  renderCalendar();
+});
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 async function init() {
