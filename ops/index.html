@@ -399,7 +399,8 @@ function dueDaysFromNow(dateStr) {
   const today = new Date(); today.setHours(0,0,0,0);
   return Math.round((due - today) / 86400000);
 }
-function dueBadge(dateStr) {
+function dueBadge(dateStr, column) {
+  if (column === 'Landed') return ''; // landed = done, no due date pressure
   const days = dueDaysFromNow(dateStr);
   if (days === null) return '';
   const fmt = new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric'});
@@ -500,7 +501,7 @@ function renderBoard() {
         <div class="card-meta">
           ${badgeHTML(card.assignee)}
           ${card.project ? `<span>${escHtml(card.project)}</span>` : ''}
-          ${dueBadge(card.dueDate)}
+          ${dueBadge(card.dueDate, card.column)}
         </div>
         ${attachHtml}
       `;
