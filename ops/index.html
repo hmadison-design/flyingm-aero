@@ -40,10 +40,11 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .col-header h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .col-count { font-size: .72rem; background: rgba(255,255,255,.12); border-radius: 20px; padding: 1px 8px; color: var(--mist); }
 .col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.col-dot.preflight { background: var(--sky); }
-.col-dot.enroute   { background: #ff7a1a; }
-.col-dot.landed    { background: #22a83a; }
-.col-dot.flyingm   { background: #9b59b6; }
+.col-dot.preflight      { background: var(--sky); }
+.col-dot.enroute        { background: #2EDEFF; }
+.col-dot.landed         { background: #06C63D; }
+.col-dot.holdingpattern { background: #A1A1A1; }
+.col-dot.flyingm        { background: #4a5de8; }
 
 /* ── Card list ── */
 .card-list { padding: 10px; min-height: 120px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
@@ -64,29 +65,50 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
 .card[data-col="Preflight"] .card-delete { color: rgba(168,205,232,.4); }
 .card[data-col="Preflight"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #c8dff0; }
 
-.card[data-col="Enroute"] { background: #7a3500; border-color: #c45500; }
-.card[data-col="Enroute"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #ff7a1a; }
-.card[data-col="Enroute"] .card-title { color: #fff0e0; }
-.card[data-col="Enroute"] .card-notes { color: #ffb870; }
-.card[data-col="Enroute"] .card-meta { color: #ffb870; }
-.card[data-col="Enroute"] .card-delete { color: rgba(255,184,112,.4); }
-.card[data-col="Enroute"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #ffd0a0; }
+/* Enroute — bright cyan, dark text for contrast */
+.card[data-col="Enroute"] { background: #0a9aaa; border-color: #2EDEFF; }
+.card[data-col="Enroute"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #7af0ff; }
+.card[data-col="Enroute"] .card-title { color: #001a1e; }
+.card[data-col="Enroute"] .card-notes { color: #003840; }
+.card[data-col="Enroute"] .card-meta { color: #003840; }
+.card[data-col="Enroute"] .card-delete { color: rgba(0,56,64,.5); }
+.card[data-col="Enroute"] .attach-chip { background: rgba(0,0,0,.15); border-color: rgba(0,0,0,.2); color: #001a1e; }
+.card[data-col="Enroute"] .badge-harvey { background: #0044cc; color: #fff; }
+.card[data-col="Enroute"] .badge-jolie  { background: #006655; color: #fff; }
+.card[data-col="Enroute"] .badge-both   { background: linear-gradient(90deg,#006655 50%,#0044cc 50%); color: #fff; }
 
-.card[data-col="Landed"] { background: #0a4d1a; border-color: #117a28; }
-.card[data-col="Landed"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #22a83a; }
-.card[data-col="Landed"] .card-title { color: #d0f5d8; }
-.card[data-col="Landed"] .card-notes { color: #70d484; }
-.card[data-col="Landed"] .card-meta { color: #70d484; }
-.card[data-col="Landed"] .card-delete { color: rgba(112,212,132,.4); }
-.card[data-col="Landed"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #98e8a8; }
+/* Landed — Kelly green, dark text for contrast */
+.card[data-col="Landed"] { background: #05923d; border-color: #06C63D; }
+.card[data-col="Landed"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #4dffa0; }
+.card[data-col="Landed"] .card-title { color: #001a0a; }
+.card[data-col="Landed"] .card-notes { color: #003818; }
+.card[data-col="Landed"] .card-meta { color: #003818; }
+.card[data-col="Landed"] .card-delete { color: rgba(0,56,24,.5); }
+.card[data-col="Landed"] .attach-chip { background: rgba(0,0,0,.15); border-color: rgba(0,0,0,.2); color: #001a0a; }
+.card[data-col="Landed"] .badge-harvey { background: #0044cc; color: #fff; }
+.card[data-col="Landed"] .badge-jolie  { background: #006655; color: #fff; }
+.card[data-col="Landed"] .badge-both   { background: linear-gradient(90deg,#006655 50%,#0044cc 50%); color: #fff; }
 
-.card[data-col="Flying M"] { background: #3d1a5c; border-color: #5a2888; }
-.card[data-col="Flying M"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #9b59b6; }
-.card[data-col="Flying M"] .card-title { color: #f0e0ff; }
-.card[data-col="Flying M"] .card-notes { color: #c090e0; }
-.card[data-col="Flying M"] .card-meta { color: #c090e0; }
-.card[data-col="Flying M"] .card-delete { color: rgba(192,144,224,.4); }
-.card[data-col="Flying M"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #d8b0f0; }
+/* Holding Pattern — medium grey, dark text */
+.card[data-col="Holding Pattern"] { background: #787878; border-color: #A1A1A1; }
+.card[data-col="Holding Pattern"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #c8c8c8; }
+.card[data-col="Holding Pattern"] .card-title { color: #0a0a0a; }
+.card[data-col="Holding Pattern"] .card-notes { color: #1a1a1a; }
+.card[data-col="Holding Pattern"] .card-meta { color: #1a1a1a; }
+.card[data-col="Holding Pattern"] .card-delete { color: rgba(0,0,0,.35); }
+.card[data-col="Holding Pattern"] .attach-chip { background: rgba(0,0,0,.15); border-color: rgba(0,0,0,.2); color: #0a0a0a; }
+.card[data-col="Holding Pattern"] .badge-harvey { background: #0044cc; color: #fff; }
+.card[data-col="Holding Pattern"] .badge-jolie  { background: #006655; color: #fff; }
+.card[data-col="Holding Pattern"] .badge-both   { background: linear-gradient(90deg,#006655 50%,#0044cc 50%); color: #fff; }
+
+/* Flying M — deep navy blue, light text */
+.card[data-col="Flying M"] { background: #141E69; border-color: #2a36a0; }
+.card[data-col="Flying M"]:hover { box-shadow: 0 4px 16px rgba(0,0,0,.4); border-color: #5060d0; }
+.card[data-col="Flying M"] .card-title { color: #dde2ff; }
+.card[data-col="Flying M"] .card-notes { color: #9aa0e0; }
+.card[data-col="Flying M"] .card-meta { color: #9aa0e0; }
+.card[data-col="Flying M"] .card-delete { color: rgba(154,160,224,.4); }
+.card[data-col="Flying M"] .attach-chip { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); color: #c0c8f8; }
 
 /* Shared card internals */
 .card-top { display: flex; align-items: flex-start; gap: 6px; padding-right: 20px; margin-bottom: 4px; }
@@ -217,6 +239,11 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
     <div class="card-list" id="list-landed" data-col="Landed"></div>
     <button class="add-card-btn" data-col="Landed">+ Add card</button>
   </div>
+  <div class="column" id="col-holdingpattern" data-col="Holding Pattern">
+    <div class="col-header"><span class="col-dot holdingpattern"></span><h2>Holding Pattern</h2><span class="col-count" id="count-holdingpattern">0</span></div>
+    <div class="card-list" id="list-holdingpattern" data-col="Holding Pattern"></div>
+    <button class="add-card-btn" data-col="Holding Pattern">+ Add card</button>
+  </div>
   <div class="column" id="col-flyingm" data-col="Flying M">
     <div class="col-header"><span class="col-dot flyingm"></span><h2>Flying M</h2><span class="col-count" id="count-flyingm">0</span></div>
     <div class="card-list" id="list-flyingm" data-col="Flying M"></div>
@@ -239,6 +266,7 @@ header .subtitle { font-size: .8rem; color: var(--mist); opacity: .7; margin-lef
           <option value="Preflight">Preflight</option>
           <option value="Enroute">Enroute</option>
           <option value="Landed">Landed</option>
+          <option value="Holding Pattern">Holding Pattern</option>
           <option value="Flying M">Flying M</option>
         </select>
       </div>
@@ -402,9 +430,9 @@ async function saveCard(id, updates) {
 
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderBoard() {
-  const cols = ['Preflight', 'Enroute', 'Landed', 'Flying M'];
-  const listIds = { 'Preflight':'list-preflight', 'Enroute':'list-enroute', 'Landed':'list-landed', 'Flying M':'list-flyingm' };
-  const countIds = { 'Preflight':'count-preflight', 'Enroute':'count-enroute', 'Landed':'count-landed', 'Flying M':'count-flyingm' };
+  const cols = ['Preflight', 'Enroute', 'Landed', 'Holding Pattern', 'Flying M'];
+  const listIds = { 'Preflight':'list-preflight', 'Enroute':'list-enroute', 'Landed':'list-landed', 'Holding Pattern':'list-holdingpattern', 'Flying M':'list-flyingm' };
+  const countIds = { 'Preflight':'count-preflight', 'Enroute':'count-enroute', 'Landed':'count-landed', 'Holding Pattern':'count-holdingpattern', 'Flying M':'count-flyingm' };
   cols.forEach(col => {
     const colCards = sortCards(cards.filter(c => c.column === col));
     document.getElementById(countIds[col]).textContent = colCards.length;
