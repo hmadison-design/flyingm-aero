@@ -53,7 +53,7 @@ body { height: 100vh; overflow: hidden; }
 .col-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
 .card-list { padding: 10px; min-height: 80px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .card-list.drag-over { background: rgba(40,128,190,.12); border-radius: 6px; }
-.add-card-wrap { flex-shrink: 0; }
+.add-card-footer { flex-shrink: 0; border-top: 1px solid rgba(255,255,255,.06); padding: 6px 10px 8px; }
 
 /* ── Cards ── */
 /* Base card — column-specific backgrounds override via data-col */
@@ -141,7 +141,7 @@ body { height: 100vh; overflow: hidden; }
 .card-delete:hover { color: #ff8080 !important; }
 
 /* ── Add card ── */
-.add-card-btn { margin: 0 10px 10px; padding: 7px; background: none; border: 1px dashed rgba(255,255,255,.18); border-radius: 7px; color: var(--mist); opacity: .6; cursor: pointer; font-size: .82rem; text-align: center; transition: opacity .15s, border-color .15s; }
+.add-card-btn { width: 100%; margin: 0; padding: 7px; background: none; border: 1px dashed rgba(255,255,255,.18); border-radius: 7px; color: var(--mist); opacity: .6; cursor: pointer; font-size: .82rem; text-align: center; transition: opacity .15s, border-color .15s; }
 .add-card-btn:hover { opacity: 1; border-color: var(--sky); }
 .add-card-form { margin: 0 10px 10px; display: flex; flex-direction: column; gap: 6px; }
 .add-card-form input, .add-card-form select { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18); border-radius: 6px; color: var(--cream); padding: 7px 10px; font-size: .82rem; font-family: var(--font-body); outline: none; }
@@ -265,36 +265,36 @@ body { height: 100vh; overflow: hidden; }
     <div class="col-header"><span class="col-dot preflight"></span><h2>Preflight</h2><span class="col-count" id="count-preflight">0</span></div>
     <div class="col-body">
       <div class="card-list" id="list-preflight" data-col="Preflight"></div>
-      <div class="add-card-wrap"><button class="add-card-btn" data-col="Preflight">+ Add card</button></div>
     </div>
+    <div class="add-card-footer"><button class="add-card-btn" data-col="Preflight">+ Add card</button></div>
   </div>
   <div class="column" id="col-enroute" data-col="Enroute">
     <div class="col-header"><span class="col-dot enroute"></span><h2>Enroute</h2><span class="col-count" id="count-enroute">0</span></div>
     <div class="col-body">
       <div class="card-list" id="list-enroute" data-col="Enroute"></div>
-      <div class="add-card-wrap"><button class="add-card-btn" data-col="Enroute">+ Add card</button></div>
     </div>
+    <div class="add-card-footer"><button class="add-card-btn" data-col="Enroute">+ Add card</button></div>
   </div>
   <div class="column" id="col-landed" data-col="Landed">
     <div class="col-header"><span class="col-dot landed"></span><h2>Landed</h2><span class="col-count" id="count-landed">0</span></div>
     <div class="col-body">
       <div class="card-list" id="list-landed" data-col="Landed"></div>
-      <div class="add-card-wrap"><button class="add-card-btn" data-col="Landed">+ Add card</button></div>
     </div>
+    <div class="add-card-footer"><button class="add-card-btn" data-col="Landed">+ Add card</button></div>
   </div>
   <div class="column" id="col-holdingpattern" data-col="Holding Pattern">
     <div class="col-header"><span class="col-dot holdingpattern"></span><h2>Holding Pattern</h2><span class="col-count" id="count-holdingpattern">0</span></div>
     <div class="col-body">
       <div class="card-list" id="list-holdingpattern" data-col="Holding Pattern"></div>
-      <div class="add-card-wrap"><button class="add-card-btn" data-col="Holding Pattern">+ Add card</button></div>
     </div>
+    <div class="add-card-footer"><button class="add-card-btn" data-col="Holding Pattern">+ Add card</button></div>
   </div>
   <div class="column" id="col-flyingm" data-col="Flying M">
     <div class="col-header"><span class="col-dot flyingm"></span><h2>Flying M</h2><span class="col-count" id="count-flyingm">0</span></div>
     <div class="col-body">
       <div class="card-list" id="list-flyingm" data-col="Flying M"></div>
-      <div class="add-card-wrap"><button class="add-card-btn" data-col="Flying M">+ Add card</button></div>
     </div>
+    <div class="add-card-footer"><button class="add-card-btn" data-col="Flying M">+ Add card</button></div>
   </div>
 </div>
 
