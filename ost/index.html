@@ -881,15 +881,15 @@
 <section class="hero" id="next">
   <div class="container hero-grid">
     <div>
-      <span class="kicker"><span class="dot"></span><span id="ost-countdown" data-air="2026-08-12T19:00:00-05:00">Next Episode · August 12</span></span>
-      <h1>Twelve Habits That Keep Us Out of the Statistics</h1>
-      <p class="episode-title">Episode 8 · A checklist-style self-assessment for every aviator.</p>
-      <p class="lead" style="margin-top: 18px;">Twelve research-backed behaviors that reduce risk in every aviation role. Pilots will recognize familiar safety themes, maintainers will see clear parallels to the FAA's Dirty Dozen — join Jolie &amp; Harvey live and leave with small habit changes that pay off over an entire career.</p>
+      <span class="kicker"><span class="dot"></span><span id="ost-countdown" data-air="2026-09-09T19:00:00-05:00">Next Episode · September 9</span></span>
+      <h1>Operating Without a Safety Net</h1>
+      <p class="episode-title">Episode 9 · Borrowing margin-conscious habits from high-consequence environments.</p>
+      <p class="lead" style="margin-top: 18px;">Bush pilots, remote maintainers, single-person airport operators, and solo controllers all learn to work without redundancy or immediate backup. Join Jolie &amp; Harvey live as they distill the transferable lessons from those environments — and the habits that keep your margins intact when no one is there to catch the mistake.</p>
 
       <div class="hero-meta">
         <div class="meta-item">
           <span class="label">Airs</span>
-          <span class="value">Wed, Aug 12, 2026</span>
+          <span class="value">Wed, Sep 9, 2026</span>
         </div>
         <div class="meta-item">
           <span class="label">Time</span>
@@ -914,7 +914,7 @@
         <img src="https://www.onsecondthought.me/4/media/Avemco.png" alt="Brought to you by Avemco" class="hero-sponsor-img">
       </a>
       <div class="hero-art">
-        <img src="https://onsecondthought.me/images/Live8.png" onerror="this.onerror=null; this.src='images/OSTLogo.jpg';" alt="Episode 8 — Twelve Habits That Keep Us Out of the Statistics">
+        <img src="https://onsecondthought.me/images/OST9logo.png" onerror="this.onerror=null; this.src='images/OSTLogo.jpg';" alt="Episode 9 — Operating Without a Safety Net">
       </div>
     </div>
   </div>
@@ -938,7 +938,7 @@
     <div class="section-head">
       <div class="eyebrow">Season 1 Archives</div>
       <h2>Catch Up on What You Missed</h2>
-      <p>Seven episodes in the books — each built on peer-reviewed research and packaged with free WINGS / AMT / IA credit. Watch the full program, or grab the audio-only podcast episode on your platform of choice.</p>
+      <p>Eight episodes in the books — each built on peer-reviewed research and packaged with free WINGS / AMT / IA credit. Watch the full program, or grab the audio-only podcast episode on your platform of choice.</p>
     </div>
 
     <!-- OST:ARCHIVES-GRID — one card per archived episode, auto-updated -->
@@ -1045,6 +1045,7 @@
           <p class="card-excerpt">The most dangerous flight is often the one flown a hundred times. How familiarity breeds complacency — and how vigilant aviators keep routine work from turning hazardous.</p>
           <div class="card-actions">
             <a href="https://www.onsecondthought.me/6" target="_blank" rel="noopener" class="btn btn-teal btn-sm">▶ Watch</a>
+            <a href="https://www.buzzsprout.com/2588945/episodes/19678770-when-routine-becomes-the-risk" target="_blank" rel="noopener" class="icon-btn" title="Listen on podcast">🎧</a>
             <a href="https://www.onsecondthought.me/6" target="_blank" rel="noopener" class="icon-btn" title="Resources, disclaimer &amp; WINGS quiz">📄</a>
           </div>
         </div>
@@ -1066,6 +1067,23 @@
           </div>
         </div>
       </article>
+
+      <!-- EP 8 -->
+      <article class="card">
+        <div class="card-thumb" style="background-image: url('https://onsecondthought.me/images/Archive8.png'); background-size: cover; background-position: center;">
+          <span class="ep-num">EP 08 · AUG 2026</span>
+          <div class="play-btn"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Archived · Earns WINGS + AMT / IA Credit</div>
+          <h3>"Twelve Habits That Keep Us Out of the Statistics"</h3>
+          <p class="card-excerpt">Twelve research-backed behaviors any aviator can adopt to reduce risk — presented checklist-style so you can self-assess and make the small changes that pay off over an entire career.</p>
+          <div class="card-actions">
+            <a href="https://www.onsecondthought.me/8" target="_blank" rel="noopener" class="btn btn-teal btn-sm">▶ Watch</a>
+            <a href="https://www.onsecondthought.me/8" target="_blank" rel="noopener" class="icon-btn" title="Resources, disclaimer &amp; WINGS quiz">📄</a>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -1076,16 +1094,10 @@
     <div class="section-head">
       <div class="eyebrow">The Rest of Season 1</div>
       <h2>Coming Up</h2>
-      <p>Five more live episodes through December 2026 — live on the second Wednesday of each month at 7:00 PM Central. Tap any episode to get a reminder before it airs.</p>
+      <p>Four more live episodes through December 2026 — live on the second Wednesday of each month at 7:00 PM Central. Tap any episode to get a reminder before it airs.</p>
     </div>
     <!-- OST:UPCOMING — remaining Season 1 episodes, auto-updated -->
     <div class="upcoming-scroller">
-      <a href="#newsletter" class="upcoming-card">
-        <span class="ep">Episode 8</span>
-        <span class="date">Aug 12</span>
-        <span class="title">Twelve Habits That Keep Us Out of the Statistics</span>
-        <span class="reminder">🔔  Remind me</span>
-      </a>
       <a href="#newsletter" class="upcoming-card">
         <span class="ep">Episode 9</span>
         <span class="date">Sep 9</span>
@@ -1440,8 +1452,8 @@
   var ms = air - new Date();
   var days = Math.floor(ms / 86400000);
   var text;
-  if (ms <= 0 && ms > -5400000) { text = 'Episode 8 · Live Now'; }
-  else if (ms <= 0) { text = 'Episode 8 · Archive Coming Soon'; }
+  if (ms <= 0 && ms > -5400000) { text = 'Episode 9 · Live Now'; }
+  else if (ms <= 0) { text = 'Episode 9 · Archive Coming Soon'; }
   else if (days === 0) { text = 'Next Episode · Tonight at 7:00 Central'; }
   else if (days === 1) { text = 'Next Episode · Tomorrow Night'; }
   else if (days < 15) { text = 'Next Episode · ' + days + ' Days Away'; }
